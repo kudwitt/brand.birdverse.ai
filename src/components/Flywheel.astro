@@ -1,0 +1,100 @@
+---
+interface Props {
+  pretitle?: string;
+  title?: string;
+  desc?: string;
+}
+
+const {
+  pretitle = "Ecosystem Growth",
+  title = "The Birdverse Product Flywheel",
+  desc = "Creating rapid ecosystem loop dynamics by aligning incentives between fleet managers, parts suppliers, and MRO service shops."
+} = Astro.props;
+---
+
+<section class="flywheel" id="flywheel">
+  <div class="section-header">
+    <span class="section-pretitle">{pretitle}</span>
+    <h2 class="section-title">{title}</h2>
+    <p class="section-desc">{desc}</p>
+  </div>
+  
+  <div class="flywheel-split">
+    <div class="flywheel-steps">
+      <div class="flywheel-step active" data-step="1">
+        <div class="flywheel-num">1</div>
+        <span class="flywheel-step-title">Owners & Operators Come for Free Valuations</span>
+      </div>
+      <div class="flywheel-step" data-step="2">
+        <div class="flywheel-num">2</div>
+        <span class="flywheel-step-title">Stay for One-Click Competitive RFQ's</span>
+      </div>
+      <div class="flywheel-step" data-step="3">
+        <div class="flywheel-num">3</div>
+        <span class="flywheel-step-title">Streamline RFQ to Cash Process for MROs</span>
+      </div>
+      <div class="flywheel-step" data-step="4">
+        <div class="flywheel-num">4</div>
+        <span class="flywheel-step-title">Reputation Scores Improve Discovery of New MROs</span>
+      </div>
+      <div class="flywheel-step" data-step="5">
+        <div class="flywheel-num">5</div>
+        <span class="flywheel-step-title">Messaging Stimulates Viral Spread</span>
+      </div>
+    </div>
+    
+    <div class="flywheel-display">
+      <!-- Flywheel loop svg icon -->
+      <svg class="flywheel-display-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+        <path d="M12 6v6h6v-2h-4V6z"/>
+      </svg>
+      <h3 class="flywheel-display-title" id="fw-title">Free Fleet Valuations</h3>
+      <p class="flywheel-display-desc" id="fw-desc">
+        Aircraft owners and operators onboard their assets for free live market value tracking. This initializes our core database with active aircraft tail and serial records.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const flywheelData: Record<number, { title: string; desc: string }> = {
+    1: {
+      title: "Free Fleet Valuations",
+      desc: "Aircraft owners and operators onboard their assets for free live market value tracking. This initializes our core database with active aircraft tail and serial records."
+    },
+    2: {
+      title: "One-Click Competitive RFQs",
+      desc: "Fleet owners stay on the platform to issue quick, paperless RFQs for AOGs (Aircraft on Ground), scheduled inspections, and avionics upgrades, receiving bids in hours."
+    },
+    3: {
+      title: "Streamlined RFQ-to-Cash",
+      desc: "Part 145 MROs use our platform to capture bids, manage communication, request digital signatures, and secure milestones in escrow, speeding up FBO invoicing."
+    },
+    4: {
+      title: "Dynamic Reputation Scoring",
+      desc: "Completed jobs trigger rating records. Honest discovery and reputation scoring help operators locate premium, verified MRO providers they can trust."
+    },
+    5: {
+      title: "Viral Messaging Spread",
+      desc: "In-context messaging triggers notifications across pilot, dispatcher, broker, and manufacturer loops, driving organic user signup back to Step 1."
+    }
+  };
+
+  const steps = document.querySelectorAll('.flywheel-step');
+  const fwTitle = document.getElementById('fw-title');
+  const fwDesc = document.getElementById('fw-desc');
+
+  steps.forEach(step => {
+    step.addEventListener('click', () => {
+      steps.forEach(btn => btn.classList.remove('active'));
+      step.classList.add('active');
+      const stepNumStr = step.getAttribute('data-step');
+      if (stepNumStr && fwTitle && fwDesc) {
+        const stepNum = parseInt(stepNumStr, 10);
+        fwTitle.innerText = flywheelData[stepNum].title;
+        fwDesc.innerText = flywheelData[stepNum].desc;
+      }
+    });
+  });
+</script>

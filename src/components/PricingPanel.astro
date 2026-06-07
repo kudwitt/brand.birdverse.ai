@@ -1,0 +1,24 @@
+---
+interface Props {
+  tag?: string;
+  headline?: string;
+  sub?: string;
+  disclaimer?: string;
+}
+
+const {
+  tag = "disclosed transactional pricing",
+  headline = "Birdverse is Free for Everyone",
+  sub = "We charge a flat 1% platform fee to facilitate transactions and manage secure escrow accounts.",
+  disclaimer = "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
+} = Astro.props;
+---
+
+<div class="pricing-banner">
+  <div class="pricing-card">
+    <div class="pricing-tag">{tag}</div>
+    <h2 class="pricing-headline">{headline}</h2>
+    <div class="pricing-sub">{sub}</div>
+    <p class="pricing-disclaimer">{disclaimer}</p>
+  </div>
+</div>

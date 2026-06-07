@@ -1,0 +1,60 @@
+---
+interface Card {
+  badge: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  pretitle?: string;
+  title?: string;
+  desc?: string;
+  cards?: Card[];
+}
+
+const {
+  pretitle = "Strategic Vision",
+  title = "The \"Bloomberg\" of Aviation",
+  desc = "A unifying platform that surfaces critical insights, contextualizes messaging, and streamlines fragmented industry workflows.",
+  cards = [
+    {
+      badge: "Independent & Neutral",
+      title: "Switzerland & Trusted by All",
+      desc: "We eliminate misaligned incentives with clear, disclosed transaction fees and secure cryptographic escrow systems that protect operators, brokers, and MRO service shops."
+    },
+    {
+      badge: "Process Velocity",
+      title: "End \"Quote Roulette\"",
+      desc: "Reduce administrative bloat and Hobbs hour losses through API-driven architectures that automate structural Part 145 RFQ-to-Cash processes."
+    },
+    {
+      badge: "Industry Pain Points",
+      title: "Fragmentation is the Enemy",
+      desc: "Managing AOGs, scheduled servicing, and inspections are time-consuming and cost-inefficient. Data is locked in PDFs, disconnected database silos, and manual email chains."
+    },
+    {
+      badge: "Unified Communication",
+      title: "Contextualized Telemetry",
+      desc: "By providing everyone with real-time access to flight data, tail logs, and regulatory alerts in context of the transaction, we eliminate delays and improve industry safety."
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="narrative" id="narrative">
+  <div class="section-header">
+    <span class="section-pretitle">{pretitle}</span>
+    <h2 class="section-title">{title}</h2>
+    <p class="section-desc">{desc}</p>
+  </div>
+  
+  <div class="narrative-grid">
+    {cards.map(card => (
+      <div class="narrative-card">
+        <div class="narrative-badge">{card.badge}</div>
+        <h3 class="narrative-title">{card.title}</h3>
+        <p class="narrative-desc">{card.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>

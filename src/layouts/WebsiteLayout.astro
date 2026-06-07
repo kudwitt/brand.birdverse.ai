@@ -1,16 +1,19 @@
+---
+const { frontmatter } = Astro.props;
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birdverse — The Bloomberg of Aviation</title>
+  <title>{frontmatter.title} — {frontmatter.tagline}</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
-  <style>
+  <style is:global>
     :root {
       /* Typography */
       --font-primary: 'Montserrat', sans-serif;
@@ -1180,7 +1183,7 @@
       }
 
       .nav-links {
-        display: none; /* simple collapse for mobile demonstration */
+        display: none;
       }
 
       .hero-title {
@@ -1216,7 +1219,7 @@
       <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
       </svg>
-      <span class="nav-logo-text">Birdverse</span>
+      <span class="nav-logo-text">{frontmatter.title}</span>
     </a>
     
     <ul class="nav-links">
@@ -1229,385 +1232,7 @@
     </ul>
   </nav>
 
-  <!-- Hero Banner -->
-  <section class="hero">
-    <div class="hero-gtm-badge">60-Day Founder-Led GTM Plan</div>
-    <h1 class="hero-title">Birdverse</h1>
-    <div class="hero-tagline">The Terminal for Aviation Professionals</div>
-    <div class="hero-url">https://birdverse.ai</div>
-    <p class="hero-gtm-desc">
-      Leveraging high-trust C-Suite relationships to fast-track OEM, Tier-1 MRO, and strategic investor recruitment. Establishing the single unifying workspace for flight dispatch, maintenance tracking, and escrow commerce.
-    </p>
-    
-    <div class="cta-group">
-      <a href="#solutions" class="btn-primary">Explore Products</a>
-      <a href="#roadmap" class="btn-secondary">View 60-Day GTM</a>
-    </div>
-  </section>
-
-  <!-- Strategic Narrative (Bloomberg of Aviation) -->
-  <section class="narrative" id="narrative">
-    <div class="section-header">
-      <span class="section-pretitle">Strategic Vision</span>
-      <h2 class="section-title">The "Bloomberg" of Aviation</h2>
-      <p class="section-desc">A unifying platform that surfaces critical insights, contextualizes messaging, and streamlines fragmented industry workflows.</p>
-    </div>
-    
-    <div class="narrative-grid">
-      
-      <!-- Card 1 -->
-      <div class="narrative-card">
-        <div class="narrative-badge">Independent & Neutral</div>
-        <h3 class="narrative-title">Switzerland & Trusted by All</h3>
-        <p class="narrative-desc">
-          We eliminate misaligned incentives with clear, disclosed transaction fees and secure cryptographic escrow systems that protect operators, brokers, and MRO service shops.
-        </p>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="narrative-card">
-        <div class="narrative-badge">Process Velocity</div>
-        <h3 class="narrative-title">End "Quote Roulette"</h3>
-        <p class="narrative-desc">
-          Reduce administrative bloat and Hobbs hour losses through API-driven architectures that automate structural Part 145 RFQ-to-Cash processes.
-        </p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="narrative-card">
-        <div class="narrative-badge">Industry Pain Points</div>
-        <h3 class="narrative-title">Fragmentation is the Enemy</h3>
-        <p class="narrative-desc">
-          Managing AOGs, scheduled servicing, and inspections are time-consuming and cost-inefficient. Data is locked in PDFs, disconnected database silos, and manual email chains.
-        </p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="narrative-card">
-        <div class="narrative-badge">Unified Communication</div>
-        <h3 class="narrative-title">Contextualized Telemetry</h3>
-        <p class="narrative-desc">
-          By providing everyone with real-time access to flight data, tail logs, and regulatory alerts in context of the transaction, we eliminate delays and improve industry safety.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Product Solution Pillars (Four Key Pillars) -->
-  <section class="solutions" id="solutions">
-    <div class="solutions-container">
-      
-      <div class="section-header">
-        <span class="section-pretitle">Unified Solution</span>
-        <h2 class="section-title">Birdverse Product Solutions</h2>
-        <p class="section-desc">Modernizing aviation operations through four tightly integrated functional pillars.</p>
-      </div>
-
-      <!-- Pillar 1: Messenger -->
-      <div class="solution-block">
-        <div>
-          <span class="solution-number">PILLAR 01 //</span>
-          <h3 class="solution-title">In-Context Messenger</h3>
-          <p class="solution-desc">
-            All communications are linked directly to tail numbers, active work orders, and quotes. No more searching through disjointed email chains. The private, secure Birdverse application runs natively across iOS, Android, and Desktop platforms.
-          </p>
-          <div class="tech-readout" style="max-width: 450px;">
-            <div class="tech-readout-row"><span class="tech-label">Security Protocol</span><span class="tech-value green">AES-256 GCM</span></div>
-            <div class="tech-readout-row"><span class="tech-label">Cross-Platform Sync</span><span class="tech-value green">VERIFIED</span></div>
-          </div>
-        </div>
-        
-        <div class="mock-viewport">
-          <div class="mock-header-bar">
-            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
-            <span class="mock-window-title">MESSENGER TERMINAL (N702WJ)</span>
-          </div>
-          <div class="mock-chat-area">
-            <div class="chat-bubble incoming">
-              <div class="chat-meta">KPBI DISPATCHER // 09:14 UTC</div>
-              <div class="chat-text">METAR KFLL updated. Headwinds at 15kts. Aircraft N702WJ cleared for routing.</div>
-            </div>
-            <div class="chat-bubble outgoing">
-              <div class="chat-meta">PILOT IN COMMAND // 09:15 UTC</div>
-              <div class="chat-text">Roger that. Quote and fuel release signed. Waiting on MRO inspection confirmation.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pillar 2: RFQ-to-Cash -->
-      <div class="solution-block reverse">
-        <div class="mock-viewport">
-          <div class="mock-header-bar">
-            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
-            <span class="mock-window-title">ESCROW LEDGER (TX_4402)</span>
-          </div>
-          <div class="mock-escrow-card">
-            <div>
-              <div class="escrow-row"><span class="escrow-label">Transaction ID</span><span class="escrow-value">TX_998274_B</span></div>
-              <div class="escrow-row"><span class="escrow-label">Total Escrow Funds</span><span class="escrow-value" style="color:var(--brand-orange);">$42,910.00</span></div>
-              <div class="escrow-row"><span class="escrow-label">MRO Sign-off</span><span class="escrow-value">E-Signed (FAA #8849)</span></div>
-            </div>
-            <div>
-              <div class="escrow-status-bar"><div class="escrow-progress"></div></div>
-              <div class="escrow-status-text">FUNDS AUTOMATICALLY RELEASED TO FBO</div>
-            </div>
-          </div>
-        </div>
-        
-        <div>
-          <span class="solution-number">PILLAR 02 //</span>
-          <h3 class="solution-title">RFQ-to-Cash Commerce</h3>
-          <p class="solution-desc">
-            End-to-end transaction automation. Operators issue competitive RFQs, sign work orders with secure E-signatures, and fund escrow accounts instantly. Funds are programmatically released to the MRO provider the moment digital sign-offs are completed.
-          </p>
-          <div class="tech-readout" style="max-width: 450px;">
-            <div class="tech-readout-row"><span class="tech-label">E-Signature Standards</span><span class="tech-value green">eIDAS / ESIGN Compliant</span></div>
-            <div class="tech-readout-row"><span class="tech-label">Escrow Release Speed</span><span class="tech-value green">INSTANT (<1s)</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pillar 3: Wingman AI -->
-      <div class="solution-block">
-        <div>
-          <span class="solution-number">PILLAR 03 //</span>
-          <h3 class="solution-title">"Wingman" AI Copilot</h3>
-          <p class="solution-desc">
-            Instant technical query tool. Access up-to-date Airworthiness Directives (ADs), Service Difficulty Reports (SDRs) for your specific fleet, live FAA tail data, airport runway information, and real-time news feeds aggregated from verified aviation sources.
-          </p>
-          <div class="tech-readout" style="max-width: 450px;">
-            <div class="tech-readout-row"><span class="tech-label">AD / SDR Database</span><span class="tech-value green">FAA Registry Live Sync</span></div>
-            <div class="tech-readout-row"><span class="tech-label">Natural Language Queries</span><span class="tech-value green">ENABLED</span></div>
-          </div>
-        </div>
-        
-        <div class="mock-viewport">
-          <div class="mock-header-bar">
-            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
-            <span class="mock-window-title">WINGMAN CO-PILOT TERMINAL</span>
-          </div>
-          <div class="mock-query-screen">
-            <div class="query-input">&gt; Wingman: Check AD alerts for Pratt & Whitney PW300 series engines</div>
-            <div class="query-response">
-              [SYSTEM RESPONSE] Pratt & Whitney PW307A Engine AD 2026-04-12 active.<br>
-              - Target: Fuel manifold flow inspector scan.<br>
-              - Action Required: Mandated compliance inspection within next 50 flight hours.<br>
-              - Impact: 2 engines in your tracked fleet (N702WJ) matched.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pillar 4: Autonomous Agents -->
-      <div class="solution-block reverse">
-        <div class="mock-viewport">
-          <div class="mock-header-bar">
-            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
-            <span class="mock-window-title">AUTONOMOUS COMPLIANCE MONITOR</span>
-          </div>
-          <div class="mock-agent-monitor">
-            <div class="monitor-grid">
-              <div class="monitor-cell">
-                <div>SB SCANNING</div>
-                <div class="monitor-status" style="color:var(--success);">ACTIVE // PASS</div>
-              </div>
-              <div class="monitor-cell">
-                <div>SERIAL CHECK</div>
-                <div class="monitor-status" style="color:var(--success);">18 MATCHED</div>
-              </div>
-              <div class="monitor-cell">
-                <div>COMPLIANCE RISK</div>
-                <div class="monitor-status" style="color:var(--success);">0% DETECTED</div>
-              </div>
-              <div class="monitor-cell">
-                <div>INTERVAL PREDICT</div>
-                <div class="monitor-status" style="color:var(--brand-orange);">+142 HOURS</div>
-              </div>
-            </div>
-            <div class="tech-readout">
-              <div class="tech-readout-row"><span>SB Cross-Ref</span><span class="green">NO ACTIONS PENDING</span></div>
-            </div>
-          </div>
-        </div>
-        
-        <div>
-          <span class="solution-number">PILLAR 04 //</span>
-          <h3 class="solution-title">Autonomous Compliance Agents</h3>
-          <p class="solution-desc">
-            An autonomous engine that works in the background to keep your fleet airworthy. It continuously cross-references manufacturer Service Bulletins (SBs) against aircraft serial numbers to ensure FAA compliance, predicts upcoming maintenance intervals, and eliminates administrative delays.
-          </p>
-          <div class="tech-readout" style="max-width: 450px;">
-            <div class="tech-readout-row"><span class="tech-label">SB Cross-Reference</span><span class="tech-value green">AUTOMATIC</span></div>
-            <div class="tech-readout-row"><span class="tech-label">Compliance Risk Check</span><span class="tech-value green">24/7 ACTIVE</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Product Flywheel & Pricing -->
-  <section class="flywheel" id="flywheel">
-    <div class="section-header">
-      <span class="section-pretitle">Ecosystem Growth</span>
-      <h2 class="section-title">The Birdverse Product Flywheel</h2>
-      <p class="section-desc">Creating rapid ecosystem loop dynamics by aligning incentives between fleet managers, parts suppliers, and MRO service shops.</p>
-    </div>
-    
-    <div class="flywheel-split">
-      <div class="flywheel-steps">
-        <div class="flywheel-step active" onclick="setFlywheel(1, this)">
-          <div class="flywheel-num">1</div>
-          <span class="flywheel-step-title">Owners & Operators Come for Free Valuations</span>
-        </div>
-        <div class="flywheel-step" onclick="setFlywheel(2, this)">
-          <div class="flywheel-num">2</div>
-          <span class="flywheel-step-title">Stay for One-Click Competitive RFQ's</span>
-        </div>
-        <div class="flywheel-step" onclick="setFlywheel(3, this)">
-          <div class="flywheel-num">3</div>
-          <span class="flywheel-step-title">Streamline RFQ to Cash Process for MROs</span>
-        </div>
-        <div class="flywheel-step" onclick="setFlywheel(4, this)">
-          <div class="flywheel-num">4</div>
-          <span class="flywheel-step-title">Reputation Scores Improve Discovery of New MROs</span>
-        </div>
-        <div class="flywheel-step" onclick="setFlywheel(5, this)">
-          <div class="flywheel-num">5</div>
-          <span class="flywheel-step-title">Messaging Stimulates Viral Spread</span>
-        </div>
-      </div>
-      
-      <div class="flywheel-display">
-        <!-- Flywheel loop svg icon -->
-        <svg class="flywheel-display-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
-          <path d="M12 6v6h6v-2h-4V6z"/>
-        </svg>
-        <h3 class="flywheel-display-title" id="fw-title">Free Fleet Valuations</h3>
-        <p class="flywheel-display-desc" id="fw-desc">
-          Aircraft owners and fleet managers onboard their assets for free live market value tracking, which populates our baseline fleet database.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing Panel -->
-  <div class="pricing-banner">
-    <div class="pricing-card">
-      <div class="pricing-tag">disclosed transactional pricing</div>
-      <h2 class="pricing-headline">Birdverse is Free for Everyone</h2>
-      <div class="pricing-sub">We charge a flat 1% platform fee to facilitate transactions and manage secure escrow accounts.</div>
-      <p class="pricing-disclaimer">No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing.</p>
-    </div>
-  </div>
-
-  <!-- Tailored ROI & Pitches Tab System -->
-  <section class="roi-pitches" id="roi">
-    <div class="roi-container">
-      <div class="section-header">
-        <span class="section-pretitle">Measurable ROI</span>
-        <h2 class="section-title">Tailored Value Propositions</h2>
-        <p class="section-desc">Delivering operational gains and financial assurances across all core aviation stakeholders.</p>
-      </div>
-
-      <div class="roi-tabs">
-        <button class="roi-tab-btn active" id="tab-fleet" onclick="switchRoiTab('fleet')">Fleet Owners & Operators</button>
-        <button class="roi-tab-btn" id="tab-mro" onclick="switchRoiTab('mro')">Tier-1 Part 145 MROs</button>
-        <button class="roi-tab-btn" id="tab-oem" onclick="switchRoiTab('oem')">OEMs & Parts Manufacturers</button>
-      </div>
-
-      <div class="roi-content-box" id="roi-box-content">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- 60-Day Founder-Led GTM Roadmap -->
-  <section class="roadmap" id="roadmap">
-    <div class="section-header">
-      <span class="section-pretitle">GTM Execution</span>
-      <h2 class="section-title">60-Day Execution Roadmap</h2>
-      <p class="section-desc">Our targeted founder-led rollout plan to recruit strategic partners and secure industry liquidity.</p>
-    </div>
-    
-    <div class="roadmap-timeline">
-      
-      <!-- Day 1-15 -->
-      <div class="roadmap-card">
-        <div class="roadmap-indicator">1-15</div>
-        <div class="roadmap-phase">Phase 01</div>
-        <div class="roadmap-heading">OEM Alignment</div>
-        <ul class="roadmap-list">
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Pitch Daher & Pilatus C-suite on SB distribution channels.</li>
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Secure commitments from 2 key strategic engine manufacturers.</li>
-        </ul>
-      </div>
-
-      <!-- Day 16-30 -->
-      <div class="roadmap-card">
-        <div class="roadmap-indicator">16-30</div>
-        <div class="roadmap-phase">Phase 02</div>
-        <div class="roadmap-heading">MRO Onboarding</div>
-        <ul class="roadmap-list">
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Secure beta trials with Duncan Aviation & StandardAero teams.</li>
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Integrate E-sign & Escrow release APIs for Part 145 invoices.</li>
-        </ul>
-      </div>
-
-      <!-- Day 31-45 -->
-      <div class="roadmap-card">
-        <div class="roadmap-indicator">31-45</div>
-        <div class="roadmap-phase">Phase 03</div>
-        <div class="roadmap-heading">Fleet Integration</div>
-        <ul class="roadmap-list">
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Onboard NetJets & Flexjet pilot and crew communication loops.</li>
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Run live tests on automated AD compliance check alerts.</li>
-        </ul>
-      </div>
-
-      <!-- Day 46-60 -->
-      <div class="roadmap-card">
-        <div class="roadmap-indicator">46-60</div>
-        <div class="roadmap-phase">Phase 04</div>
-        <div class="roadmap-heading">Platform Liquidity</div>
-        <ul class="roadmap-list">
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Go-live on first $10M escrow fuel & service transaction releases.</li>
-          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Activate public discovery listings & reputation scores.</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Interactive Telemetry simulator -->
-  <section class="simulator" id="simulator">
-    <div class="section-header">
-      <span class="section-pretitle">Live Telemetry</span>
-      <h2 class="section-title">Telemetry Terminal Live Monitor</h2>
-      <p class="section-desc">Simulate live technical dispatch loops, airworthiness agents, and escrow release telemetry.</p>
-    </div>
-    
-    <div class="sim-box">
-      <div class="sim-header">
-        <div class="sim-tabs">
-          <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimOutput('dispatch')">Flight Dispatcher</button>
-          <button class="sim-tab" id="btn-sim-compliance" onclick="loadSimOutput('compliance')">Compliance Sweep</button>
-          <button class="sim-tab" id="btn-sim-escrow" onclick="loadSimOutput('escrow')">Escrow Vault Logs</button>
-        </div>
-        <div class="sim-telemetry-text">
-          <div class="sim-telemetry-dot"></div>
-          <span id="sim-telemetry-status">KPBI CONTROL FEED: STREAMING</span>
-        </div>
-      </div>
-      
-      <div class="sim-viewport" id="sim-console-output">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
-  </section>
+  <slot />
 
   <!-- Premium Footer -->
   <footer>
@@ -1617,9 +1242,9 @@
           <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
           </svg>
-          <span class="nav-logo-text">Birdverse</span>
+          <span class="nav-logo-text">{frontmatter.title}</span>
         </a>
-        <div style="font-size: 0.8rem; color: var(--gray-velocity);">The Terminal for Aviation Professionals // https://birdverse.ai</div>
+        <div style="font-size: 0.8rem; color: var(--gray-velocity);">{frontmatter.tagline} // {frontmatter.url}</div>
       </div>
       
       <ul class="footer-links">
@@ -1629,126 +1254,12 @@
       </ul>
       
       <div style="font-size: 0.82rem; color: var(--gray-velocity);">
-        &copy; 2026 Birdverse. All rights reserved.
+        &copy; 2026 {frontmatter.title}. All rights reserved.
       </div>
     </div>
   </footer>
 
-  <script>
-    // Flywheel interactive data
-    const flywheelData = {
-      1: {
-        title: "Free Fleet Valuations",
-        desc: "Aircraft owners and operators onboard their assets for free live market value tracking. This initializes our core database with active aircraft tail and serial records."
-      },
-      2: {
-        title: "One-Click Competitive RFQs",
-        desc: "Fleet owners stay on the platform to issue quick, paperless RFQs for AOGs (Aircraft on Ground), scheduled inspections, and avionics upgrades, receiving bids in hours."
-      },
-      3: {
-        title: "Streamlined RFQ-to-Cash",
-        desc: "Part 145 MROs use our platform to capture bids, manage communication, request digital signatures, and secure milestones in escrow, speeding up FBO invoicing."
-      },
-      4: {
-        title: "Dynamic Reputation Scoring",
-        desc: "Completed jobs trigger rating records. Honest discovery and reputation scoring help operators locate premium, verified MRO providers they can trust."
-      },
-      5: {
-        title: "Viral Messaging Spread",
-        desc: "In-context messaging triggers notifications across pilot, dispatcher, broker, and manufacturer loops, driving organic user signup back to Step 1."
-      }
-    };
-
-    function setFlywheel(stepNum, element) {
-      document.querySelectorAll('.flywheel-step').forEach(btn => btn.classList.remove('active'));
-      element.classList.add('active');
-      
-      document.getElementById('fw-title').innerText = flywheelData[stepNum].title;
-      document.getElementById('fw-desc').innerText = flywheelData[stepNum].desc;
-    }
-
-    // ROI / Specific pitches tab data
-    const roiTabData = {
-      fleet: {
-        roi: [
-          `<strong>Paperless AOG & Scheduled RFQs:</strong> Send service requests to multiple vetted MROs instantly. Save up to 40 hours of manual dispatch phone calls.`,
-          `<strong>Escrow Shield Protection:</strong> Lock funds securely in escrow. Payments are released only when the work is signed off and compliance checks pass.`,
-          `<strong>Real-time FAA & News Sync:</strong> Stay updated on FAA airworthiness directives and tail registries automatically.`
-        ],
-        pitch: [
-          `<strong>Absolute Fleet Visibility:</strong> Complete oversight of active valuations and en-route flight milestones.`,
-          `<strong>End Email Chains:</strong> Single workspace replacing fragmented communication networks.`
-        ],
-        targets: ["NetJets Aviation", "Flexjet", "Wheels Up Operations", "Solairus Aviation", "Executive Jet Management", "Clay Lacy Aviation", "Jet Linx Aviation", "Tradewind Aviation"]
-      },
-      mro: {
-        roi: [
-          `<strong>Eliminate Bad Debts:</strong> Escrow guarantees funding is secured before you turn a wrench. Never get left holding the bag.`,
-          `<strong>Accelerate Cash Flow:</strong> Milestone-based payments automatically release funds to your bank upon digital e-sign.`,
-          `<strong>Structured Customer Chat:</strong> Keep communication organized in context of the tail and work order.`
-        ],
-        pitch: [
-          `<strong>Reduce Administrative Overhead:</strong> Fast digital sign-offs and invoices eliminate hours of AR chasing.`,
-          `<strong>Expand Customer Awareness:</strong> Capture business from new fleet operators through our discovery index.`
-        ],
-        targets: ["West Star Aviation", "Duncan Aviation", "StandardAero", "Jet Aviation", "FEAM Aero", "Constant Aviation", "AAR Corp", "Lufthansa Technik"]
-      },
-      oem: {
-        roi: [
-          `<strong>Notice Distribution Channel:</strong> Broadcast Service Bulletins, Airworthiness Directives, and manuals directly to owners.`,
-          `<strong>Manual Rental Storefront:</strong> Sell operational manuals by the project directly to MROs in context.`,
-          `<strong>Streamlined Warranties:</strong> Manage warranty logs and recall issues directly with operators.`
-        ],
-        pitch: [
-          `<strong>Raise New Product Awareness:</strong> Target new product announcements directly to verified owners.`,
-          `<strong>Improve Warranty Communications:</strong> Connect directly to resolve issues and increase brand loyalty.`
-        ],
-        targets: ["Daher", "Pilatus", "Gulfstream Aerospace", "Textron Aviation", "Bombardier", "Pratt & Whitney", "Honeywell Aerospace", "Collins Aerospace"]
-      }
-    };
-
-    function switchRoiTab(tabKey) {
-      document.querySelectorAll('.roi-tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(`tab-${tabKey}`).classList.add('active');
-      
-      const data = roiTabData[tabKey];
-      
-      let roiListHtml = data.roi.map(item => `
-        <li class="roi-item">
-          <span class="roi-marker">✓</span>
-          <span class="roi-text">${item}</span>
-        </li>
-      `).join('');
-      
-      let pitchListHtml = data.pitch.map(item => `
-        <li class="roi-item">
-          <span class="roi-marker">▪</span>
-          <span class="roi-text">${item}</span>
-        </li>
-      `).join('');
-
-      let targetsHtml = data.targets.map(tgt => `
-        <div class="target-tag">${tgt}</div>
-      `).join('');
-
-      document.getElementById('roi-box-content').innerHTML = `
-        <div>
-          <div>
-            <h4 class="roi-column-title">Measurable ROI</h4>
-            <ul class="roi-list">${roiListHtml}</ul>
-          </div>
-          <div style="margin-top: 3rem;">
-            <h4 class="roi-column-title">Target Specific Pitch</h4>
-            <ul class="roi-list">${pitchListHtml}</ul>
-          </div>
-        </div>
-        <div>
-          <h4 class="roi-column-title">High-Trust Ecosystem Recruits</h4>
-          <div class="targets-list-grid">${targetsHtml}</div>
-        </div>
-      `;
-    }
-
+  <script is:inline>
     // Telemetry Simulator Outputs
     const simLogMap = {
       dispatch: [
@@ -1774,32 +1285,31 @@
       ]
     };
 
-    function loadSimOutput(stateKey) {
+    window.loadSimOutput = function(stateKey) {
       document.querySelectorAll('.sim-tab').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(`btn-sim-${stateKey}`).classList.add('active');
+      const activeBtn = document.getElementById(`btn-sim-${stateKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
       
       const statusText = {
         dispatch: 'KPBI CONTROL FEED: STREAMING',
         compliance: 'FAA COMPLIANCE AGENT: RUNNING',
         escrow: 'LEDGER TRANSACTION: SECURED'
       };
-      document.getElementById('sim-telemetry-status').innerText = statusText[stateKey];
+      const statusTextEl = document.getElementById('sim-telemetry-status');
+      if (statusTextEl) statusTextEl.innerText = statusText[stateKey];
       
       const lines = simLogMap[stateKey];
       const viewport = document.getElementById('sim-console-output');
-      viewport.innerHTML = '';
-      
-      lines.forEach(line => {
-        const div = document.createElement('div');
-        div.className = 'sim-line';
-        div.innerHTML = line;
-        viewport.appendChild(div);
-      });
+      if (viewport) {
+        viewport.innerHTML = '';
+        lines.forEach(line => {
+          const div = document.createElement('div');
+          div.className = 'sim-line';
+          div.innerHTML = line;
+          viewport.appendChild(div);
+        });
+      }
     }
-
-    // Initialize layout
-    switchRoiTab('fleet');
-    loadSimOutput('dispatch');
   </script>
 
 </body>

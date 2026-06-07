@@ -1,0 +1,53 @@
+---
+interface Props {
+  pretitle?: string;
+  title?: string;
+  desc?: string;
+}
+
+const {
+  pretitle = "Live Telemetry",
+  title = "Telemetry Terminal Live Monitor",
+  desc = "Simulate live technical dispatch loops, airworthiness agents, and escrow release telemetry."
+} = Astro.props;
+---
+
+<section class="simulator" id="simulator">
+  <div class="section-header">
+    <span class="section-pretitle">{pretitle}</span>
+    <h2 class="section-title">{title}</h2>
+    <p class="section-desc">{desc}</p>
+  </div>
+  
+  <div class="sim-box">
+    <div class="sim-header">
+      <div class="sim-tabs">
+        <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimOutput('dispatch')">Flight Dispatcher</button>
+        <button class="sim-tab" id="btn-sim-compliance" onclick="loadSimOutput('compliance')">Compliance Sweep</button>
+        <button class="sim-tab" id="btn-sim-escrow" onclick="loadSimOutput('escrow')">Escrow Vault Logs</button>
+      </div>
+      <div class="sim-telemetry-text">
+        <div class="sim-telemetry-dot"></div>
+        <span id="sim-telemetry-status">KPBI CONTROL FEED: STREAMING</span>
+      </div>
+    </div>
+    
+    <div class="sim-viewport" id="sim-console-output">
+      <!-- Rendered via JS -->
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Initialize the console feed when component loads on page
+  if (typeof window.loadSimOutput === 'function') {
+    window.loadSimOutput('dispatch');
+  } else {
+    // Fallback if window function is not defined immediately
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.loadSimOutput === 'function') {
+        window.loadSimOutput('dispatch');
+      }
+    });
+  }
+</script>

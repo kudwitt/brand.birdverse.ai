@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <style>
+  <style is:inline>
     /* ----------------------------------------------------
        DESIGN SYSTEM TOKENS (Vanilla CSS Variables)
        ---------------------------------------------------- */
@@ -1970,7 +1970,7 @@
           <div style="position: relative;">
             <div class="control-group-title">index.css (Vanilla CSS Custom Properties)</div>
             <button class="btn-copy" onclick="copySnippet('css-code')">Copy</button>
-            <pre class="code-block"><code id="css-code">:root {
+            <pre class="code-block"><code id="css-code" set:html={`:root {
   --font-primary: 'Montserrat', 'Inter', 'Outfit', sans-serif;
   --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
 
@@ -1987,13 +1987,13 @@
   --dark-bg: #f1f5f9;
   --card-bg: #ffffff;
   --card-bg-hover: #f8fafc;
-}</code></pre>
+}`} /></pre>
           </div>
 
           <div style="position: relative;">
             <div class="control-group-title">tailwind.config.js (Colors & Fonts configuration)</div>
             <button class="btn-copy" onclick="copySnippet('tailwind-code')">Copy</button>
-            <pre class="code-block"><code id="tailwind-code">module.exports = {
+            <pre class="code-block"><code id="tailwind-code" set:html={`module.exports = {
   theme: {
     extend: {
       colors: {
@@ -2010,7 +2010,7 @@
       }
     }
   }
-}</code></pre>
+}`} /></pre>
           </div>
 
         </div>
@@ -2023,7 +2023,7 @@
   <div class="toast" id="toast-notif">Hex color copied to clipboard!</div>
 
   <!-- JavaScript Controls -->
-  <script>
+  <script is:inline>
     // Theme Toggle Functionality
     function toggleTheme() {
       const html = document.documentElement;

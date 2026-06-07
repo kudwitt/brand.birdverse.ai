@@ -1,0 +1,30 @@
+---
+interface Props {
+  badge?: string;
+  title?: string;
+  tagline?: string;
+  url?: string;
+  desc?: string;
+}
+
+const {
+  badge = "60-Day Founder-Led GTM Plan",
+  title = "Birdverse",
+  tagline = "The Terminal for Aviation Professionals",
+  url = "https://birdverse.ai",
+  desc = "Leveraging high-trust C-Suite relationships to fast-track OEM, Tier-1 MRO, and strategic investor recruitment. Establishing the single unifying workspace for flight dispatch, maintenance tracking, and escrow commerce."
+} = Astro.props;
+---
+
+<section class="hero">
+  {badge && <div class="hero-gtm-badge">{badge}</div>}
+  <h1 class="hero-title">{title}</h1>
+  {tagline && <div class="hero-tagline">{tagline}</div>}
+  {url && <div class="hero-url">{url}</div>}
+  {desc && <p class="hero-gtm-desc">{desc}</p>}
+  
+  <div class="cta-group">
+    <a href="#solutions" class="btn-primary">Explore Products</a>
+    <a href="#roadmap" class="btn-secondary">View 60-Day GTM</a>
+  </div>
+</section>

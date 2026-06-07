@@ -1,0 +1,197 @@
+---
+interface Props {
+  pretitle?: string;
+  title?: string;
+  desc?: string;
+}
+
+const {
+  pretitle = "Unified Solution",
+  title = "Birdverse Product Solutions",
+  desc = "Modernizing aviation operations through four tightly integrated functional pillars."
+} = Astro.props;
+---
+
+<style>
+  .tech-readout {
+    background: rgba(4, 10, 27, 0.4);
+    border: 1px solid var(--border-color, rgba(224, 242, 254, 0.08));
+    border-radius: 8px;
+    padding: 1.25rem;
+    font-family: var(--font-technical, 'JetBrains Mono', monospace);
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .tech-readout-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(224, 242, 254, 0.05);
+  }
+  .tech-readout-row:last-child {
+    border-bottom: none;
+  }
+  .tech-label {
+    color: var(--gray-velocity, #c1cbd4);
+  }
+  .tech-value {
+    font-weight: 700;
+  }
+  .tech-value.green {
+    color: var(--success, hsl(145, 80%, 45%));
+    text-shadow: 0 0 6px rgba(16, 185, 129, 0.2);
+  }
+</style>
+
+<section class="solutions" id="solutions">
+  <div class="solutions-container">
+    
+    <div class="section-header">
+      <span class="section-pretitle">{pretitle}</span>
+      <h2 class="section-title">{title}</h2>
+      <p class="section-desc">{desc}</p>
+    </div>
+
+    <!-- Pillar 1: Messenger -->
+    <div class="solution-block">
+      <div>
+        <span class="solution-number">PILLAR 01 //</span>
+        <h3 class="solution-title">In-Context Messenger</h3>
+        <p class="solution-desc">
+          All communications are linked directly to tail numbers, active work orders, and quotes. No more searching through disjointed email chains. The private, secure Birdverse application runs natively across iOS, Android, and Desktop platforms.
+        </p>
+        <div class="tech-readout" style="max-width: 450px;">
+          <div class="tech-readout-row"><span class="tech-label">Security Protocol</span><span class="tech-value green">AES-256 GCM</span></div>
+          <div class="tech-readout-row"><span class="tech-label">Cross-Platform Sync</span><span class="tech-value green">VERIFIED</span></div>
+        </div>
+      </div>
+      
+      <div class="mock-viewport">
+        <div class="mock-header-bar">
+          <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+          <span class="mock-window-title">MESSENGER TERMINAL (N702WJ)</span>
+        </div>
+        <div class="mock-chat-area">
+          <div class="chat-bubble incoming">
+            <div class="chat-meta">KPBI DISPATCHER // 09:14 UTC</div>
+            <div class="chat-text">METAR KFLL updated. Headwinds at 15kts. Aircraft N702WJ cleared for routing.</div>
+          </div>
+          <div class="chat-bubble outgoing">
+            <div class="chat-meta">PILOT IN COMMAND // 09:15 UTC</div>
+            <div class="chat-text">Roger that. Quote and fuel release signed. Waiting on MRO inspection confirmation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillar 2: RFQ-to-Cash -->
+    <div class="solution-block reverse">
+      <div class="mock-viewport">
+        <div class="mock-header-bar">
+          <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+          <span class="mock-window-title">ESCROW LEDGER (TX_4402)</span>
+        </div>
+        <div class="mock-escrow-card">
+          <div>
+            <div class="escrow-row"><span class="escrow-label">Transaction ID</span><span class="escrow-value">TX_998274_B</span></div>
+            <div class="escrow-row"><span class="escrow-label">Total Escrow Funds</span><span class="escrow-value" style="color:var(--brand-orange, #ffa028);">$42,910.00</span></div>
+            <div class="escrow-row"><span class="escrow-label">MRO Sign-off</span><span class="escrow-value">E-Signed (FAA #8849)</span></div>
+          </div>
+          <div>
+            <div class="escrow-status-bar"><div class="escrow-progress"></div></div>
+            <div class="escrow-status-text">FUNDS AUTOMATICALLY RELEASED TO FBO</div>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <span class="solution-number">PILLAR 02 //</span>
+        <h3 class="solution-title">RFQ-to-Cash Commerce</h3>
+        <p class="solution-desc">
+          End-to-end transaction automation. Operators issue competitive RFQs, sign work orders with secure E-signatures, and fund escrow accounts instantly. Funds are programmatically released to the MRO provider the moment digital sign-offs are completed.
+        </p>
+        <div class="tech-readout" style="max-width: 450px;">
+          <div class="tech-readout-row"><span class="tech-label">E-Signature Standards</span><span class="tech-value green">eIDAS / ESIGN Compliant</span></div>
+          <div class="tech-readout-row"><span class="tech-label">Escrow Release Speed</span><span class="tech-value green">INSTANT (&lt;1s)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillar 3: Wingman AI -->
+    <div class="solution-block">
+      <div>
+        <span class="solution-number">PILLAR 03 //</span>
+        <h3 class="solution-title">"Wingman" AI Copilot</h3>
+        <p class="solution-desc">
+          Instant technical query tool. Access up-to-date Airworthiness Directives (ADs), Service Difficulty Reports (SDRs) for your specific fleet, live FAA tail data, airport runway information, and real-time news feeds aggregated from verified aviation sources.
+        </p>
+        <div class="tech-readout" style="max-width: 450px;">
+          <div class="tech-readout-row"><span class="tech-label">AD / SDR Database</span><span class="tech-value green">FAA Registry Live Sync</span></div>
+          <div class="tech-readout-row"><span class="tech-label">Natural Language Queries</span><span class="tech-value green">ENABLED</span></div>
+        </div>
+      </div>
+      
+      <div class="mock-viewport">
+        <div class="mock-header-bar">
+          <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+          <span class="mock-window-title">WINGMAN CO-PILOT TERMINAL</span>
+        </div>
+        <div class="mock-query-screen">
+          <div class="query-input">&gt; Wingman: Check AD alerts for Pratt & Whitney PW300 series engines</div>
+          <div class="query-response">
+            [SYSTEM RESPONSE] Pratt & Whitney PW307A Engine AD 2026-04-12 active.<br>
+            - Target: Fuel manifold flow inspector scan.<br>
+            - Action Required: Mandated compliance inspection within next 50 flight hours.<br>
+            - Impact: 2 engines in your tracked fleet (N702WJ) matched.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillar 4: Autonomous Agents -->
+    <div class="solution-block reverse">
+      <div class="mock-viewport">
+        <div class="mock-header-bar">
+          <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+          <span class="mock-window-title">AUTONOMOUS COMPLIANCE MONITOR</span>
+        </div>
+        <div class="mock-agent-monitor">
+          <div class="monitor-grid">
+            <div class="monitor-cell">
+              <div>SB SCAN SCANNING</div>
+              <div class="monitor-status" style="color:var(--success, hsl(145, 80%, 45%));">ACTIVE // PASS</div>
+            </div>
+            <div class="monitor-cell">
+              <div>SERIAL CHECK</div>
+              <div class="monitor-status" style="color:var(--success, hsl(145, 80%, 45%));">18 MATCHED</div>
+            </div>
+            <div class="monitor-cell">
+              <div>COMPLIANCE RISK</div>
+              <div class="monitor-status" style="color:var(--success, hsl(145, 80%, 45%));">0% DETECTED</div>
+            </div>
+            <div class="monitor-cell">
+              <div>INTERVAL PREDICT</div>
+              <div class="monitor-status" style="color:var(--brand-orange, #ffa028);">+142 HOURS</div>
+            </div>
+          </div>
+          <div class="tech-readout">
+            <div class="tech-readout-row"><span>SB Cross-Ref</span><span class="green">NO ACTIONS PENDING</span></div>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <span class="solution-number">PILLAR 04 //</span>
+        <h3 class="solution-title">Autonomous Compliance Agents</h3>
+        <p class="solution-desc">
+          An autonomous engine that works in the background to keep your fleet airworthy. It continuously cross-references manufacturer Service Bulletins (SBs) against aircraft serial numbers to ensure FAA compliance, predicts upcoming maintenance intervals, and eliminates administrative delays.
+        </p>
+        <div class="tech-readout" style="max-width: 450px;">
+          <div class="tech-readout-row"><span class="tech-label">SB Cross-Reference</span><span class="tech-value green">AUTOMATIC</span></div>
+          <div class="tech-readout-row"><span class="tech-label">Compliance Risk Check</span><span class="tech-value green">24/7 ACTIVE</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
