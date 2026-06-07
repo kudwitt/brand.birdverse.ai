@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birdverse — The Terminal for Aviation Professionals</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Typography */
+      --font-primary: 'Montserrat', 'Inter', -apple-system, sans-serif;
+      --font-secondary: 'Outfit', 'Inter', sans-serif;
+      --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
+
+      /* Color Tokens (Cockpit Standard) */
+      --dark-bg: #081431;            /* Aether Blue */
+      --card-bg: #101e3e;            /* Deep Cockpit Surface */
+      --card-bg-hover: #17284f;      /* Sleek Hover Blue */
+      
+      --brand-orange: #ffa028;       /* Terminal Orange */
+      --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
+      --brand-deep-slate: #0f172a;   /* Deep Slate */
+      
+      --gray-velocity: #c1cbd4;      /* Velocity Gray */
+      --white-horizon: #f7f9fb;      /* Horizon White */
+
+      /* Avionics Status Alerts */
+      --success: hsl(145, 80%, 45%);   /* Avionics Green */
+      --caution: hsl(40, 100%, 50%);   /* Aviation Amber */
+      --alert: hsl(350, 100%, 45%);     /* Master Warning Red */
+
+      --border-color: rgba(224, 242, 254, 0.08);
+      --border-glow: rgba(255, 160, 40, 0.25);
+      
+      --transition-normal: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: all 0.15s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--white-horizon);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    /* Ambient radar sweeps / cockpit lights */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 160, 40, 0.03) 0%, rgba(8, 20, 49, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(224, 242, 254, 0.04) 0%, rgba(8, 20, 49, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navigation Bar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(8, 20, 49, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 3rem;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--brand-arctic-ice);
+    }
+
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--brand-orange);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--gray-velocity);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--white-horizon);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand-orange);
+      transition: var(--transition-normal);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-terminal {
+      background: rgba(255, 160, 40, 0.1);
+      border: 1px solid var(--brand-orange);
+      color: var(--brand-orange);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-normal);
+    }
+
+    .btn-terminal:hover {
+      background: var(--brand-orange);
+      color: var(--brand-deep-slate);
+      box-shadow: 0 0 15px var(--border-glow);
+    }
+
+    /* Hero Section */
+    section.hero {
+      padding: 180px 2rem 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-pretitle {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-arctic-ice);
+      background: rgba(224, 242, 254, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 0 8px rgba(224, 242, 254, 0.05);
+    }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 4rem;
+      color: var(--brand-orange);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 20px rgba(255, 160, 40, 0.1));
+    }
+
+    .hero-tagline {
+      font-family: var(--font-secondary);
+      font-size: 1.5rem;
+      color: var(--gray-velocity);
+      max-width: 800px;
+      margin: 0.5rem auto 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-url {
+      font-family: var(--font-technical);
+      font-size: 1.05rem;
+      color: var(--brand-orange);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 2.5rem;
+      opacity: 0.95;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 4.5rem;
+    }
+
+    .btn-primary {
+      background: var(--brand-orange);
+      color: var(--brand-deep-slate);
+      border: none;
+      padding: 0.85rem 2.25rem;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 160, 40, 0.3);
+      transition: var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 160, 40, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(224, 242, 254, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--white-horizon);
+      padding: 0.85rem 2.25rem;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(224, 242, 254, 0.08);
+      border-color: var(--gray-velocity);
+      transform: translateY(-2px);
+    }
+
+    /* Core Features Grid */
+    section.features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--gray-velocity);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .feature-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(4, 10, 27, 0.5);
+      transition: var(--transition-normal);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 160, 40, 0.03) 0%, rgba(8, 20, 49, 0) 100%);
+      opacity: 0;
+      transition: var(--transition-normal);
+      z-index: 0;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      background-color: var(--card-bg-hover);
+      border-color: var(--border-glow);
+      box-shadow: 0 15px 35px rgba(255, 160, 40, 0.12);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(224, 242, 254, 0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition-normal);
+    }
+
+    .feature-card:hover .feature-icon {
+      background: rgba(255, 160, 40, 0.08);
+      border-color: var(--brand-orange);
+    }
+
+    .feature-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--brand-arctic-ice);
+      transition: var(--transition-normal);
+    }
+
+    .feature-card:hover .feature-icon svg {
+      fill: var(--brand-orange);
+      filter: drop-shadow(0 0 3px var(--brand-orange));
+    }
+
+    .feature-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-desc {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--gray-velocity);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Avionics Tech Readout in Cards */
+    .tech-readout {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(4, 10, 27, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tech-readout-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .tech-readout-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .tech-label {
+      color: var(--gray-velocity);
+    }
+
+    .tech-value {
+      font-weight: 700;
+    }
+
+    .tech-value.green {
+      color: var(--success);
+      text-shadow: 0 0 4px rgba(74, 222, 128, 0.3);
+    }
+
+    .tech-value.amber {
+      color: var(--caution);
+      text-shadow: 0 0 4px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Live Interactive Instrument Simulator */
+    section.simulator {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 2rem 120px;
+    }
+
+    .sim-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(4, 10, 27, 0.7);
+    }
+
+    .sim-header {
+      padding: 1.25rem 2rem;
+      background: rgba(8, 20, 49, 0.6);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sim-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .sim-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--gray-velocity);
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-tab:hover {
+      color: var(--white-horizon);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .sim-tab.active {
+      color: var(--brand-orange);
+      border-color: var(--brand-orange);
+      background: rgba(255, 160, 40, 0.06);
+    }
+
+    .sim-telemetry-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .sim-telemetry-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .sim-screen {
+      padding: 2.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.88rem;
+      color: var(--white-horizon);
+      min-height: 280px;
+      background: #040a1b;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Radar sweeping line overlay */
+    .sim-screen::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(224, 242, 254, 0.06);
+      box-shadow: 0 0 10px rgba(224, 242, 254, 0.1);
+      animation: sweep 4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      0% { top: 0%; }
+      100% { top: 100%; }
+    }
+
+    .sim-log-line {
+      margin-bottom: 8px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    .sim-prompt {
+      color: var(--brand-orange);
+      font-weight: 700;
+    }
+
+    .sim-tag-success {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .sim-tag-caution {
+      color: var(--caution);
+      font-weight: 700;
+    }
+
+    .sim-tag-alert {
+      color: var(--alert);
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background-color: rgba(8, 20, 49, 0.8);
+      padding: 4rem 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--gray-velocity);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: var(--brand-orange);
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      nav {
+        padding: 0 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 3rem;
+      }
+      
+      .hero-tagline {
+        font-size: 1.25rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Premium Navigation Bar -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+      </svg>
+      <span class="nav-logo-text">Birdverse</span>
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="#features" class="nav-link">Features</a></li>
+      <li><a href="#simulator" class="nav-link">Terminal Live</a></li>
+      <li><a href="guide.html" class="nav-link">Brand Guide</a></li>
+      <li><a href="#" class="btn-terminal">Access Terminal</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-pretitle">Aviation Dispatch & Operations Control</div>
+    <h1 class="hero-title">Birdverse</h1>
+    <div class="hero-tagline">The Terminal for Aviation Professionals</div>
+    <div class="hero-url">https://birdverse.ai</div>
+    
+    <div class="cta-group">
+      <a href="#simulator" class="btn-primary">Launch Live Mock</a>
+      <a href="#features" class="btn-secondary">Explore Features</a>
+    </div>
+  </section>
+
+  <!-- Features Grids -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2 class="section-title">Operations Engine Modules</h2>
+      <p class="section-desc">Unified control modules engineered specifically for aircraft operators, charter networks, and maintenance crews.</p>
+    </div>
+    
+    <div class="features-grid">
+      
+      <!-- Card 1: Flight Ops -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Plane Icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Flight Operations</h3>
+        <p class="feature-desc">Real-time telemetry, routing, and fuel management on a centralized cockpit dispatch dashboard.</p>
+        <div class="tech-readout">
+          <div class="tech-readout-row">
+            <span class="tech-label">Route Calculator</span>
+            <span class="tech-value green">VERIFIED</span>
+          </div>
+          <div class="tech-readout-row">
+            <span class="tech-label">METAR Sync</span>
+            <span class="tech-value green">ONLINE (KPBI)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: MRO Dispatch -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Wrench/Screwdriver Icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="m19.43 12.98 1.39-1.39c.75-.75.75-1.97 0-2.72l-2.72-2.72c-.75-.75-1.97-.75-2.72 0l-1.39 1.39-4.23-4.23c-1.12-1.12-2.94-1.12-4.06 0L3.58 5.46c-1.12 1.12-1.12 2.94 0 4.06l4.23 4.23-1.39 1.39c-.75.75-.75 1.97 0 2.72l2.72 2.72c.75.75 1.97.75 2.72 0l1.39-1.39 4.23 4.23c1.12 1.12 2.94 1.12 4.06 0l2.12-2.12c1.12-1.12 1.12-2.94 0-4.06l-4.23-4.23zM9.41 12.59l-.71-.71 4.95-4.95.71.71-4.95 4.95z"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Maintenance & MRO</h3>
+        <p class="feature-desc">Automated tracking of engine cycles, Hobbs hours, and FAA compliance gates with alert flags.</p>
+        <div class="tech-readout">
+          <div class="tech-readout-row">
+            <span class="tech-label">Hobbs Logs</span>
+            <span class="tech-value">4192.4 HRS</span>
+          </div>
+          <div class="tech-readout-row">
+            <span class="tech-label">Engine Cycles</span>
+            <span class="tech-value amber">DUE IN 28 CYC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Escrow Ledger -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Currency/Shield Icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Escrow & Payments</h3>
+        <p class="feature-desc">Secure ledger auditing for charter deposits, fuel contracts, and wet-lease transactional fees.</p>
+        <div class="tech-readout">
+          <div class="tech-readout-row">
+            <span class="tech-label">Ledger Integrity</span>
+            <span class="tech-value green">VERIFIED</span>
+          </div>
+          <div class="tech-readout-row">
+            <span class="tech-label">Unbilled Escrow</span>
+            <span class="tech-value">$42,910.00</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Live Cockpit Simulator -->
+  <section class="simulator" id="simulator">
+    <div class="section-header">
+      <h2 class="section-title">Telemetry Terminal Emulator</h2>
+      <p class="section-desc">Test the real-time technical operations outputs using the live monitor controls below.</p>
+    </div>
+    
+    <div class="sim-container">
+      
+      <!-- Top controls -->
+      <div class="sim-header">
+        <div class="sim-tabs">
+          <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimState('dispatch')">Flight Dispatcher</button>
+          <button class="sim-tab" id="btn-sim-mro" onclick="loadSimState('mro')">Maintenance Log</button>
+          <button class="sim-tab" id="btn-sim-ledger" onclick="loadSimState('ledger')">Escrow Vault</button>
+        </div>
+        <div class="sim-telemetry-indicator">
+          <div class="sim-telemetry-dot"></div>
+          <span id="sim-telemetry-text">KPBI RADAR FEED: LIVE</span>
+        </div>
+      </div>
+
+      <!-- Raw text terminal screen -->
+      <div class="sim-screen" id="sim-screen-element">
+        <!-- Rendered via JS -->
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Premium Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom: 4px;">
+          <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+          </svg>
+          <span class="nav-logo-text">Birdverse</span>
+        </a>
+        <div style="font-size: 0.8rem; color: var(--gray-velocity);">The Terminal for Aviation Professionals // https://birdverse.ai</div>
+      </div>
+      
+      <ul class="footer-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="guide.html">Brand Identity Guide</a></li>
+        <li><a href="index.html">Portal Home</a></li>
+      </ul>
+      
+      <div style="font-size: 0.8rem; color: var(--gray-velocity);">
+        &copy; 2026 Birdverse. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simulator State Loader
+    const simStates = {
+      dispatch: [
+        `<span class="sim-prompt">&gt; INGEST DISPATCH DATA RUNNING FOR N702WJ (G650ER)</span>`,
+        `<span class="sim-prompt">&gt; FAA FLIGHT PLAN: KPBI -> TEB | FILED ALTITUDE: FL410 // HEADING: 025°</span>`,
+        `STATUS REPORT: RADAR CONTACT SUCCESS // SQUAWK: 4210`,
+        `ACTIVE WEATHER GATE (METAR KPBI): KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012`,
+        `HOBBS TRACKING: ACTIVE // FUEL REMAINING: 18,400 LBS // HOBBS ELAPSED: +1.4 HRS`,
+        `<span class="sim-tag-success">DISPATCH GATE STATE: ONLINE // ALL EN-ROUTE CHECKPOINTS VERIFIED [GREEN]</span>`
+      ],
+      mro: [
+        `<span class="sim-prompt">&gt; DIAGNOSTICS DEEP CHECK: ENGINE REGISTRY FOR N244PR</span>`,
+        `FAA TAIL VERIFICATION: N244PR verified as active business jet (CL350)`,
+        `ENGINE MODEL: Honeywell HTF7350 // L_ENGINE S/N: 124102 // R_ENGINE S/N: 124103`,
+        `HOBBS HOUR SYSTEM DATA: 2942.8 hours total elapsed airframe time`,
+        `<span class="sim-tag-caution">COMPLIANCE WARNING: Left engine requires inspection in 28 cycles (Cycles elapsed: 1842/1870)</span>`,
+        `NEXT COMPLIANCE GATE: B-Check (MRO Dispatch queued for KTEB JetAviation)`
+      ],
+      ledger: [
+        `<span class="sim-prompt">&gt; INGEST TRANSACTION LEDGER GATEWAYS</span>`,
+        `LEDGER STATUS: ACTIVE (Escrow Vault Node #042)`,
+        `ACTIVE CHARTER ESCROW RECORD: ID_998274 // CHARTERER: Apex Flight Group // VALUE: $42,910.00`,
+        `DEPOSIT RELEASE: SECURE CLEARANCE CONFIRMED via signature vault key`,
+        `REFUELING TRANSACTION AUDIT: KPBI Signature Flight Support // Wet-lease fuel audit: 840 GAL`,
+        `<span class="sim-tag-success">LEDGER GATE STATE: SECURE // INTEGRITY LOG HASH VALID (SHA-256 CHECK: OK)</span>`
+      ]
+    };
+
+    function loadSimState(stateKey) {
+      // Manage Active Tab UI
+      document.querySelectorAll('.sim-tab').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(`btn-sim-${stateKey}`).classList.add('active');
+      
+      // Load Telemetry Text
+      const telemetryTextMap = {
+        dispatch: 'KPBI RADAR FEED: LIVE',
+        mro: 'MRO REGISTRY SYNC: CURRENT',
+        ledger: 'ESCROW INTEGRITY: AUDITED'
+      };
+      document.getElementById('sim-telemetry-text').innerText = telemetryTextMap[stateKey];
+
+      // Load Screen content with line-by-line typing delay simulation
+      const screenEl = document.getElementById('sim-screen-element');
+      screenEl.innerHTML = '';
+      
+      const lines = simStates[stateKey];
+      lines.forEach((line, index) => {
+        const lineDiv = document.createElement('div');
+        lineDiv.className = 'sim-log-line';
+        lineDiv.innerHTML = line;
+        screenEl.appendChild(lineDiv);
+      });
+    }
+
+    // Initialize with dispatch on load
+    loadSimState('dispatch');
+  </script>
+
+</body>
+</html>

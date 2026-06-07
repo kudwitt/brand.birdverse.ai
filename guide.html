@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birdverse — Brand Identity Guideline & Playground</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ----------------------------------------------------
+       DESIGN SYSTEM TOKENS (Vanilla CSS Variables)
+       ---------------------------------------------------- */
+    :root {
+      /* Typography */
+      --font-primary: 'Montserrat', 'Inter', 'Outfit', -apple-system, sans-serif;
+      --font-body: 'Inter', 'Outfit', sans-serif;
+      --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
+      
+      /* Theme Dependent Colors (Default: Dark Cockpit) */
+      --bg-ambient: #081431;            /* Aether Blue */
+      --bg-card: #101e3e;              /* Deep Cockpit Surface */
+      --bg-card-hover: #17284f;        /* Sleek Hover Blue */
+      --border-color: rgba(224, 242, 254, 0.1); /* Subtle Arctic Ice Border */
+      
+      /* Text Pairing */
+      --text-primary: #f7f9fb;         /* Horizon White */
+      --text-secondary: #c1cbd4;       /* Velocity Gray */
+      --text-muted: #64748b;
+      
+      /* Brand Color Tokens */
+      --brand-orange: #ffa028;         /* Terminal Orange */
+      --brand-arctic-ice: #e0f2fe;     /* Arctic Ice */
+      --brand-deep-slate: #0f172a;     /* Deep Slate */
+      
+      /* Logo Specific Colors & Styles */
+      --logo-bird-color: #e0f2fe;
+      --logo-bird-stroke: none;
+      --logo-bird-stroke-width: 0;
+      --logo-ai-color: #f7f9fb;
+      
+      /* Avionics Standard Alerts */
+      --success: hsl(145, 80%, 45%);
+      --caution: hsl(40, 100%, 50%);
+      --alert: hsl(350, 100%, 45%);
+      
+      /* Shadows & Transitions */
+      --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-normal: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    [data-theme="light"] {
+      /* Theme Dependent Colors (Light Cockpit Theme) */
+      --bg-ambient: #f1f5f9;            /* Light Gray */
+      --bg-card: #ffffff;              /* Pure White */
+      --bg-card-hover: #f8fafc;        /* Sleek Hover Tint */
+      --border-color: rgba(15, 23, 42, 0.08); /* Faint Slate Border */
+      
+      /* Text Pairing */
+      --text-primary: #0f172a;         /* Deep Slate */
+      --text-secondary: #475569;       /* Slate Gray */
+      --text-muted: #94a3b8;
+      
+      /* Logo Specific Colors & Styles */
+      --logo-bird-color: #e0f2fe;
+      --logo-bird-stroke: #0f172a;
+      --logo-bird-stroke-width: 12px;
+      --logo-ai-color: #0f172a;
+      
+      /* Shadows */
+      --card-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+    }
+    
+    /* ----------------------------------------------------
+       BASE STYLES
+       ---------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--bg-ambient);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      transition: var(--transition-normal);
+      overflow-x: hidden;
+      padding-bottom: 100px;
+    }
+    
+    a {
+      color: var(--brand-orange);
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    
+    a:hover {
+      opacity: 0.8;
+    }
+    
+    /* ----------------------------------------------------
+       LAYOUT STRUCTURE
+       ---------------------------------------------------- */
+    header {
+      width: 100%;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8, 20, 49, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition-normal);
+    }
+    
+    [data-theme="light"] header {
+      background: rgba(255, 255, 255, 0.7);
+    }
+    
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: -0.025em;
+    }
+    
+    .logo-svg {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .logo-svg path {
+      fill: var(--logo-bird-color);
+      stroke: var(--logo-bird-stroke);
+      stroke-width: var(--logo-bird-stroke-width);
+      transition: var(--transition-normal);
+    }
+    
+    .logo-text-orange {
+      color: var(--brand-orange);
+    }
+    
+    .logo-text-suffix {
+      color: var(--logo-ai-color);
+      transition: var(--transition-normal);
+    }
+    
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 30px;
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-fast);
+    }
+    
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-orange);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 3rem;
+    }
+    
+    /* ----------------------------------------------------
+       SIDE NAVIGATION RAIL
+       ---------------------------------------------------- */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+    
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .nav-item button {
+      width: 100%;
+      text-align: left;
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .nav-item button:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+    
+    .nav-item.active button {
+      background: var(--bg-card);
+      color: var(--brand-orange);
+      border-left: 4px solid var(--brand-orange);
+      border-radius: 0 8px 8px 0;
+    }
+    
+    /* ----------------------------------------------------
+       MAIN WORKBENCH & PANELS
+       ---------------------------------------------------- */
+    .workbench {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      min-width: 0; /* Prevents flex children from breaking grid layout width */
+    }
+    
+    section {
+      scroll-margin-top: 100px;
+    }
+    
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      max-width: 800px;
+    }
+    
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card:hover {
+      border-color: rgba(255, 160, 40, 0.2);
+    }
+    
+    /* Responsive Table wrappers to prevent rendering overflows */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    
+    th, td {
+      padding: 12px 16px;
+    }
+    
+    th {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--border-color);
+      font-family: var(--font-primary);
+      font-weight: 600;
+    }
+    
+    td {
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* Alert Block styling mimicking Github alerts */
+    .alert-block {
+      border-left: 4px solid;
+      padding: 1rem 1.25rem;
+      border-radius: 0 12px 12px 0;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    
+    .alert-block.caution {
+      background: rgba(239, 68, 68, 0.06);
+      border-color: var(--alert);
+      color: var(--text-primary);
+    }
+    
+    .alert-block.tip {
+      background: rgba(16, 185, 129, 0.06);
+      border-color: var(--success);
+      color: var(--text-primary);
+    }
+    
+    .alert-title {
+      font-weight: 700;
+      font-family: var(--font-primary);
+      margin-bottom: 4px;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    /* ----------------------------------------------------
+       INTERACTIVE LOGO SYSTEM
+       ---------------------------------------------------- */
+    .logo-playground {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 2rem;
+    }
+    
+    .logo-canvas {
+      height: 280px;
+      background: #040a1b; /* Extra dark default */
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: var(--transition-normal);
+    }
+    
+    .logo-canvas-label {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      font-size: 0.75rem;
+      font-family: var(--font-technical);
+      color: #64748b;
+    }
+    
+    .logo-render {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: var(--transition-normal);
+    }
+    
+    .logo-render .bird-symbol {
+      width: 80px;
+      height: 80px;
+      transition: var(--transition-normal);
+    }
+    
+    .logo-render .bird-symbol path {
+      transition: var(--transition-normal);
+    }
+    
+    .logo-render .wordmark {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 3.5rem;
+      letter-spacing: -0.025em;
+      transition: var(--transition-normal);
+      white-space: nowrap;
+    }
+    
+    .logo-render .wordmark .text-orange {
+      color: var(--brand-orange);
+    }
+    
+    .logo-render .wordmark .text-suffix {
+      color: var(--logo-sandbox-ai-color, #ffffff);
+      transition: var(--transition-normal);
+    }
+    
+    .logo-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .control-group-title {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    
+    .radio-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .radio-label:hover {
+      border-color: var(--brand-orange);
+    }
+    
+    .radio-label input {
+      accent-color: var(--brand-orange);
+    }
+    
+    .canvas-swatches {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .swatch.active {
+      border-color: var(--brand-orange);
+      transform: scale(1.1);
+    }
+    
+    .code-output {
+      margin-top: 2rem;
+      position: relative;
+    }
+    
+    .code-block {
+      background: #040a1b;
+      color: #9cdcfe;
+      padding: 1.25rem;
+      border-radius: 8px;
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+    }
+    
+    /* ----------------------------------------------------
+       TAGLINE PLAYGROUND
+       ---------------------------------------------------- */
+    .tagline-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .tagline-quote {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--brand-orange);
+      text-align: center;
+      padding: 2rem 0;
+      letter-spacing: -0.015em;
+    }
+    
+    .tagline-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1rem;
+    }
+    
+    .tagline-tab-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .tagline-tab-btn.active {
+      color: var(--brand-orange);
+      border-bottom-color: var(--brand-orange);
+    }
+    
+    .preview-window {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+    }
+    
+    /* Mock UI elements for the Tagline Playground */
+    .mock-header {
+      background: rgba(8, 20, 49, 0.8);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .mock-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    
+    .mock-links {
+      display: flex;
+      gap: 12px;
+      width: 100px;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    
+    .mock-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .mock-hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    
+    .mock-hero-tagline {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition-fast);
+    }
+    
+    .mock-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 12px;
+      flex: 1;
+      height: 100%;
+    }
+    
+    .mock-sidebar {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .mock-sidebar-item {
+      height: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+    }
+    
+    .mock-sidebar-item.active {
+      background: rgba(255, 160, 40, 0.15);
+    }
+    
+    .mock-content {
+      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .mock-row {
+      height: 14px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2px;
+    }
+    
+    .tagline-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* ----------------------------------------------------
+       WEBSITE LANDING PAGE INTERACTIVE CARD
+       ---------------------------------------------------- */
+    .landing-page-sandbox {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .landing-mock-site {
+      background: #081431; /* Mandatory Aether Blue base */
+      border: 1px solid rgba(224, 242, 254, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .landing-mock-header {
+      background: rgba(8, 20, 49, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .landing-mock-nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .landing-mock-nav-item {
+      width: 50px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .landing-mock-nav-item:hover {
+      background: var(--brand-orange);
+    }
+
+    .landing-mock-hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at center, rgba(16, 30, 62, 0.4) 0%, transparent 70%);
+      border-bottom: 1px dashed rgba(255,255,255,0.05);
+    }
+
+    .landing-mock-tagline {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #c1cbd4; /* Velocity Gray */
+      margin-top: 10px;
+    }
+
+    .landing-mock-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      padding: 3rem 2rem;
+    }
+
+    .landing-mock-card {
+      background: #101e3e; /* Deep Cockpit Blue */
+      border: 1px solid rgba(224, 242, 254, 0.08);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .landing-mock-card:hover {
+      background: #17284f; /* Sleek Hover Blue */
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 15px rgba(255, 160, 40, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .landing-mock-card-title {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: #f7f9fb;
+    }
+
+    .landing-mock-card-line {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+
+    .landing-mock-card:hover .landing-mock-card-line {
+      background: rgba(255, 160, 40, 0.3);
+    }
+
+    .landing-rule-tag {
+      font-size: 0.7rem;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      color: var(--brand-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 10px;
+      display: block;
+    }
+    
+    /* ----------------------------------------------------
+       COLOR PALETTE TOKENS
+       ---------------------------------------------------- */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .color-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+      cursor: pointer;
+    }
+    
+    .color-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 160, 40, 0.3);
+    }
+    
+    .color-preview {
+      height: 120px;
+      position: relative;
+      transition: var(--transition-normal);
+    }
+    
+    .color-card-copy-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-primary);
+      opacity: 0;
+      transition: var(--transition-fast);
+      pointer-events: none;
+    }
+    
+    .color-card:hover .color-card-copy-hint {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .color-info {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .color-name {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    
+    .color-hex {
+      font-family: var(--font-technical);
+      font-size: 0.85rem;
+      color: var(--brand-orange);
+      font-weight: 600;
+    }
+    
+    .color-use {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    
+    .color-print-info {
+      border-top: 1px dashed var(--border-color);
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    .color-print-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .color-print-row span:last-child {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* ----------------------------------------------------
+       LOGOWEAR SECTIONS (Aesthetic Clothes Shapes)
+       ---------------------------------------------------- */
+    .apparel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .apparel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+      box-shadow: var(--card-shadow);
+    }
+
+    .apparel-card:hover {
+      border-color: var(--brand-orange);
+      transform: translateY(-4px);
+    }
+
+    .mockup-preview {
+      width: 100%;
+      height: 280px;
+      background: #e2e8f0; /* Neutral light grey background matching studio shot */
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mockup-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mockup-overlay {
+      position: absolute;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-render-overlay {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo-render-overlay .bird-symbol-overlay {
+      width: 10px;
+      height: 10px;
+    }
+    
+    .logo-render-overlay .bird-symbol-overlay path {
+      fill: #e0f2fe;
+    }
+
+    .logo-render-overlay .wordmark-overlay {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 8px;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .logo-render-overlay .wordmark-overlay .text-orange {
+      color: var(--brand-orange);
+    }
+
+    .logo-render-overlay .wordmark-overlay .text-white {
+      color: #ffffff;
+    }
+
+    /* Specific Overlay adjustments for placement & sizes */
+    .polo-overlay {
+      top: 38.5%;
+      left: 64%;
+      width: 50px;
+      height: auto;
+    }
+    .polo-overlay .logo-render-overlay .bird-symbol-overlay {
+      width: 11px;
+      height: 11px;
+    }
+    .polo-overlay .logo-render-overlay .wordmark-overlay {
+      font-size: 8.5px;
+    }
+
+    .sweatshirt-overlay {
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 130px;
+      height: auto;
+    }
+    .sweatshirt-overlay .logo-render-overlay {
+      gap: 6px;
+    }
+    .sweatshirt-overlay .logo-render-overlay .bird-symbol-overlay {
+      width: 26px;
+      height: 26px;
+    }
+    .sweatshirt-overlay .logo-render-overlay .wordmark-overlay {
+      font-size: 19px;
+      gap: 3px;
+    }
+
+    .cap-overlay {
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: auto;
+    }
+    .cap-overlay .bird-symbol-overlay {
+      width: 30px;
+      height: 30px;
+    }
+    .cap-overlay .bird-symbol-overlay path {
+      fill: #e0f2fe;
+    }
+
+    .backpack-overlay {
+      top: 66%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: auto;
+    }
+    .backpack-overlay .logo-render-overlay {
+      gap: 3px;
+    }
+    .backpack-overlay .logo-render-overlay .bird-symbol-overlay {
+      width: 14px;
+      height: 14px;
+    }
+    .backpack-overlay .logo-render-overlay .wordmark-overlay {
+      font-size: 10.5px;
+      gap: 2px;
+    }
+
+    .apparel-details {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .apparel-name {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .apparel-placement {
+      font-size: 0.78rem;
+      color: var(--brand-orange);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .apparel-specs {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    /* ----------------------------------------------------
+       OUTDOOR BUILDING SIGNAGE (SIMULATOR)
+       ---------------------------------------------------- */
+    .signage-simulator {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .sign-facade {
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-normal);
+    }
+
+    /* Dark Masonry Facade */
+    .sign-facade.dark-wall {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Slate Masonry Texture */
+      border-color: rgba(255,255,255,0.05);
+    }
+
+    /* Light Stucco Facade */
+    .sign-facade.light-wall {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); /* Light concrete Texture */
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* Interactive Halo lighting simulation using Text Shadow and Box Shadow */
+    .halo-logo-rendered {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .dark-wall .halo-bird-svg {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 0 18px rgba(224, 242, 254, 0.85)); /* Arctic Ice Halo lit LED glow */
+    }
+
+    .dark-wall .halo-bird-svg path {
+      fill: #e0f2fe; /* Solid Arctic Ice Diffuser */
+    }
+
+    .dark-wall .halo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      letter-spacing: -0.02em;
+      color: #ffffff; /* Brushed Aluminum faced letters */
+      text-shadow: 0 0 20px rgba(224, 242, 254, 0.65); /* Halo glow backplate */
+    }
+
+    .dark-wall .halo-text-orange {
+      color: var(--brand-orange);
+    }
+
+    /* Light Stucco Wall: Outlined Bird + Dark faces */
+    .light-wall .halo-bird-svg {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 0 15px rgba(224, 242, 254, 0.75));
+    }
+
+    .light-wall .halo-bird-svg path {
+      fill: #e0f2fe;
+      stroke: #0f172a; /* Dimensional black framing */
+      stroke-width: 12px;
+    }
+
+    .light-wall .halo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      letter-spacing: -0.02em;
+      color: #0f172a; /* Matte Black steel faces */
+      text-shadow: 0 0 15px rgba(224, 242, 254, 0.55);
+    }
+
+    .light-wall .halo-text-orange {
+      color: var(--brand-orange);
+    }
+
+    .sign-facade-label {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-family: var(--font-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .dark-wall .sign-facade-label {
+      background: rgba(255,255,255,0.08);
+      color: var(--brand-arctic-ice);
+    }
+
+    .light-wall .sign-facade-label {
+      background: rgba(0,0,0,0.05);
+      color: var(--brand-deep-slate);
+    }
+
+    .sign-facade-desc {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      font-size: 0.75rem;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .dark-wall .sign-facade-desc {
+      color: #94a3b8;
+    }
+
+    .light-wall .sign-facade-desc {
+      color: #64748b;
+    }
+    
+    /* ----------------------------------------------------
+       TYPOGRAPHY DEMO
+       ---------------------------------------------------- */
+    .typo-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .typo-specimen {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    .font-sample-title {
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    
+    .specimen-letters {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    
+    .specimen-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    .technical-terminal-mock {
+      grid-column: span 2;
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: var(--font-technical);
+      color: #38bdf8;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    
+    .technical-terminal-mock::before {
+      content: 'AIRWORTHINESS DISPATCH MONITOR';
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.65rem;
+      color: #64748b;
+      letter-spacing: 0.05em;
+    }
+    
+    /* ----------------------------------------------------
+       TOAST NOTIFICATION FOR COPY EVENT
+       ---------------------------------------------------- */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    /* Responsive adjustment */
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+      }
+      .logo-playground {
+        grid-template-columns: 1fr;
+      }
+      .typo-showcase {
+        grid-template-columns: 1fr;
+      }
+      .technical-terminal-mock {
+        grid-column: span 1;
+      }
+      .landing-mock-grid {
+        grid-template-columns: 1fr;
+      }
+      .signage-simulator {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Premium Header -->
+  <header>
+    <div class="header-logo">
+      <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+      </svg>
+      <span><span class="logo-text-orange">Birdverse</span></span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle visual theme">
+      <span id="theme-icon">🌙</span>
+      <span id="theme-text">Dark Cockpit</span>
+    </button>
+  </header>
+
+  <div class="container">
+    
+    <!-- Sidebar Navigation Rail -->
+    <aside class="sidebar">
+      <ul class="nav-list">
+        <li class="nav-item active" data-section="overview"><button onclick="scrollToSection('overview')">Overview</button></li>
+        <li class="nav-item" data-section="naming"><button onclick="scrollToSection('naming')">Naming & Brand Casing</button></li>
+        <li class="nav-item" data-section="logo"><button onclick="scrollToSection('logo')">Logo & Icon</button></li>
+        <li class="nav-item" data-section="tagline"><button onclick="scrollToSection('tagline')">Tagline</button></li>
+        <li class="nav-item" data-section="landing-rules"><button onclick="scrollToSection('landing-rules')">Landing Page</button></li>
+        <li class="nav-item" data-section="colors"><button onclick="scrollToSection('colors')">Color Palette</button></li>
+        <li class="nav-item" data-section="theme-shading"><button onclick="scrollToSection('theme-shading')">Theme Shading</button></li>
+        <li class="nav-item" data-section="logowear"><button onclick="scrollToSection('logowear')">Logowear Specs</button></li>
+        <li class="nav-item" data-section="signage"><button onclick="scrollToSection('signage')">Outdoor Signage</button></li>
+        <li class="nav-item" data-section="typography"><button onclick="scrollToSection('typography')">Typography</button></li>
+        <li class="nav-item" data-section="dev-snippets"><button onclick="scrollToSection('dev-snippets')">Code Snippets</button></li>
+      </ul>
+    </aside>
+    
+    <!-- Main Workbench -->
+    <main class="workbench">
+      
+      <!-- Section: Overview -->
+      <section id="overview">
+        <h1 class="section-title">Brand Overview</h1>
+        <p class="section-desc">Design rules for representations of the Birdverse brand identity system.</p>
+        <div class="card">
+          <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+            Birdverse is a mission-critical operations portal tailored for aviation professionals (pilots, aircraft mechanics, dispatchers, and fleet managers). The brand aesthetic balances a <strong>highly technical, cockpit-instrument environment</strong> with a premium, sleek software experience.
+          </p>
+          <div class="alert-block tip">
+            <div class="alert-title">💡 Core Design Philosophy</div>
+            Aether Cockpit Ambient. All digital interfaces use a deep navy cockpit color base (Aether Blue) with vibrant instrument orange (Terminal Orange) and ice-blue white (Arctic Ice) accents.
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Naming & Brand Casing -->
+      <section id="naming">
+        <h1 class="section-title">1. Naming & Brand Casing</h1>
+        <p class="section-desc">Rules governing the casing and use of the brand name and URLs.</p>
+        <div class="card">
+          <h3 style="margin-bottom: 1.25rem; font-family: var(--font-primary);">Casing Specifications</h3>
+          
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Brand Name</th>
+                  <th>Casing Standard</th>
+                  <th>Approved Form</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600;">Birdverse</td>
+                  <td style="color: var(--text-secondary);">Sentence Case</td>
+                  <td style="font-family: var(--font-primary); font-weight: 700; color: var(--brand-orange);">Birdverse</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert-block caution">
+            <div class="alert-title">⚠️ Invalid Casings to Avoid</div>
+            Do not use <code>BirdVerse</code>, <code>BIRDVERSE</code>, or <code>birdverse</code> in body copy. The suffix <code>.ai</code> is not part of the brand name and must not be used in logo signatures.
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 8px; color: var(--success); font-family: var(--font-primary);">When the ".ai" suffix is used (as a URL only)</h4>
+              <ul style="list-style-position: inside; color: var(--text-secondary); font-size: 0.9rem; display: flex; flex-direction: column; gap: 6px;">
+                <li>Under the tagline (e.g. <code>https://birdverse.ai</code>)</li>
+                <li>Digital domain names & plaintext web links</li>
+                <li>System source code repository namespaces</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="margin-bottom: 8px; color: var(--text-muted); font-family: var(--font-primary);">When the suffix is dropped (Brand standard)</h4>
+              <ul style="list-style-position: inside; color: var(--text-secondary); font-size: 0.9rem; display: flex; flex-direction: column; gap: 6px;">
+                <li>Primary app headers & navigation rails</li>
+                <li>All logo signatures & wordmarks</li>
+                <li>Embroidered merchandise & physical caps</li>
+                <li>Legal agreements & corporate invoices</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Logo System -->
+      <section id="logo">
+        <h1 class="section-title">2. Logo & Icon Guidelines</h1>
+        <p class="section-desc">Interactive sandbox showing correct configuration and canvas coloring.</p>
+        <div class="card">
+          
+          <div class="logo-playground">
+            <!-- Left Side: Interactive Logo Canvas -->
+            <div>
+              <div class="control-group-title">Interactive Display Canvas</div>
+              <div class="logo-canvas" id="canvas-preview">
+                <span class="logo-canvas-label" id="canvas-label">Canvas Background: #040A1B</span>
+                
+                <div class="logo-render" id="logo-sandbox-render">
+                  <!-- Bird Symbol -->
+                  <svg class="bird-symbol" id="logo-sandbox-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="logo-bird-path" d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                  </svg>
+                  <!-- Wordmark -->
+                  <span class="wordmark" id="logo-sandbox-text"><span class="text-orange">Birdverse</span><span class="text-suffix" style="display:none">.ai</span></span>
+                </div>
+                
+              </div>
+            </div>
+            
+            <!-- Right Side: Sandbox Controls -->
+            <div class="logo-controls">
+              <div>
+                <div class="control-group-title">Configuration</div>
+                <div class="radio-buttons">
+                  <label class="radio-label">
+                    <input type="radio" name="logo-config" value="combined" checked onchange="updateLogoPlayground()">
+                    Combined (Default)
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="logo-config" value="icon" onchange="updateLogoPlayground()">
+                    Icon-Only
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="logo-config" value="wordmark" onchange="updateLogoPlayground()">
+                    Wordmark-Only
+                  </label>
+                </div>
+              </div>
+              
+              <div>
+                <div class="control-group-title">Canvas Color</div>
+                <div class="canvas-swatches">
+                  <div class="swatch active" style="background: #040a1b;" onclick="updateLogoCanvasColor('#040a1b', this)"></div>
+                  <div class="swatch" style="background: #081431;" onclick="updateLogoCanvasColor('#081431', this)"></div>
+                  <div class="swatch" style="background: #101e3e;" onclick="updateLogoCanvasColor('#101e3e', this)"></div>
+                  <div class="swatch" style="background: #ffffff; border-color: rgba(0,0,0,0.15);" onclick="updateLogoCanvasColor('#ffffff', this)"></div>
+                  <div class="swatch" style="background: #f1f5f9; border-color: rgba(0,0,0,0.15);" onclick="updateLogoCanvasColor('#f1f5f9', this)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-output">
+            <div class="control-group-title">SVG Code Snippet</div>
+            <button class="btn-copy" onclick="copyCodeSnippet()">Copy Code</button>
+            <pre class="code-block"><code id="code-snippet-box">&lt;svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;path d="M215.091 262..." fill="#E0F2FE"/&gt;
+&lt;/svg&gt;</code></pre>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Tagline -->
+      <section id="tagline">
+        <h1 class="section-title">3. Tagline & URL Guidelines</h1>
+        <p class="section-desc">Applying "The Terminal for Aviation Professionals" and its website link in context.</p>
+        <div class="card">
+          <div class="tagline-quote" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div>"The Terminal for Aviation Professionals"</div>
+            <div style="font-size: 1.25rem; font-family: var(--font-technical); color: var(--brand-orange); font-weight: 500;">https://birdverse.ai</div>
+          </div>
+          
+          <div class="tagline-showcase">
+            <div class="control-group-title">Context Preview Simulator</div>
+            
+            <div class="tagline-tabs">
+              <button class="tagline-tab-btn active" id="tab-login" onclick="toggleTaglineMock('login')">Login Screen</button>
+              <button class="tagline-tab-btn" id="tab-landing" onclick="toggleTaglineMock('landing')">Landing Page</button>
+              <button class="tagline-tab-btn" id="tab-workspace" onclick="toggleTaglineMock('workspace')">Active Workspace</button>
+            </div>
+            
+            <div class="preview-window" id="tagline-preview-window">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Website Landing Page Rules -->
+      <section id="landing-rules">
+        <h1 class="section-title">4. Landing Page Guidelines</h1>
+        <p class="section-desc">Branding rules and visual hierarchy constraints for the landing page.</p>
+        <div class="card">
+          <div class="landing-page-sandbox">
+            <div class="control-group-title">Interactive Mock Landing Page (Hover Elements)</div>
+            
+            <div class="landing-mock-site">
+              <!-- Header -->
+              <div class="landing-mock-header" title="Rule: Navbar must use Aether Blue backdrop blur. White navbars are strictly forbidden.">
+                <div class="mock-logo">
+                  <svg viewBox="0 0 512 512" fill="none" width="16" height="16">
+                    <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z" fill="#E0F2FE"/>
+                  </svg>
+                  <span style="font-family: Montserrat; font-weight:700; color:#FFA028;">Birdverse</span>
+                </div>
+                <div class="landing-mock-nav-links">
+                  <div class="landing-mock-nav-item"></div>
+                  <div class="landing-mock-nav-item"></div>
+                  <div class="landing-mock-nav-item"></div>
+                </div>
+                <span class="landing-rule-tag" style="position:absolute; top:4px; right:10px; font-size:0.6rem;">Translucent Header</span>
+              </div>
+
+              <!-- Hero -->
+              <div class="landing-mock-hero" title="Rule: Hero base must be solid Aether Blue (#081431). Radial gradients of #101E3E may be added.">
+                <h2 style="font-family:Montserrat; font-weight:700; font-size:2.2rem; margin-bottom:4px; color:#FFA028;">Birdverse</h2>
+                <div class="landing-mock-tagline" style="margin-bottom: 6px;">The Terminal for Aviation Professionals</div>
+                <div style="font-family: var(--font-technical); font-size: 0.85rem; color: var(--brand-orange); font-weight: 600;">https://birdverse.ai</div>
+                <span class="landing-rule-tag" style="margin-top:12px;">Tagline & URL layout required</span>
+              </div>
+
+              <!-- Card Grid -->
+              <div class="landing-mock-grid">
+                <div class="landing-mock-card" title="Rule: Feature blocks must be Deep Cockpit Blue (#101E3E) cards. Hoves trigger Sleek Hover Blue (#17284F) with an Orange border glow.">
+                  <div class="landing-mock-card-title">Flight Ops</div>
+                  <div class="landing-mock-card-line"></div>
+                  <div class="landing-mock-card-line" style="width: 70%"></div>
+                  <span class="landing-rule-tag" style="font-size:0.6rem;">Interactive card</span>
+                </div>
+                <div class="landing-mock-card" title="Rule: Feature blocks must be Deep Cockpit Blue (#101E3E) cards. Hoves trigger Sleek Hover Blue (#17284F) with an Orange border glow.">
+                  <div class="landing-mock-card-title">MRO Dispatch</div>
+                  <div class="landing-mock-card-line"></div>
+                  <div class="landing-mock-card-line" style="width: 50%"></div>
+                  <span class="landing-rule-tag" style="font-size:0.6rem;">Interactive card</span>
+                </div>
+                <div class="landing-mock-card" title="Rule: Feature blocks must be Deep Cockpit Blue (#101E3E) cards. Hoves trigger Sleek Hover Blue (#17284F) with an Orange border glow.">
+                  <div class="landing-mock-card-title">Escrow Ledger</div>
+                  <div class="landing-mock-card-line"></div>
+                  <div class="landing-mock-card-line" style="width: 90%"></div>
+                  <span class="landing-rule-tag" style="font-size:0.6rem;">Interactive card</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Colors -->
+      <section id="colors">
+        <h1 class="section-title">5. Brand Color Tokens</h1>
+        <p class="section-desc">Cockpit instrument color scheme. Click a card to copy its Hex code.</p>
+        <div class="color-grid">
+          
+          <!-- Aether Blue -->
+          <div class="color-card" onclick="copyColorToken('#081431', 'Aether Blue')">
+            <div class="color-preview" style="background-color: #081431;">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name">Aether Blue</div>
+              <div class="color-hex">#081431</div>
+              <div class="color-use">Root ambient background of the entire dashboard workspace. Replaces standard flat grays.</div>
+            </div>
+          </div>
+          
+          <!-- Deep Cockpit Blue -->
+          <div class="color-card" onclick="copyColorToken('#101e3e', 'Deep Cockpit Blue')">
+            <div class="color-preview" style="background-color: #101e3e;">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name">Deep Cockpit Blue</div>
+              <div class="color-hex">#101E3E</div>
+              <div class="color-use">Used for card containers, system dialog frames, and popup sheets.</div>
+            </div>
+          </div>
+
+          <!-- Sleek Hover Blue -->
+          <div class="color-card" onclick="copyColorToken('#17284f', 'Sleek Hover Blue')">
+            <div class="color-preview" style="background-color: #17284f;">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name">Sleek Hover Blue</div>
+              <div class="color-hex">#17284F</div>
+              <div class="color-use">Interactive list hovering, menu list item selections, and button focus outlines.</div>
+            </div>
+          </div>
+
+          <!-- Terminal Orange -->
+          <div class="color-card" onclick="copyColorToken('#ffa028', 'Terminal Orange')">
+            <div class="color-preview" style="background-color: #ffa028;">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name">Terminal Orange</div>
+              <div class="color-hex">#FFA028</div>
+              <div class="color-use">Primary brand highlight, bold headers, logo lettering, primary actions.</div>
+            </div>
+          </div>
+
+          <!-- Arctic Ice -->
+          <div class="color-card" onclick="copyColorToken('#e0f2fe', 'Arctic Ice')">
+            <div class="color-preview" style="background-color: #e0f2fe; border-bottom: 1px solid var(--border-color);">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name" style="color: var(--text-primary);">Arctic Ice</div>
+              <div class="color-hex">#E0F2FE</div>
+              <div class="color-use">Bird logo icon symbol fill, metadata highlight tags, and key statistical labels.</div>
+            </div>
+          </div>
+
+          <!-- Deep Slate -->
+          <div class="color-card" onclick="copyColorToken('#0f172a', 'Deep Slate')">
+            <div class="color-preview" style="background-color: #0f172a;">
+              <span class="color-card-copy-hint">Copy Hex</span>
+            </div>
+            <div class="color-info">
+              <div class="color-name">Deep Slate</div>
+              <div class="color-hex">#0F172A</div>
+              <div class="color-use">Bird icon outlines on light canvas panels, high-contrast grids.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Theme Shading -->
+      <section id="theme-shading">
+        <h1 class="section-title">6. Theme Shading & Adaptation</h1>
+        <p class="section-desc">How brand colors map between Dark and Light cockpit viewports.</p>
+        <div class="card">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Visual Element</th>
+                  <th>Dark Cockpit (Default)</th>
+                  <th>Light Cockpit (Alternate)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600;">Base Canvas Background</td>
+                  <td style="font-family: var(--font-technical); color: var(--success);">#081431 (Aether Blue)</td>
+                  <td style="font-family: var(--font-technical); color: var(--brand-orange);">#F1F5F9 (Light Gray)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Panel / Card Surface</td>
+                  <td style="font-family: var(--font-technical);">#101E3E (Deep Cockpit)</td>
+                  <td style="font-family: var(--font-technical);">#FFFFFF (Pure White)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Text Selection / Hover</td>
+                  <td style="font-family: var(--font-technical);">#17284F (Sleek Hover)</td>
+                  <td style="font-family: var(--font-technical);">#F8FAFC (Ice Tint)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Pane Border Dividers</td>
+                  <td style="font-family: var(--font-technical); font-size: 0.8rem;">rgba(255,255,255,0.1)</td>
+                  <td style="font-family: var(--font-technical); font-size: 0.8rem;">rgba(15,23,42,0.08)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Primary Header & Body Font</td>
+                  <td style="font-family: var(--font-technical);">#F7F9FB (Horizon White)</td>
+                  <td style="font-family: var(--font-technical);">#0F172A (Deep Slate)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Logowear Specifications -->
+      <section id="logowear">
+        <h1 class="section-title">7. Logowear Specifications</h1>
+        <p class="section-desc">Embroidery and layout specifications for physical brand apparel.</p>
+        <div class="apparel-grid">
+          
+          <!-- Polo -->
+          <div class="apparel-card">
+            <div class="mockup-preview">
+              <img src="assets/brand/blank_polo_1780849411101.png" alt="Birdverse Polo Mockup" class="mockup-image">
+              <div class="mockup-overlay polo-overlay">
+                <div class="logo-render-overlay">
+                  <svg class="bird-symbol-overlay" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                  </svg>
+                  <span class="wordmark-overlay"><span class="text-orange">Birdverse</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="apparel-details">
+              <div class="apparel-name">Polo Shirt</div>
+              <div class="apparel-placement">Left Chest</div>
+              <div class="apparel-specs">
+                <strong>Method:</strong> Direct Embroidery<br>
+                <strong>Size:</strong> Max 3" W × 0.75" H<br>
+                <strong>Logo Config:</strong> Combined Signature<br>
+                <strong>Threads:</strong> Madeira 1753 (Bird), 1137 (Orange), 1801 (Super White)
+              </div>
+            </div>
+          </div>
+
+          <!-- Sweatshirt -->
+          <div class="apparel-card">
+            <div class="mockup-preview">
+              <img src="assets/brand/blank_sweatshirt_1780849426899.png" alt="Birdverse Sweatshirt Mockup" class="mockup-image">
+              <div class="mockup-overlay sweatshirt-overlay">
+                <div class="logo-render-overlay">
+                  <svg class="bird-symbol-overlay" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                  </svg>
+                  <span class="wordmark-overlay"><span class="text-orange">Birdverse</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="apparel-details">
+              <div class="apparel-name">Sweatshirt</div>
+              <div class="apparel-placement">Center Chest</div>
+              <div class="apparel-specs">
+                <strong>Method:</strong> 3D Silicone Screen / Embroidery<br>
+                <strong>Size:</strong> 6" W × 1.5" H<br>
+                <strong>Logo Config:</strong> Combined Signature<br>
+                <strong>Colors:</strong> Arctic Ice + Terminal Orange + Super White
+              </div>
+            </div>
+          </div>
+
+          <!-- Baseball Cap -->
+          <div class="apparel-card">
+            <div class="mockup-preview">
+              <img src="assets/brand/blank_cap_1780849442614.png" alt="Birdverse Cap Mockup" class="mockup-image">
+              <div class="mockup-overlay cap-overlay">
+                <svg class="bird-symbol-overlay" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="apparel-details">
+              <div class="apparel-name">Baseball Cap</div>
+              <div class="apparel-placement">Front Center</div>
+              <div class="apparel-specs">
+                <strong>Method:</strong> Raised 3D Embroidery<br>
+                <strong>Size:</strong> 1.25" Height<br>
+                <strong>Logo Config:</strong> Bird Icon Only<br>
+                <strong>Thread:</strong> Madeira Classic 1753 (Arctic Ice)
+              </div>
+            </div>
+          </div>
+
+          <!-- Backpack -->
+          <div class="apparel-card">
+            <div class="mockup-preview">
+              <img src="assets/brand/blank_backpack_1780849457910.png" alt="Birdverse Backpack Mockup" class="mockup-image">
+              <div class="mockup-overlay backpack-overlay">
+                <div class="logo-render-overlay">
+                  <svg class="bird-symbol-overlay" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                  </svg>
+                  <span class="wordmark-overlay"><span class="text-orange">Birdverse</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="apparel-details">
+              <div class="apparel-name">Backpack</div>
+              <div class="apparel-placement">Front Pocket</div>
+              <div class="apparel-specs">
+                <strong>Method:</strong> Laser-etched Leather Patch / Stitch<br>
+                <strong>Size:</strong> 3.5" Width<br>
+                <strong>Logo Config:</strong> Combined Signature<br>
+                <strong>Tone:</strong> Follows dark canvas rules
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Outdoor Building Signage -->
+      <section id="signage">
+        <h1 class="section-title">8. Outdoor Building Signage</h1>
+        <p class="section-desc">Dimensional halo-lit channel lettering and installation contrast guidelines.</p>
+        <div class="card">
+          <div class="signage-simulator">
+            
+            <!-- Dark Wall Facade Simulator -->
+            <div class="sign-facade dark-wall">
+              <span class="sign-facade-label">Dark Facade Installation</span>
+              
+              <div class="halo-logo-rendered">
+                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                </svg>
+                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
+              </div>
+              
+              <div class="sign-facade-desc">
+                <strong>Brushed Aluminum Faces</strong> with backlit halo LEDs simulating the <strong>Arctic Ice</strong> color temperature (approx. 6000K). Solid bird face (no outline).
+              </div>
+            </div>
+
+            <!-- Light Wall Facade Simulator -->
+            <div class="sign-facade light-wall">
+              <span class="sign-facade-label">Light Facade Installation</span>
+              
+              <div class="halo-logo-rendered">
+                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                </svg>
+                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
+              </div>
+              
+              <div class="sign-facade-desc">
+                <strong>Matte Black Steel Faces</strong> with Arctic Ice backlit halo. The bird acrylic face is framed in a <strong>0.5" deep black metal border</strong> to preserve outline contrast.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Signage & Pantone -->
+      <section id="pantone">
+        <h1 class="section-title">9. Print & Thread Matching</h1>
+        <p class="section-desc">Pantone matching specs (PMS Coated / Uncoated) and Embroidery Thread pairing.</p>
+        <div class="color-grid">
+          
+          <!-- Orange Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: var(--brand-orange)">Terminal Orange</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #ffa028;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 1375 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 137 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1137</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blue Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: #4361ee">Aether Blue</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #081431;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 296 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 296 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1944</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ice Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: #8ecae6">Arctic Ice</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #e0f2fe; border: 1px solid var(--border-color);"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 290 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 290 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1753</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slate Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: var(--text-muted)">Deep Slate</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #0f172a;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 433 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 433 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1841</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Typography -->
+      <section id="typography">
+        <h1 class="section-title">10. Typography System</h1>
+        <p class="section-desc">Fonts mapping for visual headers, body copies, and technical dispatch lists.</p>
+        <div class="typo-showcase">
+          
+          <!-- Montserrat Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">Brand & Header Font (Montserrat)</div>
+            <div class="specimen-letters" style="font-family: 'Montserrat', sans-serif;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Montserrat', sans-serif;">
+              Used strictly for application logos, side navigation rail headers, primary layout title cards, and main headers.
+            </div>
+          </div>
+          
+          <!-- Inter Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">General Body Copy (Inter / Outfit)</div>
+            <div class="specimen-letters" style="font-family: 'Inter', sans-serif;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
+              Used for general system parameters, chat message dialogues, forms, settings menus, and paragraphs.
+            </div>
+          </div>
+
+          <!-- Monospace Technical -->
+          <div class="technical-terminal-mock">
+            [SYS EVENT] 09:12:04 UTC | INGEST DISPATCH RUNNING FOR N702WJ (G650ER)
+            <br>&gt; FAA AIRMEN REGISTRY LOOKUP: ROSS KUDWITT - PILOT VERIFIED (ATP #9910452)
+            <br>&gt; COMPLIANCE VERIFICATION GATES: ACTIVE METAR KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012
+            <br>&gt; TRIP RECORD LOGGED: HOBBS IN: 4192.4, LANDINGS: 3 | STATUS: OK [GREEN]
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Section: Dev Snippets -->
+      <section id="dev-snippets">
+        <h1 class="section-title">11. Developer Integration Snippets</h1>
+        <p class="section-desc">Copy configuration tokens into your local CSS/Tailwind projects.</p>
+        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <div style="position: relative;">
+            <div class="control-group-title">index.css (Vanilla CSS Custom Properties)</div>
+            <button class="btn-copy" onclick="copySnippet('css-code')">Copy</button>
+            <pre class="code-block"><code id="css-code">:root {
+  --font-primary: 'Montserrat', 'Inter', 'Outfit', sans-serif;
+  --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --dark-bg: #081431;            /* Aether Blue */
+  --card-bg: #101e3e;            /* Deep Cockpit Surface */
+  --card-bg-hover: #17284f;      /* Sleek Hover Blue */
+  
+  --brand-orange: #ffa028;       /* Terminal Orange */
+  --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
+  --brand-deep-slate: #0f172a;   /* Deep Slate */
+}
+
+[data-theme="light"] {
+  --dark-bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --card-bg-hover: #f8fafc;
+}</code></pre>
+          </div>
+
+          <div style="position: relative;">
+            <div class="control-group-title">tailwind.config.js (Colors & Fonts configuration)</div>
+            <button class="btn-copy" onclick="copySnippet('tailwind-code')">Copy</button>
+            <pre class="code-block"><code id="tailwind-code">module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          orange: '#FFA028',
+          'arctic-ice': '#E0F2FE',
+          'deep-slate': '#0F172A',
+        },
+        cockpit: {
+          aether: '#081431',
+          surface: '#101E3E',
+          hover: '#17284F',
+        }
+      }
+    }
+  }
+}</code></pre>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast" id="toast-notif">Hex color copied to clipboard!</div>
+
+  <!-- JavaScript Controls -->
+  <script>
+    // Theme Toggle Functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeText = document.getElementById('theme-text');
+      const themeIcon = document.getElementById('theme-icon');
+      
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        themeText.innerText = 'Light Cockpit';
+        themeIcon.innerText = '☀️';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeText.innerText = 'Dark Cockpit';
+        themeIcon.innerText = '🌙';
+      }
+      // Re-trigger playground to update outlines and stroke definitions
+      updateLogoPlayground();
+      
+      // Update Tagline mock styling
+      const activeTabBtn = document.querySelector('.tagline-tab-btn.active');
+      if (activeTabBtn) {
+        const activeTabId = activeTabBtn.id.replace('tab-', '');
+        toggleTaglineMock(activeTabId);
+      }
+    }
+
+    // Smooth scroll to section and manage active sidebar state
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // Update active nav rail
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-section') === id) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // Scroll Spy for Side Navigation
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const scrollPos = window.scrollY + 120;
+      
+      sections.forEach(section => {
+        if (scrollPos >= section.offsetTop && scrollPos < (section.offsetTop + section.offsetHeight)) {
+          document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-section') === section.id) {
+              item.classList.add('active');
+            }
+          });
+        }
+      });
+    });
+
+    // Logo Sandbox Interactive Functions
+    let currentCanvasBg = '#040a1b';
+    
+    function updateLogoCanvasColor(color, element) {
+      // Swatch selection active state
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      element.classList.add('active');
+      
+      // Update Canvas Color
+      const canvas = document.getElementById('canvas-preview');
+      canvas.style.backgroundColor = color;
+      currentCanvasBg = color;
+      
+      document.getElementById('canvas-label').innerText = `Canvas Background: ${color.toUpperCase()}`;
+      
+      // Update logo SVG fill/stroke details
+      updateLogoPlayground();
+    }
+    
+    function updateLogoPlayground() {
+      const config = document.querySelector('input[name="logo-config"]:checked').value;
+      const birdSvg = document.getElementById('logo-sandbox-svg');
+      const wordmark = document.getElementById('logo-sandbox-text');
+      const birdPath = document.getElementById('logo-bird-path');
+      
+      // Configuration Visibility toggles
+      if (config === 'combined') {
+        birdSvg.style.display = 'block';
+        wordmark.style.display = 'block';
+      } else if (config === 'icon') {
+        birdSvg.style.display = 'block';
+        wordmark.style.display = 'none';
+      } else if (config === 'wordmark') {
+        birdSvg.style.display = 'none';
+        wordmark.style.display = 'block';
+      }
+      
+      // Sandbox light/dark outline rules
+      const isLightBg = (currentCanvasBg === '#ffffff' || currentCanvasBg === '#f1f5f9');
+      
+      if (isLightBg) {
+        // Light Background: Outlined logo
+        birdPath.setAttribute('fill', '#E0F2FE');
+        birdPath.setAttribute('stroke', '#0F172A');
+        birdPath.setAttribute('stroke-width', '12');
+        // Wordmark Suffix color mapping
+        document.documentElement.style.setProperty('--logo-sandbox-ai-color', '#0F172A');
+      } else {
+        // Dark Background: Solid logo fill
+        birdPath.setAttribute('fill', '#E0F2FE');
+        birdPath.removeAttribute('stroke');
+        birdPath.removeAttribute('stroke-width');
+        // Wordmark Suffix color mapping
+        document.documentElement.style.setProperty('--logo-sandbox-ai-color', '#ffffff');
+      }
+      
+      // Update code output snippet
+      updateCodeOutputSnippet(config, isLightBg);
+    }
+    
+    function updateCodeOutputSnippet(config, isLightBg) {
+      const snippetBox = document.getElementById('code-snippet-box');
+      let strokeAttr = isLightBg ? ' stroke="#0F172A" stroke-width="12"' : '';
+      
+      if (config === 'combined') {
+        snippetBox.innerText = `<div class="logo-brand">\n` +
+          `  <svg viewBox="0 0 512 512" fill="none" width="32" height="32">\n` +
+          `    <path d="M215.091 262..." fill="#E0F2FE"${strokeAttr}/>\n` +
+          `  </svg>\n` +
+          `  <span class="wordmark">\n` +
+          `    <span style="color: #FFA028;">Birdverse</span>\n` +
+          `  </span>\n` +
+          `</div>`;
+      } else if (config === 'icon') {
+        snippetBox.innerText = `<svg viewBox="0 0 512 512" fill="none" width="80" height="80">\n` +
+          `  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z" fill="#E0F2FE"${strokeAttr}/>\n` +
+          `</svg>`;
+      } else {
+        snippetBox.innerText = `<span class="wordmark">\n` +
+          `  <span style="color: #FFA028;">Birdverse</span>\n` +
+          `</span>`;
+      }
+    }
+    
+    function copyCodeSnippet() {
+      const snippet = document.getElementById('code-snippet-box').innerText;
+      navigator.clipboard.writeText(snippet).then(() => {
+        showToast('Code snippet copied!');
+      });
+    }
+    
+    function copySnippet(id) {
+      const snippet = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(snippet).then(() => {
+        showToast('Code copied to clipboard!');
+      });
+    }
+    
+    // Copy color hex to clipboard
+    function copyColorToken(hex, name) {
+      navigator.clipboard.writeText(hex).then(() => {
+        showToast(`${name} (${hex}) copied to clipboard!`);
+      });
+    }
+    
+    // Show Toast Notification
+    function showToast(text) {
+      const toast = document.getElementById('toast-notif');
+      toast.innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+    
+    // Tagline context preview simulator
+    function toggleTaglineMock(tab) {
+      // Manage active tabs state
+      document.querySelectorAll('.tagline-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      
+      const windowPreview = document.getElementById('tagline-preview-window');
+      const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+      
+      // Theme colors for mock windows
+      const mockBg = isLightTheme ? '#ffffff' : '#040a1b';
+      const mockText = isLightTheme ? '#0f172a' : '#f7f9fb';
+      const mockTextSec = isLightTheme ? '#475569' : '#c1cbd4';
+      const mockBorder = isLightTheme ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255,255,255,0.05)';
+      const mockHeaderBg = isLightTheme ? 'rgba(241, 245, 249, 0.9)' : 'rgba(8, 20, 49, 0.8)';
+      
+      windowPreview.style.backgroundColor = mockBg;
+      windowPreview.style.color = mockText;
+      windowPreview.style.borderColor = mockBorder;
+      
+      if (tab === 'login') {
+        // Outline logo in light mode
+        const strokeAttr = isLightTheme ? ' stroke="#0F172A" stroke-width="12"' : '';
+        windowPreview.innerHTML = 
+          `<div class="mock-hero">\n` +
+          `  <svg viewBox="0 0 512 512" fill="none" width="50" height="50" style="margin-bottom: 10px;">\n` +
+          `    <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z" fill="#E0F2FE"${strokeAttr}/>\n` +
+          `  </svg>\n` +
+          `  <div class="mock-hero-title" style="color: #FFA028; margin-bottom: 4px;">Birdverse</div>\n` +
+          `  <div class="mock-hero-tagline" style="color: ${mockTextSec}; margin-bottom: 4px;">The Terminal for Aviation Professionals</div>\n` +
+          `  <div style="font-family: var(--font-technical); font-size: 0.85rem; color: var(--brand-orange); font-weight: 600; margin-bottom: 12px;">https://birdverse.ai</div>\n` +
+          `  <div class="tagline-badge">TAGLINE & URL SHOWN</div>\n` +
+          `</div>`;
+      } else if (tab === 'landing') {
+        const strokeAttr = isLightTheme ? ' stroke="#0F172A" stroke-width="12"' : '';
+        windowPreview.innerHTML = 
+          `<div class="mock-header" style="background: ${mockHeaderBg}; border-color: ${mockBorder};">\n` +
+          `  <div class="mock-logo">\n` +
+          `    <svg viewBox="0 0 512 512" fill="none" width="18" height="18">\n` +
+          `      <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z" fill="#E0F2FE"${strokeAttr}/>\n` +
+          `    </svg>\n` +
+          `    <span style="color: ${mockText}; font-family: Montserrat, sans-serif; font-weight:700; color:#FFA028;">Birdverse</span>\n` +
+          `  </div>\n` +
+          `  <div class="mock-links" style="background: ${isLightTheme ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'};"></div>\n` +
+          `</div>\n` +
+          `<div class="mock-hero" style="justify-content: flex-start; padding-top: 10px;">\n` +
+          `  <div class="mock-hero-title" style="font-size: 1.8rem; color: #FFA028; margin-bottom: 4px;">Birdverse</div>\n` +
+          `  <div class="mock-hero-tagline" style="color: ${mockTextSec}; margin-bottom: 4px;">The Terminal for Aviation Professionals</div>\n` +
+          `  <div style="font-family: var(--font-technical); font-size: 0.85rem; color: var(--brand-orange); font-weight: 600; margin-bottom: 8px;">https://birdverse.ai</div>\n` +
+          `  <div class="tagline-badge">TAGLINE & URL SHOWN</div>\n` +
+          `</div>`;
+      } else {
+        const strokeAttr = isLightTheme ? ' stroke="#0F172A" stroke-width="12"' : '';
+        const itemBg = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+        windowPreview.innerHTML = 
+          `<div class="mock-header" style="margin-bottom: 8px; background: ${mockHeaderBg}; border-color: ${mockBorder};">\n` +
+          `  <div class="mock-logo">\n` +
+          `    <svg viewBox="0 0 512 512" fill="none" width="18" height="18">\n` +
+          `      <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z" fill="#E0F2FE"${strokeAttr}/>\n` +
+          `    </svg>\n` +
+          `    <span style="color: ${mockText}; font-family: Montserrat, sans-serif; font-weight:700; color:#FFA028;">Birdverse</span>\n` +
+          `  </div>\n` +
+          `  <div style="font-size: 0.7rem; color: #ef4444; border: 1px solid #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: bold; background: rgba(239, 68, 68, 0.05);">TAGLINE HIDDEN</div>\n` +
+          `</div>\n` +
+          `<div class="mock-grid">\n` +
+          `  <div class="mock-sidebar" style="background: ${isLightTheme ? 'rgba(0,0,0,0.015)' : 'rgba(255,255,255,0.02)'}; border-color: ${mockBorder};">\n` +
+          `    <div class="mock-sidebar-item active"></div>\n` +
+          `    <div class="mock-sidebar-item" style="background: ${itemBg};"></div>\n` +
+          `    <div class="mock-sidebar-item" style="background: ${itemBg};"></div>\n` +
+          `  </div>\n` +
+          `  <div class="mock-content" style="background: ${isLightTheme ? 'rgba(0,0,0,0.005)' : 'rgba(255,255,255,0.01)'}; border-color: ${mockBorder};">\n` +
+          `    <div class="mock-row" style="width: 80%; background: ${itemBg};"></div>\n` +
+          `    <div class="mock-row" style="width: 95%; background: ${itemBg};"></div>\n` +
+          `    <div class="mock-row" style="width: 40%; background: ${itemBg};"></div>\n` +
+          `  </div>\n` +
+          `</div>`;
+      }
+    }
+    
+    // Initialize playground outputs on load
+    updateLogoPlayground();
+    toggleTaglineMock('login');
+  </script>
+</body>
+</html>

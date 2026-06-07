@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birdverse — Brand & Marketing Portal</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&family=Outfit:wght@500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --dark-bg: #081431;            /* Aether Blue */
+      --card-bg: #101e3e;            /* Deep Cockpit Surface */
+      --card-bg-hover: #17284f;      /* Sleek Hover Blue */
+      --brand-orange: #ffa028;       /* Terminal Orange */
+      --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
+      --text-horizon: #f7f9fb;       /* Horizon White */
+      --text-velocity: #c1cbd4;      /* Velocity Gray */
+      --border-color: rgba(224, 242, 254, 0.08);
+      --border-hover: rgba(255, 160, 40, 0.3);
+      --transition-normal: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-horizon);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Cockpit Background Glows */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 30, 62, 0.6) 0%, rgba(8, 20, 49, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: 15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(23, 40, 79, 0.4) 0%, rgba(8, 20, 49, 0) 75%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header Styling */
+    header {
+      width: 100%;
+      padding: 2.5rem 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--brand-arctic-ice);
+      filter: drop-shadow(0 0 8px rgba(224, 242, 254, 0.3));
+    }
+
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--brand-orange);
+      letter-spacing: -0.025em;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      color: var(--text-velocity);
+      margin-top: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--brand-orange);
+      margin-top: 0.75rem;
+      font-weight: 500;
+      opacity: 0.85;
+      letter-spacing: 0.05em;
+    }
+
+    /* Options Grid Layout */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 460px));
+      gap: 2.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .portal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -15px rgba(4, 10, 27, 0.6);
+      transition: var(--transition-normal);
+    }
+
+    /* Card background lighting overlay */
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 160, 40, 0.05) 0%, rgba(224, 242, 254, 0.01) 100%);
+      opacity: 0;
+      transition: var(--transition-normal);
+      z-index: 0;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-8px);
+      background-color: var(--card-bg-hover);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 40px -15px rgba(255, 160, 40, 0.15);
+    }
+
+    .portal-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-icon-container {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(224, 242, 254, 0.05);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      transition: var(--transition-normal);
+    }
+
+    .portal-card:hover .card-icon-container {
+      border-color: var(--brand-orange);
+      background: rgba(255, 160, 40, 0.08);
+    }
+
+    .card-icon-container svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--brand-arctic-ice);
+      transition: var(--transition-normal);
+    }
+
+    .portal-card:hover .card-icon-container svg {
+      fill: var(--brand-orange);
+      filter: drop-shadow(0 0 4px var(--brand-orange));
+    }
+
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--text-horizon);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+      transition: var(--transition-normal);
+    }
+
+    .portal-card:hover .card-title {
+      color: var(--brand-orange);
+    }
+
+    .card-description {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-velocity);
+    }
+
+    .card-action {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--brand-orange);
+      margin-top: 2rem;
+      transition: var(--transition-normal);
+    }
+
+    .card-action svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--brand-orange);
+      transition: var(--transition-normal);
+    }
+
+    .portal-card:hover .card-action svg {
+      transform: translateX(6px);
+      filter: drop-shadow(0 0 2px var(--brand-orange));
+    }
+
+    /* Footer Styling */
+    footer {
+      width: 100%;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      background-color: rgba(8, 20, 49, 0.5);
+      z-index: 1;
+    }
+
+    .footer-text {
+      font-size: 0.85rem;
+      color: var(--text-velocity);
+      text-align: center;
+    }
+
+    .footer-tech-log {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--brand-orange);
+      opacity: 0.8;
+    }
+
+    /* Responsive Grid */
+    @media (max-width: 768px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+      }
+      
+      main {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Premium Header -->
+  <header>
+    <div class="header-logo">
+      <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+      </svg>
+      <span class="logo-text">Birdverse</span>
+    </div>
+  </header>
+
+  <!-- Portal Choices -->
+  <main>
+    <div class="hero-section">
+      <div class="hero-subtitle">The Terminal for Aviation Professionals</div>
+      <div class="hero-url">https://brand.birdverse.ai</div>
+    </div>
+
+    <div class="portal-grid">
+      
+      <!-- Option 1: Brand Guide -->
+      <a href="guide.html" class="portal-card">
+        <div class="card-content">
+          <div class="card-icon-container">
+            <!-- Book/Identity Icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2zm0 14H5V5c0-.805.55-.988 1.012-1H19v12z"/>
+              <path d="M7 7h8v2H7zm0 4h8v2H7z"/>
+            </svg>
+          </div>
+          <h2 class="card-title">Brand Identity Guide</h2>
+          <p class="card-description">
+            Explore the official visual design tokens, logo rules, Pantone grids, physical signage specifications, and testing playgrounds.
+          </p>
+        </div>
+        <div class="card-action">
+          <span>Launch Guidelines</span>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Option 2: Website Homepage -->
+      <a href="website.html" class="portal-card">
+        <div class="card-content">
+          <div class="card-icon-container">
+            <!-- Globe/Network Icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a20.245 20.245 0 0 0-.792-6.064A8.008 8.008 0 0 1 19.931 11zm-5.752 0H9.821c.197-2.685.918-5 2.179-5s1.982 2.315 2.179 5zM4.069 11a8.008 8.008 0 0 1 3.556-5.064A20.245 20.245 0 0 0 6.833 11H4.069zm0 2h2.764c.112 2.149.38 4.2.792 6.064A8.008 8.008 0 0 1 4.069 13zm5.752 0h4.358c-.197 2.685-.918 5-2.179 5s-1.982-2.315-2.179-5zm5.752 6.064c.412-1.864.68-3.915.792-6.064h2.764a8.008 8.008 0 0 1-3.556 5.064zM12 4c-1.896 0-3.411 3.197-3.921 7h7.842C15.411 7.197 13.896 4 12 4z"/>
+            </svg>
+          </div>
+          <h2 class="card-title">Product Website</h2>
+          <p class="card-description">
+            Experience the public-facing landing page of the aviation dispatch, maintenance registry, and secure ledger terminal.
+          </p>
+        </div>
+        <div class="card-action">
+          <span>Open Homepage</span>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Technical Footer -->
+  <footer>
+    <div class="footer-text">
+      &copy; 2026 Birdverse. All rights reserved.
+    </div>
+    <div class="footer-tech-log">
+      SYS PORTAL: ONLINE // SECURE CHANNEL // TLS 1.3
+    </div>
+  </footer>
+
+</body>
+</html>
