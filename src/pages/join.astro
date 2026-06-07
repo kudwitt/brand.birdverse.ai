@@ -1,0 +1,592 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birdverse — Join the Aviation Terminal</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Typography */
+      --font-primary: 'Montserrat', sans-serif;
+      --font-secondary: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-technical: 'JetBrains Mono', monospace;
+
+      /* Color Tokens (Cockpit Standard) */
+      --dark-bg: #081431;            /* Aether Blue */
+      --card-bg: #101e3e;            /* Deep Cockpit Surface */
+      --card-bg-hover: #17284f;      /* Sleek Hover Blue */
+      
+      --brand-orange: #ffa028;       /* Terminal Orange */
+      --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
+      --brand-deep-slate: #0f172a;   /* Deep Slate */
+      
+      --gray-velocity: #c1cbd4;      /* Velocity Gray */
+      --white-horizon: #f7f9fb;      /* Horizon White */
+
+      /* Avionics Status Alerts */
+      --success: hsl(145, 80%, 45%);   /* Avionics Green */
+      --caution: hsl(40, 100%, 50%);   /* Aviation Amber */
+      --alert: hsl(350, 100%, 45%);     /* Master Warning Red */
+
+      --border-color: rgba(224, 242, 254, 0.08);
+      --border-glow: rgba(255, 160, 40, 0.25);
+      
+      --transition-normal: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: all 0.15s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--white-horizon);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Background Gradients */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -15%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 160, 40, 0.04) 0%, rgba(8, 20, 49, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(224, 242, 254, 0.03) 0%, rgba(8, 20, 49, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Fixed Navigation Bar */
+    nav {
+      width: 100%;
+      height: 75px;
+      background: rgba(8, 20, 49, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4rem;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-svg {
+      width: 26px;
+      height: 26px;
+      fill: var(--brand-arctic-ice);
+      filter: drop-shadow(0 0 4px rgba(224, 242, 254, 0.2));
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: var(--brand-orange);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-back-link {
+      color: var(--gray-velocity);
+      text-decoration: none;
+      font-family: var(--font-secondary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-back-link:hover {
+      color: var(--brand-orange);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 620px;
+      padding: 3rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .form-header {
+      margin-bottom: 2.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+
+    .form-free-badge {
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      font-weight: 700;
+      text-shadow: 0 0 6px rgba(16, 185, 129, 0.1);
+    }
+
+    .form-title {
+      font-family: var(--font-primary);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white-horizon);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-desc {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      color: var(--gray-velocity);
+      line-height: 1.5;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white-horizon);
+    }
+
+    .form-input, .form-select {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--white-horizon);
+      padding: 0.8rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: var(--transition-fast);
+      width: 100%;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 10px rgba(255, 160, 40, 0.15);
+    }
+
+    .form-select option {
+      background: var(--card-bg);
+      color: var(--white-horizon);
+    }
+
+    /* Dynamic Alert box */
+    .alert-box {
+      background: rgba(255, 160, 40, 0.04);
+      border: 1px solid rgba(255, 160, 40, 0.2);
+      border-left: 4px solid var(--brand-orange);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--gray-velocity);
+      margin: 1.5rem 0;
+      display: none; /* Controlled via JS */
+      line-height: 1.5;
+    }
+
+    .alert-box strong {
+      color: var(--white-horizon);
+    }
+
+    .btn-submit {
+      background: var(--brand-orange);
+      color: var(--brand-deep-slate);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 160, 40, 0.3);
+      transition: var(--transition-normal);
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 1rem;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(255, 160, 40, 0.45);
+    }
+
+    /* Success Card States */
+    .success-container {
+      display: none;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      fill: var(--success);
+      margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));
+    }
+
+    .success-subtitle {
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      color: var(--brand-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .success-desc {
+      font-size: 0.95rem;
+      color: var(--gray-velocity);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .console-box {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: left;
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      color: var(--gray-velocity);
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .console-line {
+      margin-bottom: 6px;
+    }
+
+    .console-label {
+      color: var(--brand-orange);
+      font-weight: 700;
+    }
+
+    .console-green {
+      color: var(--success);
+    }
+
+    /* Technical Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background-color: rgba(8, 20, 49, 0.8);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--gray-velocity);
+    }
+
+    .footer-log {
+      font-family: var(--font-technical);
+      color: var(--brand-orange);
+    }
+
+    @media (max-width: 640px) {
+      .form-card {
+        padding: 2rem;
+      }
+      nav {
+        padding: 0 2rem;
+      }
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="website.html" class="nav-logo">
+      <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+      </svg>
+      <span class="nav-logo-text">Birdverse</span>
+    </a>
+    
+    <a href="website.html" class="nav-back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back to Homepage</span>
+    </a>
+  </nav>
+
+  <!-- Main Section -->
+  <main>
+    <div class="form-card">
+      
+      <!-- Normal Form Content -->
+      <div id="join-form-container">
+        <div class="form-header">
+          <div class="form-free-badge">✓ Always Free for Operators & Professionals</div>
+          <h1 class="form-title">Join Birdverse</h1>
+          <p class="form-desc">Initialize your profile and claim your tail registries or service credentials.</p>
+        </div>
+
+        <form id="join-form" onsubmit="handleJoinSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="full-name">Full Name</label>
+            <input class="form-input" type="text" id="full-name" required placeholder="e.g. Capt. Ross Martinez" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Professional Email</label>
+            <input class="form-input" type="email" id="email" required placeholder="e.g. rmartinez@apexflight.com" oninput="checkEmailDomain(this.value)" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="classification">Role / Classification</label>
+            <select class="form-select" id="classification" required onchange="handleRoleChange(this.value)">
+              <option value="" disabled selected>Select your aviation role</option>
+              <option value="owner">Aircraft Owner / Owner-Operator</option>
+              <option value="operator">Flight Dispatcher / Fleet Manager</option>
+              <option value="pilot">Commercial Pilot / ATP</option>
+              <option value="mechanic">A&P Mechanic / IA Airman</option>
+              <option value="mro">Part 145 MRO Repair Station</option>
+              <option value="broker">Aircraft Broker</option>
+              <option value="supplier">Parts Distributor / Supplier</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Personal Domain Warning -->
+          <div class="alert-box" id="domain-warning">
+            ⚠️ <strong>Personal Domain Detected:</strong> Email addresses from personal domains (Gmail, iCloud, etc.) bypass auto-verification and are routed to our secure manual review queue (<code>#onboarding-triage</code>). Please provide your FAA Airman Certificate Number or Aircraft N-Number below to expedite human sign-off.
+          </div>
+
+          <!-- Dynamic Role Verification Field -->
+          <div class="form-group" id="verification-field-container" style="display: none;">
+            <label class="form-label" id="verification-label" for="verification-proof">FAA Certificate / Proof</label>
+            <input class="form-input" type="text" id="verification-proof" placeholder="e.g. FAA ATP #3842918" />
+          </div>
+
+          <button class="btn-submit" type="submit">Submit Registration</button>
+        </form>
+      </div>
+
+      <!-- Success Container -->
+      <div class="success-container" id="success-container">
+        <svg class="success-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <div class="success-subtitle">onboarding dossier dispatched</div>
+        <h2 class="form-title" style="margin-bottom: 1rem;">Dossier Ingested</h2>
+        
+        <p class="success-desc">
+          Your credentials have been logged. The onboarding agent has dispatched an interactive verification card to our internal triage workspace.
+        </p>
+
+        <div class="console-box" id="console-logs">
+          <!-- Populated by JS -->
+        </div>
+
+        <a href="website.html" class="btn-submit" style="display: block; text-decoration: none; margin-top: 2rem;">Return to Homepage</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Technical Footer -->
+  <footer>
+    <div>
+      &copy; 2026 Birdverse. All rights reserved.
+    </div>
+    <div class="footer-log">
+      SYS GATEWAY: ONLINE // TLS 1.3 // eIDAS COMPLIANT
+    </div>
+  </footer>
+
+  <script is:inline>
+    // Personal domains list to check for fallbacks
+    const personalDomains = ['gmail.com', 'icloud.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'mail.com'];
+
+    function checkEmailDomain(emailVal) {
+      if (!emailVal || !emailVal.includes('@')) return;
+      
+      const parts = emailVal.toLowerCase().split('@');
+      const domain = parts[parts.length - 1].trim();
+      const warningBox = document.getElementById('domain-warning');
+      const proofInput = document.getElementById('verification-proof');
+      
+      if (personalDomains.includes(domain)) {
+        warningBox.style.display = 'block';
+        proofInput.required = true;
+      } else {
+        warningBox.style.display = 'none';
+        // Only set required if role demands it
+        const role = document.getElementById('classification').value;
+        if (!['pilot', 'mechanic', 'mro', 'owner'].includes(role)) {
+          proofInput.required = false;
+        }
+      }
+    }
+
+    function handleRoleChange(role) {
+      const fieldContainer = document.getElementById('verification-field-container');
+      const label = document.getElementById('verification-label');
+      const input = document.getElementById('verification-proof');
+      const warningBox = document.getElementById('domain-warning');
+      const emailInput = document.getElementById('email').value;
+
+      fieldContainer.style.display = 'flex';
+      
+      const labelMap = {
+        owner: 'Aircraft N-Number Registration Proof',
+        operator: 'Corporate Job Title / Dispatch Code',
+        pilot: 'FAA Airman Certificate Number (ATP / Commercial)',
+        mechanic: 'FAA Airman Mechanic Certificate Number (A&P / IA)',
+        mro: 'FAA Part 145 Certificate Number',
+        broker: 'Brokerage License / Company URL',
+        supplier: 'AS9100 / ASA-100 Accreditation Number'
+      };
+
+      const placeholderMap = {
+        owner: 'e.g. N702WJ',
+        operator: 'e.g. Chief Flight Coordinator (APX)',
+        pilot: 'e.g. FAA ATP #3842918',
+        mechanic: 'e.g. FAA A&P #4829108',
+        mro: 'e.g. FAA Part 145 #Duncan24B',
+        broker: 'e.g. Global Jet Broker ID #4821',
+        supplier: 'e.g. AS9100 Rev D cert #9982A'
+      };
+
+      label.innerText = labelMap[role] || 'Accreditation Proof';
+      input.placeholder = placeholderMap[role] || 'e.g. FAA Certification Code';
+
+      // Check if proof is required (for critical roles or personal domains)
+      const isPersonalDomain = emailInput && emailInput.includes('@') && personalDomains.includes(emailInput.split('@')[1].toLowerCase());
+      if (['pilot', 'mechanic', 'mro', 'owner'].includes(role) || isPersonalDomain) {
+        input.required = true;
+      } else {
+        input.required = false;
+      }
+    }
+
+    function handleJoinSubmit(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('full-name').value;
+      const email = document.getElementById('email').value;
+      const role = document.getElementById('classification').value;
+      const proof = document.getElementById('verification-proof').value || 'AUTO-DOMAIN-VERIFIED';
+
+      const emailDomain = email.split('@')[1].toLowerCase();
+      const isPersonal = personalDomains.includes(emailDomain);
+      
+      // Hide form
+      document.getElementById('join-form-container').style.display = 'none';
+      
+      // Show success container
+      const successBox = document.getElementById('success-container');
+      successBox.style.display = 'block';
+
+      // Build simulated console logs based on architecture/plan
+      const consoleBox = document.getElementById('console-logs');
+      consoleBox.innerHTML = '';
+
+      const logs = [
+        `[INGEST] Initializing profile row for user: ${name}`,
+        `[INGEST] Email: ${email} // Domain: ${emailDomain}`,
+        `[RLS-AUTH] Creating secure record mapping to ${role.toUpperCase()} entity`,
+        `[AUDIT] Committing WORM entry: organization.join_request`,
+        isPersonal 
+          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review channel <span class="console-green">#onboarding-triage</span><br><span class="console-label">EVIDENCE:</span> FAA Certificate Number verified as: "${proof}"`
+          : `[TRIAGE-ROUTE] corporate domain detected: "${emailDomain}"<br><span class="console-label">ACTION:</span> Matching against trusted-domain indices...<br><span class="console-green">SUCCESS:</span> Auto-routed to waitlist queue for Administrator approval`,
+        `[SECURITY] PDF/Proof document credentials encrypted in Supabase Storage (Supabase KMS)`,
+        `[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`,
+        `[NOTIFY] Sent verification dossier card to Ross (PM / Manual Triage Signer)`,
+        `[STATUS] <span class="console-green">SUCCESS: dossier queued for manual sign-off (onboarding decision SLA &lt; 48 hours)</span>`
+      ];
+
+      logs.forEach((log, index) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'console-line';
+          div.innerHTML = `<span class="console-label">&gt;</span> ${log}`;
+          consoleBox.appendChild(div);
+          consoleBox.scrollTop = consoleBox.scrollHeight;
+        }, index * 400);
+      });
+    }
+  </script>
+
+</body>
+</html>
