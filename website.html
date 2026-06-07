@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birdverse — The Terminal for Aviation Professionals</title>
+  <title>Birdverse — The Bloomberg of Aviation</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
       /* Typography */
-      --font-primary: 'Montserrat', 'Inter', -apple-system, sans-serif;
-      --font-secondary: 'Outfit', 'Inter', sans-serif;
-      --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
+      --font-primary: 'Montserrat', sans-serif;
+      --font-secondary: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-technical: 'JetBrains Mono', monospace;
 
       /* Color Tokens (Cockpit Standard) */
       --dark-bg: #081431;            /* Aether Blue */
@@ -50,21 +51,21 @@
     body {
       background-color: var(--dark-bg);
       color: var(--white-horizon);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       overflow-x: hidden;
-      line-height: 1.5;
+      line-height: 1.6;
       position: relative;
     }
 
-    /* Ambient radar sweeps / cockpit lights */
+    /* Background Gradients */
     body::before {
       content: '';
       position: absolute;
-      top: 10%;
-      left: -10%;
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(255, 160, 40, 0.03) 0%, rgba(8, 20, 49, 0) 70%);
+      top: 5%;
+      left: -15%;
+      width: 1000px;
+      height: 1000px;
+      background: radial-gradient(circle, rgba(255, 160, 40, 0.035) 0%, rgba(8, 20, 49, 0) 70%);
       z-index: -1;
       pointer-events: none;
     }
@@ -72,30 +73,30 @@
     body::after {
       content: '';
       position: absolute;
-      top: 50%;
+      top: 45%;
       right: -10%;
-      width: 700px;
-      height: 700px;
+      width: 900px;
+      height: 900px;
       background: radial-gradient(circle, rgba(224, 242, 254, 0.04) 0%, rgba(8, 20, 49, 0) 70%);
       z-index: -1;
       pointer-events: none;
     }
 
-    /* Navigation Bar */
+    /* Fixed Navigation Bar */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 70px;
+      height: 75px;
       background: rgba(8, 20, 49, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 3rem;
+      padding: 0 4rem;
       z-index: 1000;
     }
 
@@ -107,22 +108,23 @@
     }
 
     .nav-logo-svg {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       fill: var(--brand-arctic-ice);
+      filter: drop-shadow(0 0 4px rgba(224, 242, 254, 0.2));
     }
 
     .nav-logo-text {
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       color: var(--brand-orange);
       letter-spacing: -0.02em;
     }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 2.2rem;
       list-style: none;
       align-items: center;
     }
@@ -130,6 +132,7 @@
     .nav-link {
       color: var(--gray-velocity);
       text-decoration: none;
+      font-family: var(--font-secondary);
       font-weight: 500;
       font-size: 0.9rem;
       transition: var(--transition-fast);
@@ -155,31 +158,31 @@
       width: 100%;
     }
 
-    .btn-terminal {
-      background: rgba(255, 160, 40, 0.1);
+    .btn-nav-terminal {
+      background: rgba(255, 160, 40, 0.08);
       border: 1px solid var(--brand-orange);
       color: var(--brand-orange);
-      padding: 0.5rem 1.25rem;
+      padding: 0.55rem 1.35rem;
       border-radius: 6px;
       font-family: var(--font-secondary);
       font-weight: 600;
       font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       cursor: pointer;
       text-decoration: none;
       transition: var(--transition-normal);
     }
 
-    .btn-terminal:hover {
+    .btn-nav-terminal:hover {
       background: var(--brand-orange);
       color: var(--brand-deep-slate);
       box-shadow: 0 0 15px var(--border-glow);
     }
 
-    /* Hero Section */
+    /* Hero Banner Area */
     section.hero {
-      padding: 180px 2rem 100px;
+      padding: 170px 2rem 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -187,82 +190,90 @@
       position: relative;
     }
 
-    .hero-pretitle {
+    .hero-gtm-badge {
       font-family: var(--font-technical);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--brand-arctic-ice);
-      background: rgba(224, 242, 254, 0.05);
-      border: 1px solid var(--border-color);
-      padding: 4px 12px;
+      letter-spacing: 0.12em;
+      color: var(--brand-orange);
+      background: rgba(255, 160, 40, 0.06);
+      border: 1px solid rgba(255, 160, 40, 0.2);
+      padding: 5px 14px;
       border-radius: 20px;
       margin-bottom: 1.5rem;
-      box-shadow: inset 0 0 8px rgba(224, 242, 254, 0.05);
+      box-shadow: inset 0 0 6px rgba(255, 160, 40, 0.05);
     }
 
     .hero-title {
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 800;
-      font-size: 4rem;
+      font-size: 4.5rem;
       color: var(--brand-orange);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.035em;
       margin-bottom: 0.5rem;
-      filter: drop-shadow(0 0 20px rgba(255, 160, 40, 0.1));
+      filter: drop-shadow(0 0 25px rgba(255, 160, 40, 0.12));
     }
 
     .hero-tagline {
       font-family: var(--font-secondary);
-      font-size: 1.5rem;
-      color: var(--gray-velocity);
-      max-width: 800px;
+      font-size: 1.8rem;
+      color: var(--white-horizon);
       margin: 0.5rem auto 0.75rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.01em;
     }
 
     .hero-url {
       font-family: var(--font-technical);
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: var(--brand-orange);
       font-weight: 600;
-      letter-spacing: 0.08em;
-      margin-bottom: 2.5rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
       opacity: 0.95;
+    }
+
+    .hero-gtm-desc {
+      font-family: var(--font-secondary);
+      font-size: 1.15rem;
+      color: var(--gray-velocity);
+      max-width: 750px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
     }
 
     .cta-group {
       display: flex;
       gap: 1.5rem;
       justify-content: center;
-      margin-bottom: 4.5rem;
+      margin-bottom: 4rem;
     }
 
     .btn-primary {
       background: var(--brand-orange);
       color: var(--brand-deep-slate);
       border: none;
-      padding: 0.85rem 2.25rem;
+      padding: 0.95rem 2.5rem;
       border-radius: 8px;
       font-family: var(--font-secondary);
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 160, 40, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 160, 40, 0.35);
       transition: var(--transition-normal);
       text-decoration: none;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 160, 40, 0.5);
+      box-shadow: 0 8px 30px rgba(255, 160, 40, 0.55);
     }
 
     .btn-secondary {
-      background: rgba(224, 242, 254, 0.04);
+      background: rgba(224, 242, 254, 0.03);
       border: 1px solid var(--border-color);
       color: var(--white-horizon);
-      padding: 0.85rem 2.25rem;
+      padding: 0.95rem 2.5rem;
       border-radius: 8px;
       font-family: var(--font-secondary);
       font-weight: 600;
@@ -278,177 +289,739 @@
       transform: translateY(-2px);
     }
 
-    /* Core Features Grid */
-    section.features {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 2rem;
-    }
-
+    /* Section Headers */
     .section-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .section-pretitle {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-orange);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
     }
 
     .section-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.2rem;
+      font-family: var(--font-primary);
+      font-size: 2.3rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 1rem;
     }
 
     .section-desc {
-      font-size: 1.05rem;
+      font-family: var(--font-secondary);
+      font-size: 1.1rem;
       color: var(--gray-velocity);
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
+      line-height: 1.6;
     }
 
-    .features-grid {
+    /* Strategic Narrative (Bloomberg of Aviation) */
+    section.narrative {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 2rem;
+    }
+
+    .narrative-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 2.5rem;
     }
 
-    .feature-card {
-      background-color: var(--card-bg);
+    .narrative-card {
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(4, 10, 27, 0.5);
+      padding: 3rem;
       transition: var(--transition-normal);
     }
 
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
+    .narrative-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-glow);
+      box-shadow: 0 12px 30px rgba(255, 160, 40, 0.08);
+    }
+
+    .narrative-badge {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-arctic-ice);
+      border: 1px solid rgba(224, 242, 254, 0.15);
+      background: rgba(224, 242, 254, 0.03);
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .narrative-card:hover .narrative-badge {
+      color: var(--brand-orange);
+      border-color: rgba(255, 160, 40, 0.3);
+    }
+
+    .narrative-title {
+      font-family: var(--font-primary);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--white-horizon);
+    }
+
+    .narrative-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--gray-velocity);
+    }
+
+    /* Solution Pillars Section */
+    section.solutions {
+      background: rgba(8, 20, 49, 0.5);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 100px 2rem;
+    }
+
+    .solutions-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .solution-block {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 8rem;
+    }
+
+    .solution-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .solution-block.reverse {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .solution-number {
+      font-family: var(--font-technical);
+      font-size: 1rem;
+      color: var(--brand-orange);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .solution-title {
+      font-family: var(--font-primary);
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--white-horizon);
+      letter-spacing: -0.02em;
+    }
+
+    .solution-desc {
+      font-family: var(--font-secondary);
+      font-size: 1.05rem;
+      color: var(--gray-velocity);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* Interactive CSS Mockups in Pillars */
+    .mock-viewport {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .mock-header-bar {
+      height: 36px;
+      background: rgba(16, 30, 62, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mock-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .mock-dot.active {
+      background: var(--brand-orange);
+    }
+
+    .mock-window-title {
+      font-family: var(--font-technical);
+      font-size: 0.7rem;
+      color: var(--gray-velocity);
+      margin-left: auto;
+    }
+
+    /* Mock 1: Messenger */
+    .mock-chat-area {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 240px;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+
+    .chat-bubble.incoming {
+      background: rgba(224, 242, 254, 0.05);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+    }
+
+    .chat-bubble.outgoing {
+      background: rgba(255, 160, 40, 0.1);
+      border: 1px solid rgba(255, 160, 40, 0.25);
+      align-self: flex-end;
+    }
+
+    .chat-meta {
+      font-family: var(--font-technical);
+      font-size: 0.65rem;
+      color: var(--brand-orange);
+      margin-bottom: 4px;
+    }
+
+    .chat-text {
+      color: var(--white-horizon);
+    }
+
+    /* Mock 2: Commerce / Escrow */
+    .mock-escrow-card {
+      padding: 2rem;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .escrow-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed rgba(255,255,255,0.05);
+      padding: 8px 0;
+    }
+
+    .escrow-label {
+      font-size: 0.8rem;
+      color: var(--gray-velocity);
+    }
+
+    .escrow-value {
+      font-family: var(--font-technical);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .escrow-status-bar {
+      margin-top: 1.5rem;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .escrow-progress {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(255, 160, 40, 0.03) 0%, rgba(8, 20, 49, 0) 100%);
-      opacity: 0;
-      transition: var(--transition-normal);
-      z-index: 0;
+      background: var(--success);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--success);
     }
 
-    .feature-card:hover {
-      transform: translateY(-6px);
-      background-color: var(--card-bg-hover);
-      border-color: var(--border-glow);
-      box-shadow: 0 15px 35px rgba(255, 160, 40, 0.12);
+    .escrow-status-text {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      color: var(--success);
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 700;
     }
 
-    .feature-card:hover::before {
-      opacity: 1;
+    /* Mock 3: AI Copilot */
+    .mock-query-screen {
+      padding: 1.5rem;
+      min-height: 240px;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
     }
 
-    .feature-icon {
-      width: 44px;
-      height: 44px;
+    .query-input {
+      color: var(--brand-orange);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .query-response {
+      color: var(--gray-velocity);
+      line-height: 1.5;
+    }
+
+    /* Mock 4: Compliance Agents */
+    .mock-agent-monitor {
+      padding: 1.5rem;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .monitor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .monitor-cell {
+      background: rgba(224, 242, 254, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+    }
+
+    .monitor-status {
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Product Flywheel Section */
+    section.flywheel {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 2rem;
+    }
+
+    .flywheel-split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+
+    .flywheel-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .flywheel-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 10px;
-      background: rgba(224, 242, 254, 0.04);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+
+    .flywheel-step.active {
+      border-color: var(--brand-orange);
+      background-color: var(--card-bg-hover);
+      box-shadow: 0 5px 15px rgba(255, 160, 40, 0.1);
+    }
+
+    .flywheel-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(224, 242, 254, 0.05);
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
+      font-family: var(--font-technical);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--brand-arctic-ice);
       transition: var(--transition-normal);
     }
 
-    .feature-card:hover .feature-icon {
-      background: rgba(255, 160, 40, 0.08);
+    .flywheel-step.active .flywheel-num {
+      background: var(--brand-orange);
+      color: var(--brand-deep-slate);
       border-color: var(--brand-orange);
     }
 
-    .feature-icon svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--brand-arctic-ice);
+    .flywheel-step-title {
+      font-family: var(--font-secondary);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-velocity);
       transition: var(--transition-normal);
     }
 
-    .feature-card:hover .feature-icon svg {
+    .flywheel-step.active .flywheel-step-title {
+      color: var(--white-horizon);
+    }
+
+    /* Interactive Flywheel Graph Display */
+    .flywheel-display {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(16, 30, 62, 0.5);
+    }
+
+    .flywheel-display-icon {
+      width: 70px;
+      height: 70px;
       fill: var(--brand-orange);
-      filter: drop-shadow(0 0 3px var(--brand-orange));
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 10px rgba(255,160,40,0.4));
+      animation: rotate-slow 20s linear infinite;
     }
 
-    .feature-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.3rem;
+    @keyframes rotate-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .flywheel-display-title {
+      font-family: var(--font-primary);
+      font-size: 1.6rem;
       font-weight: 700;
-      margin-bottom: 0.75rem;
-      position: relative;
-      z-index: 1;
+      color: var(--brand-orange);
+      margin-bottom: 1rem;
     }
 
-    .feature-desc {
-      font-size: 0.92rem;
-      line-height: 1.6;
+    .flywheel-display-desc {
+      font-family: var(--font-secondary);
+      font-size: 1.02rem;
       color: var(--gray-velocity);
+      line-height: 1.6;
+      max-width: 440px;
+    }
+
+    /* Pricing Panel */
+    .pricing-banner {
+      max-width: 1200px;
+      margin: 2rem auto 8rem;
+      padding: 0 2rem;
+    }
+
+    .pricing-card {
+      background: linear-gradient(135deg, #101e3e 0%, #081431 100%);
+      border: 2px solid var(--brand-orange);
+      border-radius: 16px;
+      padding: 3.5rem;
+      text-align: center;
+      box-shadow: 0 20px 45px rgba(255, 160, 40, 0.06);
       position: relative;
-      z-index: 1;
+      overflow: hidden;
+    }
+
+    .pricing-tag {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      background: var(--brand-orange);
+      color: var(--brand-deep-slate);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       margin-bottom: 1.5rem;
     }
 
-    /* Avionics Tech Readout in Cards */
-    .tech-readout {
-      font-family: var(--font-technical);
-      font-size: 0.72rem;
-      padding: 8px 12px;
-      border-radius: 6px;
-      background: rgba(4, 10, 27, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      position: relative;
-      z-index: 1;
+    .pricing-headline {
+      font-family: var(--font-primary);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white-horizon);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
     }
 
-    .tech-readout-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
+    .pricing-sub {
+      font-family: var(--font-secondary);
+      font-size: 1.25rem;
+      color: var(--brand-orange);
+      font-weight: 600;
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+      letter-spacing: 0.01em;
     }
 
-    .tech-readout-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .tech-label {
+    .pricing-disclaimer {
+      font-size: 0.88rem;
       color: var(--gray-velocity);
     }
 
-    .tech-value {
+    /* Target ROI Tabs System */
+    section.roi-pitches {
+      background: rgba(8, 20, 49, 0.3);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 90px 2rem;
+    }
+
+    .roi-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .roi-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .roi-tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--gray-velocity);
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+
+    .roi-tab-btn:hover {
+      color: var(--white-horizon);
+      background-color: var(--card-bg-hover);
+    }
+
+    .roi-tab-btn.active {
+      color: var(--brand-deep-slate);
+      background-color: var(--brand-orange);
+      border-color: var(--brand-orange);
+      box-shadow: 0 4px 15px rgba(255, 160, 40, 0.3);
+    }
+
+    .roi-content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+    }
+
+    .roi-column-title {
+      font-family: var(--font-primary);
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-orange);
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--brand-orange);
+      padding-left: 12px;
       font-weight: 700;
     }
 
-    .tech-value.green {
-      color: var(--success);
-      text-shadow: 0 0 4px rgba(74, 222, 128, 0.3);
+    .roi-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    .tech-value.amber {
-      color: var(--caution);
-      text-shadow: 0 0 4px rgba(245, 158, 11, 0.3);
+    .roi-item {
+      display: flex;
+      gap: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
 
-    /* Live Interactive Instrument Simulator */
+    .roi-marker {
+      color: var(--brand-orange);
+      font-weight: 700;
+    }
+
+    .roi-text {
+      color: var(--gray-velocity);
+    }
+
+    .roi-text strong {
+      color: var(--white-horizon);
+    }
+
+    .targets-list-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .target-tag {
+      background: rgba(224, 242, 254, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--font-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--brand-arctic-ice);
+      transition: var(--transition-fast);
+    }
+
+    .target-tag:hover {
+      background: rgba(255, 160, 40, 0.05);
+      border-color: rgba(255,160,40,0.3);
+      color: var(--brand-orange);
+    }
+
+    /* GTM 60-Day Roadmap Section */
+    section.roadmap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 2rem;
+    }
+
+    .roadmap-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    /* Connecting horizontal bar in desktop view */
+    .roadmap-timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      width: 80%;
+      height: 2px;
+      background: var(--border-color);
+      z-index: 0;
+    }
+
+    .roadmap-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.25rem 1.75rem;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition-normal);
+    }
+
+    .roadmap-card:hover {
+      border-color: var(--brand-orange);
+      box-shadow: 0 10px 25px rgba(255, 160, 40, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .roadmap-indicator {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #040a1b;
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gray-velocity);
+      transition: var(--transition-normal);
+    }
+
+    .roadmap-card:hover .roadmap-indicator {
+      border-color: var(--brand-orange);
+      color: var(--brand-orange);
+      box-shadow: 0 0 10px var(--border-glow);
+    }
+
+    .roadmap-phase {
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--brand-orange);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .roadmap-heading {
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--white-horizon);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .roadmap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .roadmap-item {
+      font-size: 0.78rem;
+      color: var(--gray-velocity);
+      display: flex;
+      gap: 6px;
+    }
+
+    .roadmap-bullet {
+      color: var(--brand-orange);
+    }
+
+    /* Simulator Terminal Area */
     section.simulator {
       max-width: 1200px;
       margin: 0 auto;
       padding: 60px 2rem 120px;
     }
 
-    .sim-container {
+    .sim-box {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 15px 40px rgba(4, 10, 27, 0.7);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
     }
 
     .sim-header {
@@ -489,7 +1062,7 @@
       background: rgba(255, 160, 40, 0.06);
     }
 
-    .sim-telemetry-indicator {
+    .sim-telemetry-text {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -508,24 +1081,18 @@
       animation: blink 1.5s infinite;
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
-
-    .sim-screen {
+    .sim-viewport {
       padding: 2.5rem;
       font-family: var(--font-technical);
       font-size: 0.88rem;
       color: var(--white-horizon);
-      min-height: 280px;
+      min-height: 300px;
       background: #040a1b;
       position: relative;
-      overflow: hidden;
+      overflow-x: auto;
     }
 
-    /* Radar sweeping line overlay */
-    .sim-screen::after {
+    .sim-viewport::after {
       content: '';
       position: absolute;
       top: 0;
@@ -534,19 +1101,13 @@
       height: 2px;
       background: rgba(224, 242, 254, 0.06);
       box-shadow: 0 0 10px rgba(224, 242, 254, 0.1);
-      animation: sweep 4s linear infinite;
+      animation: sweep 5s linear infinite;
       pointer-events: none;
     }
 
-    @keyframes sweep {
-      0% { top: 0%; }
-      100% { top: 100%; }
-    }
-
-    .sim-log-line {
+    .sim-line {
       margin-bottom: 8px;
       line-height: 1.6;
-      opacity: 0.95;
     }
 
     .sim-prompt {
@@ -554,18 +1115,13 @@
       font-weight: 700;
     }
 
-    .sim-tag-success {
+    .sim-success {
       color: var(--success);
       font-weight: 700;
     }
 
-    .sim-tag-caution {
+    .sim-caution {
       color: var(--caution);
-      font-weight: 700;
-    }
-
-    .sim-tag-alert {
-      color: var(--alert);
       font-weight: 700;
     }
 
@@ -573,10 +1129,10 @@
     footer {
       border-top: 1px solid var(--border-color);
       background-color: rgba(8, 20, 49, 0.8);
-      padding: 4rem 2rem;
+      padding: 4.5rem 2rem;
     }
 
-    .footer-content {
+    .footer-container {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
@@ -585,7 +1141,7 @@
       gap: 2rem;
     }
 
-    .footer-brand {
+    .footer-identity {
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -608,38 +1164,53 @@
       color: var(--brand-orange);
     }
 
-    /* Responsive */
+    /* Responsive adjustments */
     @media (max-width: 968px) {
-      .features-grid {
+      .narrative-grid,
+      .roi-content-box,
+      .solution-block,
+      .solution-block.reverse,
+      .flywheel-split,
+      .roadmap-timeline {
         grid-template-columns: 1fr;
       }
       
       nav {
-        padding: 0 1.5rem;
+        padding: 0 2rem;
       }
-      
+
+      .nav-links {
+        display: none; /* simple collapse for mobile demonstration */
+      }
+
       .hero-title {
         font-size: 3rem;
       }
       
       .hero-tagline {
-        font-size: 1.25rem;
+        font-size: 1.35rem;
       }
 
-      .footer-content {
+      .roadmap-timeline::before {
+        display: none;
+      }
+
+      .footer-container {
         flex-direction: column;
         text-align: center;
       }
 
       .footer-links {
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Premium Navigation Bar -->
+  <!-- Premium Navigation -->
   <nav>
     <a href="#" class="nav-logo">
       <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -649,138 +1220,399 @@
     </a>
     
     <ul class="nav-links">
-      <li><a href="#features" class="nav-link">Features</a></li>
-      <li><a href="#simulator" class="nav-link">Terminal Live</a></li>
-      <li><a href="guide.html" class="nav-link">Brand Guide</a></li>
-      <li><a href="#" class="btn-terminal">Access Terminal</a></li>
+      <li><a href="#narrative" class="nav-link">Bloomberg Pitch</a></li>
+      <li><a href="#solutions" class="nav-link">Solutions</a></li>
+      <li><a href="#flywheel" class="nav-link">Pricing & Flywheel</a></li>
+      <li><a href="#roi" class="nav-link">Measurable ROI</a></li>
+      <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+      <li><a href="#" class="btn-nav-terminal">Access Terminal</a></li>
     </ul>
   </nav>
 
   <!-- Hero Banner -->
   <section class="hero">
-    <div class="hero-pretitle">Aviation Dispatch & Operations Control</div>
+    <div class="hero-gtm-badge">60-Day Founder-Led GTM Plan</div>
     <h1 class="hero-title">Birdverse</h1>
     <div class="hero-tagline">The Terminal for Aviation Professionals</div>
     <div class="hero-url">https://birdverse.ai</div>
+    <p class="hero-gtm-desc">
+      Leveraging high-trust C-Suite relationships to fast-track OEM, Tier-1 MRO, and strategic investor recruitment. Establishing the single unifying workspace for flight dispatch, maintenance tracking, and escrow commerce.
+    </p>
     
     <div class="cta-group">
-      <a href="#simulator" class="btn-primary">Launch Live Mock</a>
-      <a href="#features" class="btn-secondary">Explore Features</a>
+      <a href="#solutions" class="btn-primary">Explore Products</a>
+      <a href="#roadmap" class="btn-secondary">View 60-Day GTM</a>
     </div>
   </section>
 
-  <!-- Features Grids -->
-  <section class="features" id="features">
+  <!-- Strategic Narrative (Bloomberg of Aviation) -->
+  <section class="narrative" id="narrative">
     <div class="section-header">
-      <h2 class="section-title">Operations Engine Modules</h2>
-      <p class="section-desc">Unified control modules engineered specifically for aircraft operators, charter networks, and maintenance crews.</p>
+      <span class="section-pretitle">Strategic Vision</span>
+      <h2 class="section-title">The "Bloomberg" of Aviation</h2>
+      <p class="section-desc">A unifying platform that surfaces critical insights, contextualizes messaging, and streamlines fragmented industry workflows.</p>
     </div>
     
-    <div class="features-grid">
+    <div class="narrative-grid">
       
-      <!-- Card 1: Flight Ops -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <!-- Plane Icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Flight Operations</h3>
-        <p class="feature-desc">Real-time telemetry, routing, and fuel management on a centralized cockpit dispatch dashboard.</p>
-        <div class="tech-readout">
-          <div class="tech-readout-row">
-            <span class="tech-label">Route Calculator</span>
-            <span class="tech-value green">VERIFIED</span>
-          </div>
-          <div class="tech-readout-row">
-            <span class="tech-label">METAR Sync</span>
-            <span class="tech-value green">ONLINE (KPBI)</span>
-          </div>
-        </div>
+      <!-- Card 1 -->
+      <div class="narrative-card">
+        <div class="narrative-badge">Independent & Neutral</div>
+        <h3 class="narrative-title">Switzerland & Trusted by All</h3>
+        <p class="narrative-desc">
+          We eliminate misaligned incentives with clear, disclosed transaction fees and secure cryptographic escrow systems that protect operators, brokers, and MRO service shops.
+        </p>
       </div>
 
-      <!-- Card 2: MRO Dispatch -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <!-- Wrench/Screwdriver Icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="m19.43 12.98 1.39-1.39c.75-.75.75-1.97 0-2.72l-2.72-2.72c-.75-.75-1.97-.75-2.72 0l-1.39 1.39-4.23-4.23c-1.12-1.12-2.94-1.12-4.06 0L3.58 5.46c-1.12 1.12-1.12 2.94 0 4.06l4.23 4.23-1.39 1.39c-.75.75-.75 1.97 0 2.72l2.72 2.72c.75.75 1.97.75 2.72 0l1.39-1.39 4.23 4.23c1.12 1.12 2.94 1.12 4.06 0l2.12-2.12c1.12-1.12 1.12-2.94 0-4.06l-4.23-4.23zM9.41 12.59l-.71-.71 4.95-4.95.71.71-4.95 4.95z"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Maintenance & MRO</h3>
-        <p class="feature-desc">Automated tracking of engine cycles, Hobbs hours, and FAA compliance gates with alert flags.</p>
-        <div class="tech-readout">
-          <div class="tech-readout-row">
-            <span class="tech-label">Hobbs Logs</span>
-            <span class="tech-value">4192.4 HRS</span>
-          </div>
-          <div class="tech-readout-row">
-            <span class="tech-label">Engine Cycles</span>
-            <span class="tech-value amber">DUE IN 28 CYC</span>
-          </div>
-        </div>
+      <!-- Card 2 -->
+      <div class="narrative-card">
+        <div class="narrative-badge">Process Velocity</div>
+        <h3 class="narrative-title">End "Quote Roulette"</h3>
+        <p class="narrative-desc">
+          Reduce administrative bloat and Hobbs hour losses through API-driven architectures that automate structural Part 145 RFQ-to-Cash processes.
+        </p>
       </div>
 
-      <!-- Card 3: Escrow Ledger -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <!-- Currency/Shield Icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Escrow & Payments</h3>
-        <p class="feature-desc">Secure ledger auditing for charter deposits, fuel contracts, and wet-lease transactional fees.</p>
-        <div class="tech-readout">
-          <div class="tech-readout-row">
-            <span class="tech-label">Ledger Integrity</span>
-            <span class="tech-value green">VERIFIED</span>
-          </div>
-          <div class="tech-readout-row">
-            <span class="tech-label">Unbilled Escrow</span>
-            <span class="tech-value">$42,910.00</span>
-          </div>
-        </div>
+      <!-- Card 3 -->
+      <div class="narrative-card">
+        <div class="narrative-badge">Industry Pain Points</div>
+        <h3 class="narrative-title">Fragmentation is the Enemy</h3>
+        <p class="narrative-desc">
+          Managing AOGs, scheduled servicing, and inspections are time-consuming and cost-inefficient. Data is locked in PDFs, disconnected database silos, and manual email chains.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="narrative-card">
+        <div class="narrative-badge">Unified Communication</div>
+        <h3 class="narrative-title">Contextualized Telemetry</h3>
+        <p class="narrative-desc">
+          By providing everyone with real-time access to flight data, tail logs, and regulatory alerts in context of the transaction, we eliminate delays and improve industry safety.
+        </p>
       </div>
 
     </div>
   </section>
 
-  <!-- Live Cockpit Simulator -->
-  <section class="simulator" id="simulator">
-    <div class="section-header">
-      <h2 class="section-title">Telemetry Terminal Emulator</h2>
-      <p class="section-desc">Test the real-time technical operations outputs using the live monitor controls below.</p>
-    </div>
-    
-    <div class="sim-container">
+  <!-- Product Solution Pillars (Four Key Pillars) -->
+  <section class="solutions" id="solutions">
+    <div class="solutions-container">
       
-      <!-- Top controls -->
-      <div class="sim-header">
-        <div class="sim-tabs">
-          <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimState('dispatch')">Flight Dispatcher</button>
-          <button class="sim-tab" id="btn-sim-mro" onclick="loadSimState('mro')">Maintenance Log</button>
-          <button class="sim-tab" id="btn-sim-ledger" onclick="loadSimState('ledger')">Escrow Vault</button>
+      <div class="section-header">
+        <span class="section-pretitle">Unified Solution</span>
+        <h2 class="section-title">Birdverse Product Solutions</h2>
+        <p class="section-desc">Modernizing aviation operations through four tightly integrated functional pillars.</p>
+      </div>
+
+      <!-- Pillar 1: Messenger -->
+      <div class="solution-block">
+        <div>
+          <span class="solution-number">PILLAR 01 //</span>
+          <h3 class="solution-title">In-Context Messenger</h3>
+          <p class="solution-desc">
+            All communications are linked directly to tail numbers, active work orders, and quotes. No more searching through disjointed email chains. The private, secure Birdverse application runs natively across iOS, Android, and Desktop platforms.
+          </p>
+          <div class="tech-readout" style="max-width: 450px;">
+            <div class="tech-readout-row"><span class="tech-label">Security Protocol</span><span class="tech-value green">AES-256 GCM</span></div>
+            <div class="tech-readout-row"><span class="tech-label">Cross-Platform Sync</span><span class="tech-value green">VERIFIED</span></div>
+          </div>
         </div>
-        <div class="sim-telemetry-indicator">
-          <div class="sim-telemetry-dot"></div>
-          <span id="sim-telemetry-text">KPBI RADAR FEED: LIVE</span>
+        
+        <div class="mock-viewport">
+          <div class="mock-header-bar">
+            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+            <span class="mock-window-title">MESSENGER TERMINAL (N702WJ)</span>
+          </div>
+          <div class="mock-chat-area">
+            <div class="chat-bubble incoming">
+              <div class="chat-meta">KPBI DISPATCHER // 09:14 UTC</div>
+              <div class="chat-text">METAR KFLL updated. Headwinds at 15kts. Aircraft N702WJ cleared for routing.</div>
+            </div>
+            <div class="chat-bubble outgoing">
+              <div class="chat-meta">PILOT IN COMMAND // 09:15 UTC</div>
+              <div class="chat-text">Roger that. Quote and fuel release signed. Waiting on MRO inspection confirmation.</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Raw text terminal screen -->
-      <div class="sim-screen" id="sim-screen-element">
+      <!-- Pillar 2: RFQ-to-Cash -->
+      <div class="solution-block reverse">
+        <div class="mock-viewport">
+          <div class="mock-header-bar">
+            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+            <span class="mock-window-title">ESCROW LEDGER (TX_4402)</span>
+          </div>
+          <div class="mock-escrow-card">
+            <div>
+              <div class="escrow-row"><span class="escrow-label">Transaction ID</span><span class="escrow-value">TX_998274_B</span></div>
+              <div class="escrow-row"><span class="escrow-label">Total Escrow Funds</span><span class="escrow-value" style="color:var(--brand-orange);">$42,910.00</span></div>
+              <div class="escrow-row"><span class="escrow-label">MRO Sign-off</span><span class="escrow-value">E-Signed (FAA #8849)</span></div>
+            </div>
+            <div>
+              <div class="escrow-status-bar"><div class="escrow-progress"></div></div>
+              <div class="escrow-status-text">FUNDS AUTOMATICALLY RELEASED TO FBO</div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <span class="solution-number">PILLAR 02 //</span>
+          <h3 class="solution-title">RFQ-to-Cash Commerce</h3>
+          <p class="solution-desc">
+            End-to-end transaction automation. Operators issue competitive RFQs, sign work orders with secure E-signatures, and fund escrow accounts instantly. Funds are programmatically released to the MRO provider the moment digital sign-offs are completed.
+          </p>
+          <div class="tech-readout" style="max-width: 450px;">
+            <div class="tech-readout-row"><span class="tech-label">E-Signature Standards</span><span class="tech-value green">eIDAS / ESIGN Compliant</span></div>
+            <div class="tech-readout-row"><span class="tech-label">Escrow Release Speed</span><span class="tech-value green">INSTANT (<1s)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 3: Wingman AI -->
+      <div class="solution-block">
+        <div>
+          <span class="solution-number">PILLAR 03 //</span>
+          <h3 class="solution-title">"Wingman" AI Copilot</h3>
+          <p class="solution-desc">
+            Instant technical query tool. Access up-to-date Airworthiness Directives (ADs), Service Difficulty Reports (SDRs) for your specific fleet, live FAA tail data, airport runway information, and real-time news feeds aggregated from verified aviation sources.
+          </p>
+          <div class="tech-readout" style="max-width: 450px;">
+            <div class="tech-readout-row"><span class="tech-label">AD / SDR Database</span><span class="tech-value green">FAA Registry Live Sync</span></div>
+            <div class="tech-readout-row"><span class="tech-label">Natural Language Queries</span><span class="tech-value green">ENABLED</span></div>
+          </div>
+        </div>
+        
+        <div class="mock-viewport">
+          <div class="mock-header-bar">
+            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+            <span class="mock-window-title">WINGMAN CO-PILOT TERMINAL</span>
+          </div>
+          <div class="mock-query-screen">
+            <div class="query-input">&gt; Wingman: Check AD alerts for Pratt & Whitney PW300 series engines</div>
+            <div class="query-response">
+              [SYSTEM RESPONSE] Pratt & Whitney PW307A Engine AD 2026-04-12 active.<br>
+              - Target: Fuel manifold flow inspector scan.<br>
+              - Action Required: Mandated compliance inspection within next 50 flight hours.<br>
+              - Impact: 2 engines in your tracked fleet (N702WJ) matched.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 4: Autonomous Agents -->
+      <div class="solution-block reverse">
+        <div class="mock-viewport">
+          <div class="mock-header-bar">
+            <div class="mock-dot active"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+            <span class="mock-window-title">AUTONOMOUS COMPLIANCE MONITOR</span>
+          </div>
+          <div class="mock-agent-monitor">
+            <div class="monitor-grid">
+              <div class="monitor-cell">
+                <div>SB SCANNING</div>
+                <div class="monitor-status" style="color:var(--success);">ACTIVE // PASS</div>
+              </div>
+              <div class="monitor-cell">
+                <div>SERIAL CHECK</div>
+                <div class="monitor-status" style="color:var(--success);">18 MATCHED</div>
+              </div>
+              <div class="monitor-cell">
+                <div>COMPLIANCE RISK</div>
+                <div class="monitor-status" style="color:var(--success);">0% DETECTED</div>
+              </div>
+              <div class="monitor-cell">
+                <div>INTERVAL PREDICT</div>
+                <div class="monitor-status" style="color:var(--brand-orange);">+142 HOURS</div>
+              </div>
+            </div>
+            <div class="tech-readout">
+              <div class="tech-readout-row"><span>SB Cross-Ref</span><span class="green">NO ACTIONS PENDING</span></div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <span class="solution-number">PILLAR 04 //</span>
+          <h3 class="solution-title">Autonomous Compliance Agents</h3>
+          <p class="solution-desc">
+            An autonomous engine that works in the background to keep your fleet airworthy. It continuously cross-references manufacturer Service Bulletins (SBs) against aircraft serial numbers to ensure FAA compliance, predicts upcoming maintenance intervals, and eliminates administrative delays.
+          </p>
+          <div class="tech-readout" style="max-width: 450px;">
+            <div class="tech-readout-row"><span class="tech-label">SB Cross-Reference</span><span class="tech-value green">AUTOMATIC</span></div>
+            <div class="tech-readout-row"><span class="tech-label">Compliance Risk Check</span><span class="tech-value green">24/7 ACTIVE</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Product Flywheel & Pricing -->
+  <section class="flywheel" id="flywheel">
+    <div class="section-header">
+      <span class="section-pretitle">Ecosystem Growth</span>
+      <h2 class="section-title">The Birdverse Product Flywheel</h2>
+      <p class="section-desc">Creating rapid ecosystem loop dynamics by aligning incentives between fleet managers, parts suppliers, and MRO service shops.</p>
+    </div>
+    
+    <div class="flywheel-split">
+      <div class="flywheel-steps">
+        <div class="flywheel-step active" onclick="setFlywheel(1, this)">
+          <div class="flywheel-num">1</div>
+          <span class="flywheel-step-title">Owners & Operators Come for Free Valuations</span>
+        </div>
+        <div class="flywheel-step" onclick="setFlywheel(2, this)">
+          <div class="flywheel-num">2</div>
+          <span class="flywheel-step-title">Stay for One-Click Competitive RFQ's</span>
+        </div>
+        <div class="flywheel-step" onclick="setFlywheel(3, this)">
+          <div class="flywheel-num">3</div>
+          <span class="flywheel-step-title">Streamline RFQ to Cash Process for MROs</span>
+        </div>
+        <div class="flywheel-step" onclick="setFlywheel(4, this)">
+          <div class="flywheel-num">4</div>
+          <span class="flywheel-step-title">Reputation Scores Improve Discovery of New MROs</span>
+        </div>
+        <div class="flywheel-step" onclick="setFlywheel(5, this)">
+          <div class="flywheel-num">5</div>
+          <span class="flywheel-step-title">Messaging Stimulates Viral Spread</span>
+        </div>
+      </div>
+      
+      <div class="flywheel-display">
+        <!-- Flywheel loop svg icon -->
+        <svg class="flywheel-display-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+          <path d="M12 6v6h6v-2h-4V6z"/>
+        </svg>
+        <h3 class="flywheel-display-title" id="fw-title">Free Fleet Valuations</h3>
+        <p class="flywheel-display-desc" id="fw-desc">
+          Aircraft owners and fleet managers onboard their assets for free live market value tracking, which populates our baseline fleet database.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Panel -->
+  <div class="pricing-banner">
+    <div class="pricing-card">
+      <div class="pricing-tag">disclosed transactional pricing</div>
+      <h2 class="pricing-headline">Birdverse is Free for Everyone</h2>
+      <div class="pricing-sub">We charge a flat 1% platform fee to facilitate transactions and manage secure escrow accounts.</div>
+      <p class="pricing-disclaimer">No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing.</p>
+    </div>
+  </div>
+
+  <!-- Tailored ROI & Pitches Tab System -->
+  <section class="roi-pitches" id="roi">
+    <div class="roi-container">
+      <div class="section-header">
+        <span class="section-pretitle">Measurable ROI</span>
+        <h2 class="section-title">Tailored Value Propositions</h2>
+        <p class="section-desc">Delivering operational gains and financial assurances across all core aviation stakeholders.</p>
+      </div>
+
+      <div class="roi-tabs">
+        <button class="roi-tab-btn active" id="tab-fleet" onclick="switchRoiTab('fleet')">Fleet Owners & Operators</button>
+        <button class="roi-tab-btn" id="tab-mro" onclick="switchRoiTab('mro')">Tier-1 Part 145 MROs</button>
+        <button class="roi-tab-btn" id="tab-oem" onclick="switchRoiTab('oem')">OEMs & Parts Manufacturers</button>
+      </div>
+
+      <div class="roi-content-box" id="roi-box-content">
         <!-- Rendered via JS -->
       </div>
+    </div>
+  </section>
+
+  <!-- 60-Day Founder-Led GTM Roadmap -->
+  <section class="roadmap" id="roadmap">
+    <div class="section-header">
+      <span class="section-pretitle">GTM Execution</span>
+      <h2 class="section-title">60-Day Execution Roadmap</h2>
+      <p class="section-desc">Our targeted founder-led rollout plan to recruit strategic partners and secure industry liquidity.</p>
+    </div>
+    
+    <div class="roadmap-timeline">
       
+      <!-- Day 1-15 -->
+      <div class="roadmap-card">
+        <div class="roadmap-indicator">1-15</div>
+        <div class="roadmap-phase">Phase 01</div>
+        <div class="roadmap-heading">OEM Alignment</div>
+        <ul class="roadmap-list">
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Pitch Daher & Pilatus C-suite on SB distribution channels.</li>
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Secure commitments from 2 key strategic engine manufacturers.</li>
+        </ul>
+      </div>
+
+      <!-- Day 16-30 -->
+      <div class="roadmap-card">
+        <div class="roadmap-indicator">16-30</div>
+        <div class="roadmap-phase">Phase 02</div>
+        <div class="roadmap-heading">MRO Onboarding</div>
+        <ul class="roadmap-list">
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Secure beta trials with Duncan Aviation & StandardAero teams.</li>
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Integrate E-sign & Escrow release APIs for Part 145 invoices.</li>
+        </ul>
+      </div>
+
+      <!-- Day 31-45 -->
+      <div class="roadmap-card">
+        <div class="roadmap-indicator">31-45</div>
+        <div class="roadmap-phase">Phase 03</div>
+        <div class="roadmap-heading">Fleet Integration</div>
+        <ul class="roadmap-list">
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Onboard NetJets & Flexjet pilot and crew communication loops.</li>
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Run live tests on automated AD compliance check alerts.</li>
+        </ul>
+      </div>
+
+      <!-- Day 46-60 -->
+      <div class="roadmap-card">
+        <div class="roadmap-indicator">46-60</div>
+        <div class="roadmap-phase">Phase 04</div>
+        <div class="roadmap-heading">Platform Liquidity</div>
+        <ul class="roadmap-list">
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Go-live on first $10M escrow fuel & service transaction releases.</li>
+          <li class="roadmap-item"><span class="roadmap-bullet">▪</span> Activate public discovery listings & reputation scores.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Telemetry simulator -->
+  <section class="simulator" id="simulator">
+    <div class="section-header">
+      <span class="section-pretitle">Live Telemetry</span>
+      <h2 class="section-title">Telemetry Terminal Live Monitor</h2>
+      <p class="section-desc">Simulate live technical dispatch loops, airworthiness agents, and escrow release telemetry.</p>
+    </div>
+    
+    <div class="sim-box">
+      <div class="sim-header">
+        <div class="sim-tabs">
+          <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimOutput('dispatch')">Flight Dispatcher</button>
+          <button class="sim-tab" id="btn-sim-compliance" onclick="loadSimOutput('compliance')">Compliance Sweep</button>
+          <button class="sim-tab" id="btn-sim-escrow" onclick="loadSimOutput('escrow')">Escrow Vault Logs</button>
+        </div>
+        <div class="sim-telemetry-text">
+          <div class="sim-telemetry-dot"></div>
+          <span id="sim-telemetry-status">KPBI CONTROL FEED: STREAMING</span>
+        </div>
+      </div>
+      
+      <div class="sim-viewport" id="sim-console-output">
+        <!-- Rendered via JS -->
+      </div>
     </div>
   </section>
 
   <!-- Premium Footer -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-brand">
+    <div class="footer-container">
+      <div class="footer-identity">
         <a href="#" class="nav-logo" style="margin-bottom: 4px;">
           <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
@@ -791,74 +1623,183 @@
       </div>
       
       <ul class="footer-links">
-        <li><a href="#features">Features</a></li>
+        <li><a href="#narrative">Bloomberg Pitch</a></li>
         <li><a href="guide.html">Brand Identity Guide</a></li>
         <li><a href="index.html">Portal Home</a></li>
       </ul>
       
-      <div style="font-size: 0.8rem; color: var(--gray-velocity);">
+      <div style="font-size: 0.82rem; color: var(--gray-velocity);">
         &copy; 2026 Birdverse. All rights reserved.
       </div>
     </div>
   </footer>
 
   <script>
-    // Simulator State Loader
-    const simStates = {
+    // Flywheel interactive data
+    const flywheelData = {
+      1: {
+        title: "Free Fleet Valuations",
+        desc: "Aircraft owners and operators onboard their assets for free live market value tracking. This initializes our core database with active aircraft tail and serial records."
+      },
+      2: {
+        title: "One-Click Competitive RFQs",
+        desc: "Fleet owners stay on the platform to issue quick, paperless RFQs for AOGs (Aircraft on Ground), scheduled inspections, and avionics upgrades, receiving bids in hours."
+      },
+      3: {
+        title: "Streamlined RFQ-to-Cash",
+        desc: "Part 145 MROs use our platform to capture bids, manage communication, request digital signatures, and secure milestones in escrow, speeding up FBO invoicing."
+      },
+      4: {
+        title: "Dynamic Reputation Scoring",
+        desc: "Completed jobs trigger rating records. Honest discovery and reputation scoring help operators locate premium, verified MRO providers they can trust."
+      },
+      5: {
+        title: "Viral Messaging Spread",
+        desc: "In-context messaging triggers notifications across pilot, dispatcher, broker, and manufacturer loops, driving organic user signup back to Step 1."
+      }
+    };
+
+    function setFlywheel(stepNum, element) {
+      document.querySelectorAll('.flywheel-step').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      
+      document.getElementById('fw-title').innerText = flywheelData[stepNum].title;
+      document.getElementById('fw-desc').innerText = flywheelData[stepNum].desc;
+    }
+
+    // ROI / Specific pitches tab data
+    const roiTabData = {
+      fleet: {
+        roi: [
+          `<strong>Paperless AOG & Scheduled RFQs:</strong> Send service requests to multiple vetted MROs instantly. Save up to 40 hours of manual dispatch phone calls.`,
+          `<strong>Escrow Shield Protection:</strong> Lock funds securely in escrow. Payments are released only when the work is signed off and compliance checks pass.`,
+          `<strong>Real-time FAA & News Sync:</strong> Stay updated on FAA airworthiness directives and tail registries automatically.`
+        ],
+        pitch: [
+          `<strong>Absolute Fleet Visibility:</strong> Complete oversight of active valuations and en-route flight milestones.`,
+          `<strong>End Email Chains:</strong> Single workspace replacing fragmented communication networks.`
+        ],
+        targets: ["NetJets Aviation", "Flexjet", "Wheels Up Operations", "Solairus Aviation", "Executive Jet Management", "Clay Lacy Aviation", "Jet Linx Aviation", "Tradewind Aviation"]
+      },
+      mro: {
+        roi: [
+          `<strong>Eliminate Bad Debts:</strong> Escrow guarantees funding is secured before you turn a wrench. Never get left holding the bag.`,
+          `<strong>Accelerate Cash Flow:</strong> Milestone-based payments automatically release funds to your bank upon digital e-sign.`,
+          `<strong>Structured Customer Chat:</strong> Keep communication organized in context of the tail and work order.`
+        ],
+        pitch: [
+          `<strong>Reduce Administrative Overhead:</strong> Fast digital sign-offs and invoices eliminate hours of AR chasing.`,
+          `<strong>Expand Customer Awareness:</strong> Capture business from new fleet operators through our discovery index.`
+        ],
+        targets: ["West Star Aviation", "Duncan Aviation", "StandardAero", "Jet Aviation", "FEAM Aero", "Constant Aviation", "AAR Corp", "Lufthansa Technik"]
+      },
+      oem: {
+        roi: [
+          `<strong>Notice Distribution Channel:</strong> Broadcast Service Bulletins, Airworthiness Directives, and manuals directly to owners.`,
+          `<strong>Manual Rental Storefront:</strong> Sell operational manuals by the project directly to MROs in context.`,
+          `<strong>Streamlined Warranties:</strong> Manage warranty logs and recall issues directly with operators.`
+        ],
+        pitch: [
+          `<strong>Raise New Product Awareness:</strong> Target new product announcements directly to verified owners.`,
+          `<strong>Improve Warranty Communications:</strong> Connect directly to resolve issues and increase brand loyalty.`
+        ],
+        targets: ["Daher", "Pilatus", "Gulfstream Aerospace", "Textron Aviation", "Bombardier", "Pratt & Whitney", "Honeywell Aerospace", "Collins Aerospace"]
+      }
+    };
+
+    function switchRoiTab(tabKey) {
+      document.querySelectorAll('.roi-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`tab-${tabKey}`).classList.add('active');
+      
+      const data = roiTabData[tabKey];
+      
+      let roiListHtml = data.roi.map(item => `
+        <li class="roi-item">
+          <span class="roi-marker">✓</span>
+          <span class="roi-text">${item}</span>
+        </li>
+      `).join('');
+      
+      let pitchListHtml = data.pitch.map(item => `
+        <li class="roi-item">
+          <span class="roi-marker">▪</span>
+          <span class="roi-text">${item}</span>
+        </li>
+      `).join('');
+
+      let targetsHtml = data.targets.map(tgt => `
+        <div class="target-tag">${tgt}</div>
+      `).join('');
+
+      document.getElementById('roi-box-content').innerHTML = `
+        <div>
+          <div>
+            <h4 class="roi-column-title">Measurable ROI</h4>
+            <ul class="roi-list">${roiListHtml}</ul>
+          </div>
+          <div style="margin-top: 3rem;">
+            <h4 class="roi-column-title">Target Specific Pitch</h4>
+            <ul class="roi-list">${pitchListHtml}</ul>
+          </div>
+        </div>
+        <div>
+          <h4 class="roi-column-title">High-Trust Ecosystem Recruits</h4>
+          <div class="targets-list-grid">${targetsHtml}</div>
+        </div>
+      `;
+    }
+
+    // Telemetry Simulator Outputs
+    const simLogMap = {
       dispatch: [
-        `<span class="sim-prompt">&gt; INGEST DISPATCH DATA RUNNING FOR N702WJ (G650ER)</span>`,
-        `<span class="sim-prompt">&gt; FAA FLIGHT PLAN: KPBI -> TEB | FILED ALTITUDE: FL410 // HEADING: 025°</span>`,
-        `STATUS REPORT: RADAR CONTACT SUCCESS // SQUAWK: 4210`,
-        `ACTIVE WEATHER GATE (METAR KPBI): KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012`,
-        `HOBBS TRACKING: ACTIVE // FUEL REMAINING: 18,400 LBS // HOBBS ELAPSED: +1.4 HRS`,
-        `<span class="sim-tag-success">DISPATCH GATE STATE: ONLINE // ALL EN-ROUTE CHECKPOINTS VERIFIED [GREEN]</span>`
+        `<span class="sim-prompt">&gt; INGEST FLIGHT DISPATCHER Telemetry KPBI -> KTEB</span>`,
+        `STATUS: active // Squawk: 4402 // TAIL: N702WJ (G650ER)`,
+        `ROUTE: HEADING 025° // ALTITUDE FL410 // WIND SPEED: 15kts Headwind`,
+        `METAR KPBI: KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012`,
+        `<span class="sim-success">SUCCESS: Route checkpoints logged. Dispatch telemetry synced.</span>`
       ],
-      mro: [
-        `<span class="sim-prompt">&gt; DIAGNOSTICS DEEP CHECK: ENGINE REGISTRY FOR N244PR</span>`,
-        `FAA TAIL VERIFICATION: N244PR verified as active business jet (CL350)`,
-        `ENGINE MODEL: Honeywell HTF7350 // L_ENGINE S/N: 124102 // R_ENGINE S/N: 124103`,
-        `HOBBS HOUR SYSTEM DATA: 2942.8 hours total elapsed airframe time`,
-        `<span class="sim-tag-caution">COMPLIANCE WARNING: Left engine requires inspection in 28 cycles (Cycles elapsed: 1842/1870)</span>`,
-        `NEXT COMPLIANCE GATE: B-Check (MRO Dispatch queued for KTEB JetAviation)`
+      compliance: [
+        `<span class="sim-prompt">&gt; SCANNING COMPLIANCE AGENTS ON FLEET SERIAL NUMBERS</span>`,
+        `SB SCAN STATUS: active // 18 Serial records scanned`,
+        `CROSS-REFERENCE: SB 2026-04 Pratt & Whitney PW307A manifolds`,
+        `RESULT: 2 match records found on tail N702WJ. Inspection queued.`,
+        `<span class="sim-caution">WARNING: Compliance Check Flagged. Inspection required in next 50 cycles.</span>`
       ],
-      ledger: [
-        `<span class="sim-prompt">&gt; INGEST TRANSACTION LEDGER GATEWAYS</span>`,
-        `LEDGER STATUS: ACTIVE (Escrow Vault Node #042)`,
-        `ACTIVE CHARTER ESCROW RECORD: ID_998274 // CHARTERER: Apex Flight Group // VALUE: $42,910.00`,
-        `DEPOSIT RELEASE: SECURE CLEARANCE CONFIRMED via signature vault key`,
-        `REFUELING TRANSACTION AUDIT: KPBI Signature Flight Support // Wet-lease fuel audit: 840 GAL`,
-        `<span class="sim-tag-success">LEDGER GATE STATE: SECURE // INTEGRITY LOG HASH VALID (SHA-256 CHECK: OK)</span>`
+      escrow: [
+        `<span class="sim-prompt">&gt; AUDITING ESCROW RELEASE VAULT TRANSACTIONS</span>`,
+        `ESCROW STATUS: Active (Vault Node #042)`,
+        `LEDGER INGEST: TX_998274 // CHARTERER: Apex Flight Group // VALUE: $42,910.00`,
+        `FAA SIGN-OFF DETECTED: Digital E-Signature confirmed (FAA #8849)`,
+        `<span class="sim-success">SUCCESS: cryptographic keys matched. Funds released to Part 145 MRO.</span>`
       ]
     };
 
-    function loadSimState(stateKey) {
-      // Manage Active Tab UI
-      document.querySelectorAll('.sim-tab').forEach(tab => tab.classList.remove('active'));
+    function loadSimOutput(stateKey) {
+      document.querySelectorAll('.sim-tab').forEach(btn => btn.classList.remove('active'));
       document.getElementById(`btn-sim-${stateKey}`).classList.add('active');
       
-      // Load Telemetry Text
-      const telemetryTextMap = {
-        dispatch: 'KPBI RADAR FEED: LIVE',
-        mro: 'MRO REGISTRY SYNC: CURRENT',
-        ledger: 'ESCROW INTEGRITY: AUDITED'
+      const statusText = {
+        dispatch: 'KPBI CONTROL FEED: STREAMING',
+        compliance: 'FAA COMPLIANCE AGENT: RUNNING',
+        escrow: 'LEDGER TRANSACTION: SECURED'
       };
-      document.getElementById('sim-telemetry-text').innerText = telemetryTextMap[stateKey];
-
-      // Load Screen content with line-by-line typing delay simulation
-      const screenEl = document.getElementById('sim-screen-element');
-      screenEl.innerHTML = '';
+      document.getElementById('sim-telemetry-status').innerText = statusText[stateKey];
       
-      const lines = simStates[stateKey];
-      lines.forEach((line, index) => {
-        const lineDiv = document.createElement('div');
-        lineDiv.className = 'sim-log-line';
-        lineDiv.innerHTML = line;
-        screenEl.appendChild(lineDiv);
+      const lines = simLogMap[stateKey];
+      const viewport = document.getElementById('sim-console-output');
+      viewport.innerHTML = '';
+      
+      lines.forEach(line => {
+        const div = document.createElement('div');
+        div.className = 'sim-line';
+        div.innerHTML = line;
+        viewport.appendChild(div);
       });
     }
 
-    // Initialize with dispatch on load
-    loadSimState('dispatch');
+    // Initialize layout
+    switchRoiTab('fleet');
+    loadSimOutput('dispatch');
   </script>
 
 </body>
