@@ -31,14 +31,14 @@ const {
   <h1 class="hero-title">{title}</h1>
   {tagline && <div class="hero-tagline">{tagline}</div>}
   {url && <div class="hero-url">{url}</div>}
-  {desc && <p class="hero-gtm-desc">{desc}</p>}
+  {desc && <p class="hero-gtm-desc" set:html={desc}></p>}
   
   <div class="cta-container">
     <div class="cta-group">
       <a href={primaryCtaLink} class="btn-primary">{primaryCtaText}</a>
       <a href={secondaryCtaLink} class="btn-secondary">{secondaryCtaText}</a>
     </div>
-    {ctaSubtext && <div class="cta-subtext">{ctaSubtext}</div>}
+    {ctaSubtext && <div class="cta-subtext" set:html={ctaSubtext}></div>}
   </div>
 </section>
 
