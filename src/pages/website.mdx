@@ -2,11 +2,11 @@
 layout: ../layouts/WebsiteLayout.astro
 title: "Birdverse"
 tagline: "The Terminal for Global Aviation."
-url: "birdverse.ai"
-gtmBadge: "1% Flat Transaction Fee"
-gtmDesc: "Defragment your operations, communication, and payments. One unified desktop for Fleet Operators, MROs, and OEMs. Stop losing Hobbs hours to manual RFQs, disconnected PDFs, and payment friction. Welcome to the industry's single source of truth."
+url: "Welcome to Birdverse"
+gtmBadge: "Free for Everyone"
+gtmDesc: "One Unified System to Simplify Data, Messaging, and Maintenance for Aircraft Owners and Aviation Professionals."
 
-bloombergPretitle: "The Core Problem"
+bloombergPretitle: "The Core Problem for Owners and MROs"
 bloombergTitle: "Aviation moves at Mach 0.8. Your administrative back-office shouldn't move at a snail's pace."
 bloombergDesc: "Today's aviation ecosystem is crippled by fragmented data and legacy silos. Every maintenance event, parts procurement, and compliance check requires a dozen emails, unverified PDFs, phone tag, and financial risk."
 
@@ -68,7 +68,6 @@ import PricingPanel from '../components/PricingPanel.astro';
 import RoiTabs from '../components/RoiTabs.astro';
 import Roadmap from '../components/Roadmap.astro';
 import TelemetrySimulator from '../components/TelemetrySimulator.astro';
-import TailScanner from '../components/TailScanner.astro';
 import { frontmatter as labels } from './labels.mdx';
 
 <Hero 
@@ -78,9 +77,9 @@ import { frontmatter as labels } from './labels.mdx';
   url={frontmatter.url} 
   desc={frontmatter.gtmDesc} 
   primaryCtaText={labels.heroPrimaryCtaText}
-  primaryCtaLink="#valuation"
+  primaryCtaLink="join.html"
   secondaryCtaText={labels.heroSecondaryCtaText}
-  secondaryCtaLink="join.html"
+  secondaryCtaLink="inquiry.html"
   ctaSubtext={labels.heroCtaSubtext}
 />
 
@@ -115,15 +114,6 @@ import { frontmatter as labels } from './labels.mdx';
   disclaimer={frontmatter.pricingDisclaimer}
 />
 
-<TailScanner 
-  pretitle="Top-of-Funnel Hook"
-  title="What is your fleet worth right now?"
-  desc="Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles."
-  inputPlaceholder={labels.scannerInputPlaceholder}
-  btnText={labels.scannerBtnText}
-  cardCtaText={labels.scannerCardCtaText}
-  cardCtaBtn={labels.scannerCardCtaBtn}
-/>
 
 <Roadmap 
   pretitle={frontmatter.roadmapPretitle}
