@@ -22,13 +22,13 @@ const {
   <div class="sim-box">
     <div class="sim-header">
       <div class="sim-tabs">
-        <button class="sim-tab active" id="btn-sim-dispatch" onclick="loadSimOutput('dispatch')">Flight Dispatcher</button>
-        <button class="sim-tab" id="btn-sim-compliance" onclick="loadSimOutput('compliance')">Compliance Sweep</button>
-        <button class="sim-tab" id="btn-sim-escrow" onclick="loadSimOutput('escrow')">Escrow Vault Logs</button>
+        <button class="sim-tab active" id="btn-sim-ad_sdr" onclick="loadSimOutput('ad_sdr')">ADs & SDRs</button>
+        <button class="sim-tab" id="btn-sim-valuations" onclick="loadSimOutput('valuations')">Aircraft Valuations</button>
+        <button class="sim-tab" id="btn-sim-rfq" onclick="loadSimOutput('rfq')">One-Click RFQs</button>
       </div>
       <div class="sim-telemetry-text">
         <div class="sim-telemetry-dot"></div>
-        <span id="sim-telemetry-status">KPBI CONTROL FEED: STREAMING</span>
+        <span id="sim-telemetry-status">FAA AD/SDR FEED: STREAMING</span>
       </div>
     </div>
     
@@ -41,12 +41,12 @@ const {
 <script is:inline>
   // Initialize the console feed when component loads on page
   if (typeof window.loadSimOutput === 'function') {
-    window.loadSimOutput('dispatch');
+    window.loadSimOutput('ad_sdr');
   } else {
     // Fallback if window function is not defined immediately
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof window.loadSimOutput === 'function') {
-        window.loadSimOutput('dispatch');
+        window.loadSimOutput('ad_sdr');
       }
     });
   }

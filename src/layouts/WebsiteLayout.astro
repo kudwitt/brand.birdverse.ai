@@ -859,8 +859,9 @@ const { frontmatter } = Astro.props;
       border-radius: 14px;
       padding: 4rem;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 4rem;
+      grid-template-columns: 1fr;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .roi-column-title {
@@ -1327,26 +1328,29 @@ const { frontmatter } = Astro.props;
   <script is:inline>
     // Telemetry Simulator Outputs
     const simLogMap = {
-      dispatch: [
-        `<span class="sim-prompt">&gt; INGEST FLIGHT DISPATCHER Telemetry KPBI -> KTEB</span>`,
-        `STATUS: active // Squawk: 4402 // TAIL: N702WJ (G650ER)`,
-        `ROUTE: HEADING 025° // ALTITUDE FL410 // WIND SPEED: 15kts Headwind`,
-        `METAR KPBI: KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012`,
-        `<span class="sim-success">SUCCESS: Route checkpoints logged. Dispatch telemetry synced.</span>`
+      ad_sdr: [
+        `<span class="sim-prompt">&gt; INGEST FAA AIRWORTHINESS DIRECTIVES (AD) & SDR FEED</span>`,
+        `QUERY ID: news-ad-collins // SOURCE: FAA // TYPE: AD WARNING`,
+        `TITLE: FAA issues AD warning on Collins display screens`,
+        `APPLIES TO: Citation CJ3+ serials 525B-0500 to 0530. Action required within 10 flight hours.`,
+        `<span class="sim-caution">WARNING: Compliance Check Flagged. Inspection required in next 10 flight hours.</span>`
       ],
-      compliance: [
-        `<span class="sim-prompt">&gt; SCANNING COMPLIANCE AGENTS ON FLEET SERIAL NUMBERS</span>`,
-        `SB SCAN STATUS: active // 18 Serial records scanned`,
-        `CROSS-REFERENCE: SB 2026-04 Pratt & Whitney PW307A manifolds`,
-        `RESULT: 2 match records found on tail N702WJ. Inspection queued.`,
-        `<span class="sim-caution">WARNING: Compliance Check Flagged. Inspection required in next 50 cycles.</span>`
+      valuations: [
+        `<span class="sim-prompt">&gt; QUERYING WINGMAN REAL-TIME FLEET VALUATION INDEX</span>`,
+        `ACTIVE FLEET: TLC Jet Operations // ESTIMATED TOTAL VALUE: $105.2M`,
+        `TAIL N552RK (Citation CJ3+): 4,847.3 hrs // ESTIMATED VALUE: $7.2M (AOG)`,
+        `TAIL N888BV (Challenger 350): 2,156.8 hrs // ESTIMATED VALUE: $18.5M`,
+        `TAIL N650GX (Gulfstream G650): 6,421.0 hrs // ESTIMATED VALUE: $32.5M`,
+        `TAIL N6X01F (Falcon 6X): 892.4 hrs // ESTIMATED VALUE: $47.0M`,
+        `<span class="sim-success">SUCCESS: 4 tail valuation indexes synced with active market metrics.</span>`
       ],
-      escrow: [
-        `<span class="sim-prompt">&gt; AUDITING ESCROW RELEASE VAULT TRANSACTIONS</span>`,
-        `ESCROW STATUS: Active (Vault Node #042)`,
-        `LEDGER INGEST: TX_998274 // CHARTERER: Apex Flight Group // VALUE: $42,910.00`,
-        `FAA SIGN-OFF DETECTED: Digital E-Signature confirmed (FAA #8849)`,
-        `<span class="sim-success">SUCCESS: cryptographic keys matched. Funds released to Part 145 MRO.</span>`
+      rfq: [
+        `<span class="sim-prompt">&gt; GENERATING ONE-CLICK RFQ VIA WINGMAN AI AGENT</span>`,
+        `RFQ ID: BDN0001048 // Aileron Actuator Replacement (Draft)`,
+        `AIRCRAFT: Gulfstream G650 (N650GX) // S/N: 6178`,
+        `SQUAWK: Aileron actuator seal leaking hydraulic fluid.`,
+        `DISTRIBUTION LIST: Duncan Aviation (KTEB), West Star Aviation`,
+        `<span class="sim-success">SUCCESS: RFQ packet pre-compiled & dispatched to MRO network.</span>`
       ]
     };
 
@@ -1356,9 +1360,9 @@ const { frontmatter } = Astro.props;
       if (activeBtn) activeBtn.classList.add('active');
       
       const statusText = {
-        dispatch: 'KPBI CONTROL FEED: STREAMING',
-        compliance: 'FAA COMPLIANCE AGENT: RUNNING',
-        escrow: 'LEDGER TRANSACTION: SECURED'
+        ad_sdr: 'FAA AD/SDR FEED: STREAMING',
+        valuations: 'WINGMAN VALUATION INDEX: SYNCED',
+        rfq: 'AI RFQ GENERATOR: ACTIVE'
       };
       const statusTextEl = document.getElementById('sim-telemetry-status');
       if (statusTextEl) statusTextEl.innerText = statusText[stateKey];
