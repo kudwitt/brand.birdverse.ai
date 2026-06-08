@@ -6,9 +6,9 @@ url: "Welcome to Birdverse"
 gtmBadge: "Free for Everyone"
 gtmDesc: "One Unified System to Simplify Data, Messaging,<br />and Maintenance for Aircraft Owners and Aviation Professionals."
 
-bloombergPretitle: "The Core Problem for Owners and MROs"
+bloombergPretitle: "The Core Problems for Owners and MROs"
 bloombergTitle: "Aviation moves at Mach 0.8. Your administrative back-office shouldn't move at a snail's pace."
-bloombergDesc: "Today's aviation ecosystem is crippled by fragmented data and legacy silos. Every maintenance event, parts procurement, and compliance check requires a dozen emails, unverified PDFs, phone tag, and financial risk."
+bloombergDesc: "In aviation, there's a system for everything. The bad news is that we're crippled by fragmented data and siloed systems. Every maintenance event, parts procurement, and compliance check requires a dozen emails, unverified PDFs, phone tag, and financial risk."
 
 solutionsPretitle: "The Solution"
 solutionsTitle: "One Terminal. Infinite Operational Velocity."
@@ -27,9 +27,6 @@ roiPretitle: "Choose Your Runway"
 roiTitle: "Audience Segmentation"
 roiDesc: "Delivering operational gains and financial assurances across all core aviation stakeholders."
 
-telemetryPretitle: "Live Telemetry"
-telemetryTitle: "Telemetry Terminal Live Monitor"
-telemetryDesc: "Simulate live technical dispatch loops, airworthiness agents, and escrow release telemetry."
 ---
 import Hero from '../components/Hero.astro';
 import BloombergPitch from '../components/BloombergPitch.astro';
@@ -37,7 +34,6 @@ import SolutionsGrid from '../components/SolutionsGrid.astro';
 import Flywheel from '../components/Flywheel.astro';
 import PricingPanel from '../components/PricingPanel.astro';
 import RoiTabs from '../components/RoiTabs.astro';
-import TelemetrySimulator from '../components/TelemetrySimulator.astro';
 import { frontmatter as labels } from './labels.mdx';
 
 <Hero 
@@ -94,15 +90,10 @@ import { frontmatter as labels } from './labels.mdx';
     <div class="cta-container">
       <div class="cta-group">
         <a href="join.html" class="btn-primary">{labels.finalCtaPrimaryBtn}</a>
-        <a href="join.html" class="btn-secondary">{labels.finalCtaSecondaryBtn}</a>
+        <a href="inquiry.html" class="btn-secondary">{labels.finalCtaSecondaryBtn}</a>
       </div>
       <div class="cta-subtext">{labels.finalCtaSubtext}</div>
     </div>
   </div>
 </section>
 
-<TelemetrySimulator 
-  pretitle={frontmatter.telemetryPretitle}
-  title={frontmatter.telemetryTitle}
-  desc={frontmatter.telemetryDesc}
-/>

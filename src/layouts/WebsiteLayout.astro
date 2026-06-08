@@ -1325,61 +1325,7 @@ const { frontmatter } = Astro.props;
     </div>
   </footer>
 
-  <script is:inline>
-    // Telemetry Simulator Outputs
-    const simLogMap = {
-      ad_sdr: [
-        `<span class="sim-prompt">&gt; INGEST FAA AIRWORTHINESS DIRECTIVES (AD) & SDR FEED</span>`,
-        `QUERY ID: news-ad-collins // SOURCE: FAA // TYPE: AD WARNING`,
-        `TITLE: FAA issues AD warning on Collins display screens`,
-        `APPLIES TO: Citation CJ3+ serials 525B-0500 to 0530. Action required within 10 flight hours.`,
-        `<span class="sim-caution">WARNING: Compliance Check Flagged. Inspection required in next 10 flight hours.</span>`
-      ],
-      valuations: [
-        `<span class="sim-prompt">&gt; QUERYING WINGMAN REAL-TIME FLEET VALUATION INDEX</span>`,
-        `ACTIVE FLEET: TLC Jet Operations // ESTIMATED TOTAL VALUE: $105.2M`,
-        `TAIL N552RK (Citation CJ3+): 4,847.3 hrs // ESTIMATED VALUE: $7.2M (AOG)`,
-        `TAIL N888BV (Challenger 350): 2,156.8 hrs // ESTIMATED VALUE: $18.5M`,
-        `TAIL N650GX (Gulfstream G650): 6,421.0 hrs // ESTIMATED VALUE: $32.5M`,
-        `TAIL N6X01F (Falcon 6X): 892.4 hrs // ESTIMATED VALUE: $47.0M`,
-        `<span class="sim-success">SUCCESS: 4 tail valuation indexes synced with active market metrics.</span>`
-      ],
-      rfq: [
-        `<span class="sim-prompt">&gt; GENERATING ONE-CLICK RFQ VIA WINGMAN AI AGENT</span>`,
-        `RFQ ID: BDN0001048 // Aileron Actuator Replacement (Draft)`,
-        `AIRCRAFT: Gulfstream G650 (N650GX) // S/N: 6178`,
-        `SQUAWK: Aileron actuator seal leaking hydraulic fluid.`,
-        `DISTRIBUTION LIST: Duncan Aviation (KTEB), West Star Aviation`,
-        `<span class="sim-success">SUCCESS: RFQ packet pre-compiled & dispatched to MRO network.</span>`
-      ]
-    };
 
-    window.loadSimOutput = function(stateKey) {
-      document.querySelectorAll('.sim-tab').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`btn-sim-${stateKey}`);
-      if (activeBtn) activeBtn.classList.add('active');
-      
-      const statusText = {
-        ad_sdr: 'FAA AD/SDR FEED: STREAMING',
-        valuations: 'WINGMAN VALUATION INDEX: SYNCED',
-        rfq: 'AI RFQ GENERATOR: ACTIVE'
-      };
-      const statusTextEl = document.getElementById('sim-telemetry-status');
-      if (statusTextEl) statusTextEl.innerText = statusText[stateKey];
-      
-      const lines = simLogMap[stateKey];
-      const viewport = document.getElementById('sim-console-output');
-      if (viewport) {
-        viewport.innerHTML = '';
-        lines.forEach(line => {
-          const div = document.createElement('div');
-          div.className = 'sim-line';
-          div.innerHTML = line;
-          viewport.appendChild(div);
-        });
-      }
-    }
-  </script>
 
 </body>
 </html>
