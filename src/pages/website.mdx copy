@@ -3,8 +3,8 @@ layout: ../layouts/WebsiteLayout.astro
 title: "Birdverse"
 tagline: "The Terminal for the Aviation Industry"
 url: "birdverse.ai"
-gtmBadge: "Free Forever for Aircraft Owners and Aviation Profressionals"
-gtmDesc: "Aircraft valuations and a unifying workspace for data, communication, and maintenance."
+gtmBadge: "Free Forever"
+gtmDesc: "Free aircraft valuations and a unifying workspace for data, communication, and maintenance."
 
 bloombergPretitle: "Birdverse runs natively on iOS, Android, Windows, MacOS, and the Web"
 bloombergTitle: "Data, Communication, Maintenance in One Integrated and Secure App"
