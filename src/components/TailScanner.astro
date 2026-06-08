@@ -1,0 +1,405 @@
+---
+interface Props {
+  pretitle?: string;
+  title?: string;
+  desc?: string;
+}
+
+const {
+  pretitle = "Trojan Horse Hook",
+  title = "What is your fleet worth right now?",
+  desc = "Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles."
+} = Astro.props;
+---
+
+<style>
+  section.valuation-scanner {
+    padding: 90px 2rem;
+    background: rgba(8, 20, 49, 0.4);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .scanner-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .search-box {
+    display: flex;
+    gap: 12px;
+    max-width: 550px;
+    margin: 3rem auto 2rem;
+    background: rgba(16, 30, 62, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--white-horizon);
+    font-family: var(--font-technical);
+    font-size: 1.05rem;
+    padding: 12px 18px;
+  }
+  .search-input::placeholder {
+    color: var(--gray-velocity);
+  }
+  .btn-scan {
+    background: var(--brand-orange);
+    color: var(--brand-deep-slate);
+    border: none;
+    padding: 0 28px;
+    border-radius: 6px;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition-normal);
+  }
+  .btn-scan:hover {
+    background: #ffb854;
+    box-shadow: 0 0 15px var(--border-glow);
+  }
+  
+  /* Console Readout State */
+  .scanner-console {
+    display: none;
+    background: #040a1b;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: left;
+    font-family: var(--font-technical);
+    font-size: 0.85rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    min-height: 180px;
+    position: relative;
+  }
+  .console-line {
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: console-fade-in 0.4s forwards;
+  }
+  .console-prompt {
+    color: var(--brand-orange);
+  }
+  .console-success {
+    color: var(--success);
+  }
+  @keyframes console-fade-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Valuation Report Result Card */
+  .valuation-report {
+    display: none;
+    background: linear-gradient(135deg, #101e3e 0%, #081431 100%);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: left;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  .valuation-report::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 160, 40, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .report-tail {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--brand-orange);
+  }
+  .report-model {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem;
+    color: var(--white-horizon);
+    font-weight: 500;
+  }
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .report-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-velocity);
+    margin-bottom: 4px;
+  }
+  .report-value {
+    font-family: var(--font-technical);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white-horizon);
+  }
+  .report-value.highlight {
+    color: var(--brand-orange);
+    font-size: 1.6rem;
+  }
+  .report-status {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-family: var(--font-technical);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .status-airworthy {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  .status-caution {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--caution);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  
+  .report-cta-box {
+    background: rgba(255, 160, 40, 0.05);
+    border: 1px dashed rgba(255, 160, 40, 0.25);
+    border-radius: 6px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .report-cta-text {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--gray-velocity);
+    margin-bottom: 10px;
+  }
+  .report-cta-btn {
+    display: inline-block;
+    background: var(--brand-orange);
+    color: var(--brand-deep-slate);
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: var(--transition-fast);
+  }
+  .report-cta-btn:hover {
+    background: #ffb854;
+    box-shadow: 0 0 10px var(--border-glow);
+  }
+</style>
+
+<section class="valuation-scanner" id="valuation">
+  <div class="scanner-container">
+    <div class="section-header">
+      <span class="section-pretitle">{pretitle}</span>
+      <h2 class="section-title">{title}</h2>
+      <p class="section-desc">{desc}</p>
+    </div>
+
+    <!-- Scanner Input -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="tail-input" 
+        class="search-input" 
+        placeholder="Enter Tail Number(s)... (e.g., N702WJ, N193P, N884F)" 
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button id="scan-trigger-btn" class="btn-scan" onclick="triggerScan()">Generate Live Valuation</button>
+    </div>
+
+    <!-- Console Logging Telemetry Screen -->
+    <div class="scanner-console" id="scanner-console">
+      <!-- Ingested via JS -->
+    </div>
+
+    <!-- Report Output Card -->
+    <div class="valuation-report" id="valuation-report">
+      <div class="report-header">
+        <div>
+          <span id="report-tag" class="report-tail">N702WJ</span>
+          <div id="report-model" class="report-model">Gulfstream G650ER</div>
+        </div>
+        <div>
+          <span id="report-status" class="report-status status-airworthy">AIRWORTHY</span>
+        </div>
+      </div>
+      
+      <div class="report-grid">
+        <div>
+          <div class="report-label">Estimated Market Value</div>
+          <div id="report-value" class="report-value highlight">$61,250,000</div>
+        </div>
+        <div>
+          <span class="report-label">Tracked Flight Hours</span>
+          <div id="report-hours" class="report-value">1,420 hrs</div>
+        </div>
+        <div>
+          <span class="report-label">Cycle Health Index</span>
+          <div id="report-health" class="report-value">98.4%</div>
+        </div>
+        <div>
+          <span class="report-label">Compliance Alerts</span>
+          <div id="report-compliance" class="report-value">None Pending</div>
+        </div>
+      </div>
+
+      <div class="report-cta-box">
+        <div class="report-cta-text">This asset is eligible for active monitoring on the Birdverse Terminal.</div>
+        <a href="join.html" class="report-cta-btn">Claim Ownership & Onboard Tail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const tailDatabase = {
+    'N702WJ': {
+      model: 'Gulfstream G650ER',
+      value: '$61,250,000',
+      hours: '1,420 hrs',
+      health: '98.4%',
+      compliance: 'AD 2026-04 Flagged',
+      status: 'CAUTION',
+      statusClass: 'status-caution'
+    },
+    'N193P': {
+      model: 'Daher TBM 960',
+      value: '$4,850,000',
+      hours: '380 hrs',
+      health: '99.8%',
+      compliance: 'None Pending',
+      status: 'AIRWORTHY',
+      statusClass: 'status-airworthy'
+    },
+    'N884F': {
+      model: 'Pilatus PC-12/47E',
+      value: '$5,920,000',
+      hours: '2,110 hrs',
+      health: '96.2%',
+      compliance: 'SB 202 cycle check pending',
+      status: 'CAUTION',
+      statusClass: 'status-caution'
+    }
+  };
+
+  const randomJets = [
+    { model: 'Bombardier Challenger 350', minVal: 18000000, maxVal: 22000000 },
+    { model: 'Cessna Citation Latitude', minVal: 14000000, maxVal: 16500000 },
+    { model: 'Embraer Phenom 300E', minVal: 8500000, maxVal: 10500000 },
+    { model: 'Gulfstream G280', minVal: 21000000, maxVal: 24500000 }
+  ];
+
+  window.triggerScan = function() {
+    const inputEl = document.getElementById('tail-input');
+    const tailRaw = inputEl.value.trim().toUpperCase();
+    if (!tailRaw) return;
+
+    // Elements
+    const consoleEl = document.getElementById('scanner-console');
+    const reportEl = document.getElementById('valuation-report');
+    
+    // Reset viewports
+    reportEl.style.display = 'none';
+    consoleEl.style.display = 'block';
+    consoleEl.innerHTML = '';
+
+    // Scroll to console smoothly
+    consoleEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Build data
+    let data = tailDatabase[tailRaw];
+    if (!data) {
+      // Generate randomized data
+      const jet = randomJets[Math.floor(Math.random() * randomJets.length)];
+      const randValue = Math.floor(Math.random() * (jet.maxVal - jet.minVal)) + jet.minVal;
+      const formattedValue = '$' + randValue.toLocaleString();
+      const randHours = Math.floor(Math.random() * 3000) + 100;
+      const randHealth = (90 + Math.random() * 10).toFixed(1) + '%';
+      data = {
+        model: jet.model,
+        value: formattedValue,
+        hours: randHours.toLocaleString() + ' hrs',
+        health: randHealth,
+        compliance: 'None Pending',
+        status: 'AIRWORTHY',
+        statusClass: 'status-airworthy'
+      };
+    }
+
+    // Telemetry scan lines
+    const scanLines = [
+      { text: `&gt; INGESTING REGISTRY DATA FOR TAIL: ${tailRaw}...`, delay: 0 },
+      { text: `&gt; LOCATING FAA AIRWORTHINESS RECORD STATE...`, delay: 400 },
+      { text: `&gt; SYNCING ACTIVE ENGINE LIFE CYCLE METRICS...`, delay: 900 },
+      { text: `&gt; RUNNING AD/SB CROSS-REFERENCE COMPLIANCE AGENT...`, delay: 1400 },
+      { text: `&gt; COMPUTING REAL-TIME MARKET VALUATION INDEX...`, delay: 1900 },
+      { text: `&gt; SUCCESS: Fleet valuation report compiled successfully.`, delay: 2400, success: true }
+    ];
+
+    // Play console logs
+    scanLines.forEach(line => {
+      setTimeout(() => {
+        const lineEl = document.createElement('div');
+        lineEl.className = 'console-line';
+        if (line.success) {
+          lineEl.innerHTML = `<span class="console-success">${line.text}</span>`;
+        } else {
+          lineEl.innerHTML = `<span class="console-prompt">${line.text}</span>`;
+        }
+        consoleEl.appendChild(lineEl);
+      }, line.delay);
+    });
+
+    // Display final valuation report after logs complete
+    setTimeout(() => {
+      consoleEl.style.display = 'none';
+      
+      // Load data to elements
+      document.getElementById('report-tag').innerText = tailRaw;
+      document.getElementById('report-model').innerText = data.model;
+      document.getElementById('report-value').innerText = data.value;
+      document.getElementById('report-hours').innerText = data.hours;
+      document.getElementById('report-health').innerText = data.health;
+      document.getElementById('report-compliance').innerText = data.compliance;
+      
+      const statusBadge = document.getElementById('report-status');
+      statusBadge.innerText = data.status;
+      statusBadge.className = `report-status ${data.statusClass}`;
+      
+      reportEl.style.display = 'block';
+      reportEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 3000);
+  }
+</script>

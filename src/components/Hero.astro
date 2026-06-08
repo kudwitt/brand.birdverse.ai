@@ -5,14 +5,24 @@ interface Props {
   tagline?: string;
   url?: string;
   desc?: string;
+  primaryCtaText?: string;
+  primaryCtaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+  ctaSubtext?: string;
 }
 
 const {
   badge = "60-Day Founder-Led GTM Plan",
   title = "Birdverse",
-  tagline = "The Terminal for the Aviation Industry",
+  tagline = "The Terminal for Global Aviation.",
   url = "birdverse.ai",
-  desc = "Leveraging high-trust C-Suite relationships to fast-track OEM, Tier-1 MRO, and strategic investor recruitment. Establishing the single unifying workspace for flight dispatch, maintenance tracking, and escrow commerce."
+  desc = "Defragment your operations, communication, and payments. One unified desktop for Fleet Operators, MROs, and OEMs. Stop losing Hobbs hours to manual RFQs, disconnected PDFs, and payment friction. Welcome to the industry's single source of truth.",
+  primaryCtaText = "Scan Your Tail (Free Valuation)",
+  primaryCtaLink = "#valuation",
+  secondaryCtaText = "Talk to an Aviation Specialist →",
+  secondaryCtaLink = "join.html",
+  ctaSubtext = "No monthly subscriptions. No onboarding fees. 1% flat transaction fee."
 } = Astro.props;
 ---
 
@@ -23,8 +33,12 @@ const {
   {url && <div class="hero-url">{url}</div>}
   {desc && <p class="hero-gtm-desc">{desc}</p>}
   
-  <div class="cta-group">
-    <a href="#solutions" class="btn-primary">Explore Products</a>
-    <a href="#roadmap" class="btn-secondary">View 60-Day GTM</a>
+  <div class="cta-container">
+    <div class="cta-group">
+      <a href={primaryCtaLink} class="btn-primary">{primaryCtaText}</a>
+      <a href={secondaryCtaLink} class="btn-secondary">{secondaryCtaText}</a>
+    </div>
+    {ctaSubtext && <div class="cta-subtext">{ctaSubtext}</div>}
   </div>
 </section>
+

@@ -8,17 +8,55 @@ interface Props {
 
 const {
   tag = "disclosed transactional pricing",
-  headline = "Birdverse is Free for Everyone",
-  sub = "We charge a flat 1% platform fee to facilitate transactions and manage secure escrow accounts.",
+  headline = "Radical transparency. No subscription traps.",
+  sub = "We don't believe in charging you for user seats, software updates, or data storage. We only succeed when you successfully close a transaction.",
   disclaimer = "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
 } = Astro.props;
 ---
 
-<div class="pricing-banner">
-  <div class="pricing-card">
-    <div class="pricing-tag">{tag}</div>
-    <h2 class="pricing-headline">{headline}</h2>
-    <div class="pricing-sub">{sub}</div>
-    <p class="pricing-disclaimer">{disclaimer}</p>
+<section class="pricing" id="pricing" style="max-width: 1200px; margin: 0 auto; padding: 20px 0;">
+  <div class="pricing-banner">
+    <div class="pricing-card">
+      <div class="pricing-tag">{tag}</div>
+      <h2 class="pricing-headline">{headline}</h2>
+      <div class="pricing-sub">{sub}</div>
+      <p class="pricing-disclaimer">{disclaimer}</p>
+      
+      <!-- Comparison Table -->
+      <div class="pricing-table-wrapper">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Legacy Software</th>
+              <th style="color: var(--brand-orange);">Birdverse</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monthly Subscription Fee</strong></td>
+              <td class="muted-legacy">$500 - $5,000+ / mo</td>
+              <td class="highlight"><strong>$0</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Per-User Seat Costs</strong></td>
+              <td class="muted-legacy">Yes (Scales with team)</td>
+              <td class="highlight"><strong>$0 (Unlimited Users)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Data & AI Features</strong></td>
+              <td class="muted-legacy">Paid Add-on</td>
+              <td class="highlight"><strong>Included Free</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Platform Transaction Fee</strong></td>
+              <td class="muted-legacy">High/Hidden/Escalating</td>
+              <td class="highlight"><strong>1% flat</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+

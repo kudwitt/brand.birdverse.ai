@@ -13,33 +13,41 @@ interface Props {
 }
 
 const {
-  pretitle = "Strategic Vision",
-  title = "The \"Bloomberg\" of Aviation",
-  desc = "A unifying platform that surfaces critical insights, contextualizes messaging, and streamlines fragmented industry workflows.",
+  pretitle = "The Core Problem",
+  title = "Aviation moves at Mach 0.8. Your administrative back-office shouldn't move at a snail's pace.",
+  desc = "Today's aviation ecosystem is crippled by fragmented data and legacy silos. Every maintenance event, parts procurement, and compliance check requires a dozen emails, unverified PDFs, phone tag, and financial risk.",
   cards = [
     {
-      badge: "Independent & Neutral",
-      title: "Switzerland & Trusted by All",
-      desc: "We eliminate misaligned incentives with clear, disclosed transaction fees and secure cryptographic escrow systems that protect operators, brokers, and MRO service shops."
+      badge: "The Data Tax",
+      title: "Isolated Databases",
+      desc: "Aircraft logs, Airworthiness Directives (ADs), and Service Bulletins (SBs) live in isolated databases."
     },
     {
-      badge: "Process Velocity",
-      title: "End \"Quote Roulette\"",
-      desc: "Reduce administrative bloat and Hobbs hour losses through API-driven architectures that automate structural Part 145 RFQ-to-Cash processes."
+      badge: "The Communication Void",
+      title: "Fragmented Threads",
+      desc: "Crucial maintenance updates get buried in personal email threads and WhatsApp groups."
     },
     {
-      badge: "Industry Pain Points",
-      title: "Fragmentation is the Enemy",
-      desc: "Managing AOGs, scheduled servicing, and inspections are time-consuming and cost-inefficient. Data is locked in PDFs, disconnected database silos, and manual email chains."
-    },
-    {
-      badge: "Unified Communication",
-      title: "Contextualized Telemetry",
-      desc: "By providing everyone with real-time access to flight data, tail logs, and regulatory alerts in context of the transaction, we eliminate delays and improve industry safety."
+      badge: "The Capital Freeze",
+      title: "Slowing Cash Flow",
+      desc: "Legacy wire transfers and high-fee credit card processors drag out turn-around times (TAT) and stall cash flow."
     }
   ]
 } = Astro.props;
 ---
+
+<style>
+  .narrative-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  @media (max-width: 968px) {
+    .narrative-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 
 <section class="narrative" id="narrative">
   <div class="section-header">
@@ -58,3 +66,4 @@ const {
     ))}
   </div>
 </section>
+

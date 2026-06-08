@@ -1,43 +1,30 @@
 ---
 layout: ../layouts/WebsiteLayout.astro
 title: "Birdverse"
-tagline: "The Terminal for the Aviation Industry"
+tagline: "The Terminal for Global Aviation."
 url: "birdverse.ai"
-gtmBadge: "Free Forever for Aircraft Owners and Aviation Profressionals"
-gtmDesc: "Aircraft valuations and a unifying workspace for data, communication, and maintenance."
+gtmBadge: "1% Flat Transaction Fee"
+gtmDesc: "Defragment your operations, communication, and payments. One unified desktop for Fleet Operators, MROs, and OEMs. Stop losing Hobbs hours to manual RFQs, disconnected PDFs, and payment friction. Welcome to the industry's single source of truth."
 
-bloombergPretitle: "Birdverse runs natively on iOS, Android, Windows, MacOS, and the Web"
-bloombergTitle: "Data, Communication, Maintenance in One Integrated and Secure App"
-bloombergDesc: "Aircraft valuations, critical insights, contextual messaging, and an effecient RFQ process for maintenance."
-bloombergCards:
-  - badge: "Independent & Neutral"
-    title: "Switzerland & Trusted by All"
-    desc: "We eliminate misaligned incentives with clear, disclosed transaction fees and secure cryptographic escrow systems that protect operators, brokers, and MRO service shops."
-  - badge: "Process Velocity"
-    title: "End \"Quote Roulette\""
-    desc: "Reduce administrative bloat and Hobbs hour losses through API-driven architectures that automate structural Part 145 RFQ-to-Cash processes."
-  - badge: "Industry Pain Points"
-    title: "Fragmentation is the Enemy"
-    desc: "Managing AOGs, scheduled servicing, and inspections are time-consuming and cost-inefficient. Data is locked in PDFs, disconnected database silos, and manual email chains."
-  - badge: "Unified Communication"
-    title: "Contextualized Telemetry"
-    desc: "By providing everyone with real-time access to flight data, tail logs, and regulatory alerts in context of the transaction, we eliminate delays and improve industry safety."
+bloombergPretitle: "The Core Problem"
+bloombergTitle: "Aviation moves at Mach 0.8. Your administrative back-office shouldn't move at a snail's pace."
+bloombergDesc: "Today's aviation ecosystem is crippled by fragmented data and legacy silos. Every maintenance event, parts procurement, and compliance check requires a dozen emails, unverified PDFs, phone tag, and financial risk."
 
-solutionsPretitle: "Unified Solution"
-solutionsTitle: "Birdverse Product Solutions"
-solutionsDesc: "Modernizing aviation operations through four tightly integrated functional pillars."
+solutionsPretitle: "The Solution"
+solutionsTitle: "One Terminal. Infinite Operational Velocity."
+solutionsDesc: "Birdverse bridges the gap between dispatch, the hangar floor, and global supply chains by combining three core layers into a single, seamless dashboard."
 
 flywheelPretitle: "Ecosystem Growth"
 flywheelTitle: "The Birdverse Product Flywheel"
 flywheelDesc: "Creating rapid ecosystem loop dynamics by aligning incentives between fleet managers, parts suppliers, and MRO service shops."
 
 pricingTag: "disclosed transactional pricing"
-pricingHeadline: "Birdverse is Free for Everyone"
-pricingSub: "We charge a flat 1% platform fee to facilitate transactions and manage secure escrow accounts."
+pricingHeadline: "Radical transparency. No subscription traps."
+pricingSub: "We don't believe in charging you for user seats, software updates, or data storage. We only succeed when you successfully close a transaction."
 pricingDisclaimer: "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
 
-roiPretitle: "Measurable ROI"
-roiTitle: "Tailored Value Propositions"
+roiPretitle: "Choose Your Runway"
+roiTitle: "Audience Segmentation"
 roiDesc: "Delivering operational gains and financial assurances across all core aviation stakeholders."
 
 roadmapPretitle: "GTM Execution"
@@ -81,6 +68,7 @@ import PricingPanel from '../components/PricingPanel.astro';
 import RoiTabs from '../components/RoiTabs.astro';
 import Roadmap from '../components/Roadmap.astro';
 import TelemetrySimulator from '../components/TelemetrySimulator.astro';
+import TailScanner from '../components/TailScanner.astro';
 
 <Hero 
   badge={frontmatter.gtmBadge} 
@@ -88,19 +76,29 @@ import TelemetrySimulator from '../components/TelemetrySimulator.astro';
   tagline={frontmatter.tagline} 
   url={frontmatter.url} 
   desc={frontmatter.gtmDesc} 
+  primaryCtaText="Scan Your Tail (Free Valuation)"
+  primaryCtaLink="#valuation"
+  secondaryCtaText="Talk to an Aviation Specialist →"
+  secondaryCtaLink="join.html"
+  ctaSubtext="No monthly subscriptions. No onboarding fees. 1% flat transaction fee."
 />
 
 <BloombergPitch 
   pretitle={frontmatter.bloombergPretitle}
   title={frontmatter.bloombergTitle}
   desc={frontmatter.bloombergDesc}
-  cards={frontmatter.bloombergCards}
 />
 
 <SolutionsGrid 
   pretitle={frontmatter.solutionsPretitle}
   title={frontmatter.solutionsTitle}
   desc={frontmatter.solutionsDesc}
+/>
+
+<RoiTabs 
+  pretitle={frontmatter.roiPretitle}
+  title={frontmatter.roiTitle}
+  desc={frontmatter.roiDesc}
 />
 
 <Flywheel 
@@ -116,10 +114,10 @@ import TelemetrySimulator from '../components/TelemetrySimulator.astro';
   disclaimer={frontmatter.pricingDisclaimer}
 />
 
-<RoiTabs 
-  pretitle={frontmatter.roiPretitle}
-  title={frontmatter.roiTitle}
-  desc={frontmatter.roiDesc}
+<TailScanner 
+  pretitle="Top-of-Funnel Hook"
+  title="What is your fleet worth right now?"
+  desc="Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles."
 />
 
 <Roadmap 
@@ -128,6 +126,22 @@ import TelemetrySimulator from '../components/TelemetrySimulator.astro';
   desc={frontmatter.roadmapDesc}
   phases={frontmatter.roadmapPhases}
 />
+
+<section class="final-cta" style="padding: 100px 2rem; text-align: center; border-top: 1px solid var(--border-color); background: rgba(8, 20, 49, 0.2);">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <span class="section-pretitle">Ready to claim your terminal?</span>
+    <h2 class="section-title" style="margin-bottom: 1.5rem;">Join the Next Generation of Aviation Management</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">Set up your workspace in under 5 minutes.</p>
+    
+    <div class="cta-container">
+      <div class="cta-group">
+        <a href="join.html" class="btn-primary">Launch Your Terminal Now</a>
+        <a href="join.html" class="btn-secondary">Schedule a Live 1-on-1 Demo</a>
+      </div>
+      <div class="cta-subtext">Free forever for operators and aviation industry professionals.</div>
+    </div>
+  </div>
+</section>
 
 <TelemetrySimulator 
   pretitle={frontmatter.telemetryPretitle}

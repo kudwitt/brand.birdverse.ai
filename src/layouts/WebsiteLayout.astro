@@ -245,11 +245,26 @@ const { frontmatter } = Astro.props;
       line-height: 1.7;
     }
 
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 4rem;
+      gap: 12px;
+    }
+
     .cta-group {
       display: flex;
       gap: 1.5rem;
       justify-content: center;
-      margin-bottom: 4rem;
+      margin-bottom: 0;
+    }
+
+    .cta-subtext {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      color: var(--gray-velocity);
+      letter-spacing: 0.05em;
     }
 
     .btn-primary {
@@ -1209,6 +1224,55 @@ const { frontmatter } = Astro.props;
         gap: 1.5rem;
       }
     }
+
+    /* Pricing Comparison Table */
+    .pricing-table-wrapper {
+      margin-top: 3.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: rgba(4, 10, 27, 0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .pricing-table th, 
+    .pricing-table td {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .pricing-table th {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      color: var(--brand-arctic-ice);
+      background: rgba(16, 30, 62, 0.6);
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+    }
+
+    .pricing-table tr:last-child th,
+    .pricing-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pricing-table td.highlight {
+      font-family: var(--font-technical);
+      font-weight: 700;
+      color: var(--brand-orange);
+      background: rgba(255, 160, 40, 0.03);
+    }
+    
+    .pricing-table td.muted-legacy {
+      color: var(--gray-velocity);
+    }
   </style>
 </head>
 <body>
@@ -1223,12 +1287,11 @@ const { frontmatter } = Astro.props;
     </a>
     
     <ul class="nav-links">
-      <li><a href="#narrative" class="nav-link">Bloomberg Pitch</a></li>
-      <li><a href="#solutions" class="nav-link">Solutions</a></li>
-      <li><a href="#flywheel" class="nav-link">Pricing & Flywheel</a></li>
-      <li><a href="#roi" class="nav-link">Measurable ROI</a></li>
-      <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
-      <li><a href="join.html" class="btn-nav-terminal">Join Now</a></li>
+      <li><a href="#solutions" class="nav-link">Features</a></li>
+      <li><a href="#roi" class="nav-link">Audiences</a></li>
+      <li><a href="#pricing" class="nav-link">Pricing</a></li>
+      <li><a href="#valuation" class="btn-nav-terminal" style="background: var(--brand-orange); color: var(--brand-deep-slate); border: none;">Get Free Fleet Valuation</a></li>
+      <li><a href="join.html" class="btn-nav-terminal">Launch Terminal</a></li>
     </ul>
   </nav>
 
