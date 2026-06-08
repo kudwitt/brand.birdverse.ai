@@ -8,8 +8,8 @@ interface Props {
 
 const {
   tag = "Simple, Secure, Streamlined",
-  headline = "Radical transparency. No subscription traps.",
-  sub = "We don't believe in charging you for user seats, software updates, or data storage. We only succeed when you successfully close a transaction.",
+  headline = "Radical transparency.<br />No subscriptions. No hidden fees. No markups.",
+  sub = "We don't believe in charging you for user seats, software upgrades, or data storage.",
   disclaimer = "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
 } = Astro.props;
 ---
@@ -18,7 +18,7 @@ const {
   <div class="pricing-banner">
     <div class="pricing-card">
       <div class="pricing-tag">{tag}</div>
-      <h2 class="pricing-headline">{headline}</h2>
+      <h2 class="pricing-headline" set:html={headline}></h2>
       <div class="pricing-sub">{sub}</div>
       <p class="pricing-disclaimer">{disclaimer}</p>
       
