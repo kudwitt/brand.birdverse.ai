@@ -1,4 +1,5 @@
 ---
+import { frontmatter as labels } from '../pages/labels.mdx';
 const { frontmatter } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -1287,11 +1288,11 @@ const { frontmatter } = Astro.props;
     </a>
     
     <ul class="nav-links">
-      <li><a href="#solutions" class="nav-link">Features</a></li>
-      <li><a href="#roi" class="nav-link">Audiences</a></li>
-      <li><a href="#pricing" class="nav-link">Pricing</a></li>
-      <li><a href="#valuation" class="btn-nav-terminal" style="background: var(--brand-orange); color: var(--brand-deep-slate); border: none;">Get Free Fleet Valuation</a></li>
-      <li><a href="join.html" class="btn-nav-terminal">Launch Terminal</a></li>
+      <li><a href="#solutions" class="nav-link">{labels.navFeatures}</a></li>
+      <li><a href="#roi" class="nav-link">{labels.navAudiences}</a></li>
+      <li><a href="#pricing" class="nav-link">{labels.navPricing}</a></li>
+      <li><a href="#valuation" class="btn-nav-terminal" style="background: var(--brand-orange); color: var(--brand-deep-slate); border: none;">{labels.navValuationBtn}</a></li>
+      <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
     </ul>
   </nav>
 
@@ -1311,13 +1312,13 @@ const { frontmatter } = Astro.props;
       </div>
       
       <ul class="footer-links">
-        <li><a href="#narrative">Bloomberg Pitch</a></li>
-        <li><a href="guide.html">Brand Identity Guide</a></li>
-        <li><a href="index.html">Portal Home</a></li>
+        <li><a href="#narrative">{labels.footerBloombergLink}</a></li>
+        <li><a href="guide.html">{labels.footerGuideLink}</a></li>
+        <li><a href="index.html">{labels.footerHomeLink}</a></li>
       </ul>
       
       <div style="font-size: 0.82rem; color: var(--gray-velocity);">
-        &copy; 2026 {frontmatter.title}. All rights reserved.
+        {labels.footerCopyright}
       </div>
     </div>
   </footer>

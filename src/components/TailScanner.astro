@@ -3,12 +3,20 @@ interface Props {
   pretitle?: string;
   title?: string;
   desc?: string;
+  inputPlaceholder?: string;
+  btnText?: string;
+  cardCtaText?: string;
+  cardCtaBtn?: string;
 }
 
 const {
   pretitle = "Trojan Horse Hook",
   title = "What is your fleet worth right now?",
-  desc = "Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles."
+  desc = "Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles.",
+  inputPlaceholder = "Enter Tail Number(s)... (e.g., N702WJ, N193P, N884F)",
+  btnText = "Generate Live Valuation",
+  cardCtaText = "This asset is eligible for active monitoring on the Birdverse Terminal.",
+  cardCtaBtn = "Claim Ownership & Onboard Tail"
 } = Astro.props;
 ---
 
@@ -232,11 +240,11 @@ const {
         type="text" 
         id="tail-input" 
         class="search-input" 
-        placeholder="Enter Tail Number(s)... (e.g., N702WJ, N193P, N884F)" 
+        placeholder={inputPlaceholder} 
         autocomplete="off"
         spellcheck="false"
       />
-      <button id="scan-trigger-btn" class="btn-scan" onclick="triggerScan()">Generate Live Valuation</button>
+      <button id="scan-trigger-btn" class="btn-scan" onclick="triggerScan()">{btnText}</button>
     </div>
 
     <!-- Console Logging Telemetry Screen -->
@@ -276,8 +284,8 @@ const {
       </div>
 
       <div class="report-cta-box">
-        <div class="report-cta-text">This asset is eligible for active monitoring on the Birdverse Terminal.</div>
-        <a href="join.html" class="report-cta-btn">Claim Ownership & Onboard Tail</a>
+        <div class="report-cta-text">{cardCtaText}</div>
+        <a href="join.html" class="report-cta-btn">{cardCtaBtn}</a>
       </div>
     </div>
   </div>

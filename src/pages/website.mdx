@@ -69,6 +69,7 @@ import RoiTabs from '../components/RoiTabs.astro';
 import Roadmap from '../components/Roadmap.astro';
 import TelemetrySimulator from '../components/TelemetrySimulator.astro';
 import TailScanner from '../components/TailScanner.astro';
+import { frontmatter as labels } from './labels.mdx';
 
 <Hero 
   badge={frontmatter.gtmBadge} 
@@ -76,11 +77,11 @@ import TailScanner from '../components/TailScanner.astro';
   tagline={frontmatter.tagline} 
   url={frontmatter.url} 
   desc={frontmatter.gtmDesc} 
-  primaryCtaText="Scan Your Tail (Free Valuation)"
+  primaryCtaText={labels.heroPrimaryCtaText}
   primaryCtaLink="#valuation"
-  secondaryCtaText="Talk to an Aviation Specialist →"
+  secondaryCtaText={labels.heroSecondaryCtaText}
   secondaryCtaLink="join.html"
-  ctaSubtext="No monthly subscriptions. No onboarding fees. 1% flat transaction fee."
+  ctaSubtext={labels.heroCtaSubtext}
 />
 
 <BloombergPitch 
@@ -118,6 +119,10 @@ import TailScanner from '../components/TailScanner.astro';
   pretitle="Top-of-Funnel Hook"
   title="What is your fleet worth right now?"
   desc="Don't guess your asset values based on outdated quarterly spreadsheets. Plug your tail numbers into the Birdverse Terminal for an instant, data-driven market valuation leveraging active flight hours and upcoming maintenance cycles."
+  inputPlaceholder={labels.scannerInputPlaceholder}
+  btnText={labels.scannerBtnText}
+  cardCtaText={labels.scannerCardCtaText}
+  cardCtaBtn={labels.scannerCardCtaBtn}
 />
 
 <Roadmap 
@@ -129,16 +134,16 @@ import TailScanner from '../components/TailScanner.astro';
 
 <section class="final-cta" style="padding: 100px 2rem; text-align: center; border-top: 1px solid var(--border-color); background: rgba(8, 20, 49, 0.2);">
   <div style="max-width: 600px; margin: 0 auto;">
-    <span class="section-pretitle">Ready to claim your terminal?</span>
-    <h2 class="section-title" style="margin-bottom: 1.5rem;">Join the Next Generation of Aviation Management</h2>
-    <p class="section-desc" style="margin-bottom: 3rem;">Set up your workspace in under 5 minutes.</p>
+    <span class="section-pretitle">{labels.finalCtaPretitle}</span>
+    <h2 class="section-title" style="margin-bottom: 1.5rem;">{labels.finalCtaTitle}</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">{labels.finalCtaDesc}</p>
     
     <div class="cta-container">
       <div class="cta-group">
-        <a href="join.html" class="btn-primary">Launch Your Terminal Now</a>
-        <a href="join.html" class="btn-secondary">Schedule a Live 1-on-1 Demo</a>
+        <a href="join.html" class="btn-primary">{labels.finalCtaPrimaryBtn}</a>
+        <a href="join.html" class="btn-secondary">{labels.finalCtaSecondaryBtn}</a>
       </div>
-      <div class="cta-subtext">Free forever for operators and aviation industry professionals.</div>
+      <div class="cta-subtext">{labels.finalCtaSubtext}</div>
     </div>
   </div>
 </section>
