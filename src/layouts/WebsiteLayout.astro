@@ -46,6 +46,12 @@ const { frontmatter } = Astro.props;
       --transition-fast: all 0.15s ease;
     }
 
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -56,9 +62,14 @@ const { frontmatter } = Astro.props;
       background-color: var(--dark-bg);
       color: var(--white-horizon);
       font-family: var(--font-body);
-      overflow-x: hidden;
       line-height: 1.6;
       position: relative;
+    }
+
+    section, footer, nav {
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     /* Background Gradients */
@@ -126,6 +137,37 @@ const { frontmatter } = Astro.props;
       letter-spacing: -0.02em;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-join-btn {
+      display: none; /* hidden on desktop */
+    }
+
+    .nav-hamburger {
+      display: none; /* hidden on desktop */
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    .hamburger-bar {
+      width: 100%;
+      height: 2px;
+      background-color: var(--brand-orange);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
     .nav-links {
       display: flex;
       gap: 2.2rem;
@@ -184,9 +226,47 @@ const { frontmatter } = Astro.props;
       box-shadow: 0 0 15px var(--border-glow);
     }
 
+    /* Platform compatibility section styles */
+    .platform-logo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--gray-velocity) !important;
+      transition: var(--transition-normal);
+      width: 100px;
+      text-decoration: none;
+    }
+    
+    .platform-icon {
+      color: var(--white-horizon);
+      opacity: 0.8;
+      transition: var(--transition-normal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .platform-logo-item:hover {
+      color: var(--brand-orange) !important;
+    }
+    
+    .platform-logo-item:hover .platform-icon {
+      opacity: 1;
+      color: var(--brand-orange);
+      transform: translateY(-4px);
+    }
+    
+    .platform-label {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     /* Hero Banner Area */
     section.hero {
-      padding: 170px 2rem 80px;
+      padding: 130px 2rem 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1197,15 +1277,108 @@ const { frontmatter } = Astro.props;
       }
       
       nav {
-        padding: 0 2rem;
+        padding: 0 1.5rem;
+      }
+
+      .header-join-btn {
+        display: inline-block;
+      }
+
+      .nav-hamburger {
+        display: flex;
       }
 
       .nav-links {
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: rgba(8, 20, 49, 0.98);
+        border-bottom: 1px solid var(--border-color);
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        transform: translateY(-150%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+      }
+
+      .nav-links.active {
+        transform: translateY(0);
+      }
+
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+      }
+
+      .nav-links li a {
+        display: block;
+        padding: 1.2rem 0;
+        width: 100%;
+        font-size: 1.15rem;
+      }
+
+      .nav-links li a::after {
         display: none;
       }
 
+      .nav-desktop-only {
+        display: none;
+      }
+
+      /* Hamburger menu toggle animation styles */
+      .nav-hamburger.active .hamburger-bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .nav-hamburger.active .hamburger-bar:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-hamburger.active .hamburger-bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      /* Sections Spacing */
+      section.solutions,
+      section.flywheel,
+      section.roi-pitches {
+        padding: 60px 1rem;
+      }
+
+      .solution-block {
+        gap: 2.5rem;
+        margin-bottom: 5rem;
+      }
+
+      .roi-content-box {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .flywheel-display {
+        padding: 2rem 1.25rem;
+        min-height: auto;
+      }
+
+      .pricing-banner {
+        margin: 2rem auto 4rem;
+        padding: 0 1rem;
+      }
+
+      .pricing-card {
+        padding: 2rem 1.25rem;
+      }
+
+      .pricing-headline {
+        font-size: 2rem;
+      }
+
+      .pricing-sub {
+        font-size: 1.1rem;
+      }
+
       .hero-title {
-        font-size: 3rem;
+        font-size: 2.8rem;
       }
       
       .hero-tagline {
@@ -1225,6 +1398,65 @@ const { frontmatter } = Astro.props;
         justify-content: center;
         flex-wrap: wrap;
         gap: 1.5rem;
+      }
+
+      /* Responsive adjustments for buttons size */
+      .btn-primary,
+      .btn-secondary {
+        padding: 0.75rem 1.75rem;
+        font-size: 0.9rem;
+      }
+      .cta-group {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .hero-tagline {
+        font-size: 1.15rem;
+      }
+      
+      .hero-gtm-desc {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+      }
+
+      .cta-container {
+        width: 100%;
+        padding: 0 0.5rem;
+      }
+
+      .cta-group {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        text-align: center;
+        width: 100%;
+        padding: 0.8rem 1.5rem;
+      }
+      
+      .pricing-table th, 
+      .pricing-table td {
+        padding: 0.75rem 0.75rem;
+        font-size: 0.8rem;
+      }
+      
+      .roi-tabs {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .roi-tab-btn {
+        text-align: center;
+        padding: 10px 15px;
       }
     }
 
@@ -1289,11 +1521,21 @@ const { frontmatter } = Astro.props;
       <span class="nav-logo-text">{frontmatter.title}</span>
     </a>
     
-    <ul class="nav-links">
+    <div class="nav-actions">
+      <a href="join.html" class="btn-nav-terminal header-join-btn">{labels.navLaunchBtn}</a>
+      
+      <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+    
+    <ul class="nav-links" id="nav-menu">
       <li><a href="#solutions" class="nav-link">{labels.navFeatures}</a></li>
       <li><a href="#roi" class="nav-link">{labels.navAudiences}</a></li>
       <li><a href="#pricing" class="nav-link">{labels.navPricing}</a></li>
-      <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
+      <li class="nav-desktop-only"><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
     </ul>
   </nav>
 
@@ -1324,6 +1566,28 @@ const { frontmatter } = Astro.props;
       </div>
     </div>
   </footer>
+
+  <script is:inline>
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (hamburgerBtn && navMenu) {
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('active');
+        hamburgerBtn.classList.toggle('active');
+        hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      
+      // Close menu when clicking a link
+      document.querySelectorAll('#nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
 
 
 
