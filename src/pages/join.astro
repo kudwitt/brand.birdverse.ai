@@ -50,11 +50,16 @@
       padding: 0;
     }
 
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
     body {
       background-color: var(--dark-bg);
       color: var(--white-horizon);
       font-family: var(--font-body);
-      overflow-x: hidden;
       line-height: 1.6;
       position: relative;
       min-height: 100vh;
@@ -418,7 +423,7 @@
       <!-- Normal Form Content -->
       <div id="join-form-container">
         <div class="form-header">
-          <div class="form-free-badge">✓ Free forever for operators and aviation industry professionals.</div>
+          <div class="form-free-badge">✓ Free forever for owners and aviation industry professionals.</div>
           <h1 class="form-title">Join Birdverse</h1>
           <p class="form-desc">To protect the integrity of Birdverse, you'll be asked to provide credentials to show ownership of aircraft or a member of the aviation industry as part of the onboarding process.</p>
         </div>
@@ -461,7 +466,7 @@
 
           <!-- Dynamic Personal Domain Warning -->
           <div class="alert-box" id="domain-warning">
-            ⚠️ <strong>Personal Domain Detected:</strong> Email addresses from personal domains (Gmail, iCloud, etc.) bypass auto-verification and are routed to our secure manual review queue (<code>#onboarding-triage</code>). Please provide your FAA Airman Certificate Number or Aircraft N-Number below to expedite human sign-off.
+            ⚠️ <strong>Personal Domain Detected:</strong> Email addresses from personal domains (Gmail, iCloud, etc.) bypass auto-verification and are routed to our secure manual review queue (<code>#onboarding-triage</code>). Please provide your FAA Airman Certificate Number or Aircraft N-Number in the message field below to expedite human sign-off.
           </div>
 
           <!-- Dynamic Role Verification Field -->
@@ -470,7 +475,13 @@
             <input class="form-input" type="text" id="verification-proof" placeholder="e.g. FAA ATP #3842918" />
           </div>
 
-          <button class="btn-submit" type="submit">Submit Registration</button>
+          <!-- Message Field -->
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea class="form-input" id="message" rows="4" placeholder="Tell us about your fleet, operations, or how we can help..." style="resize: vertical; font-family: var(--font-body);"></textarea>
+          </div>
+
+          <button class="btn-submit" type="submit">Submit</button>
         </form>
       </div>
 
@@ -517,17 +528,18 @@
       const domain = parts[parts.length - 1].trim();
       const warningBox = document.getElementById('domain-warning');
       const proofInput = document.getElementById('verification-proof');
+      const role = document.getElementById('classification').value;
       
       if (personalDomains.includes(domain)) {
         warningBox.style.display = 'block';
-        proofInput.required = true;
-      } else {
-        warningBox.style.display = 'none';
-        // Only set required if role demands it
-        const role = document.getElementById('classification').value;
-        if (!['pilot', 'mechanic', 'mro', 'owner_part91', 'owner_part135'].includes(role)) {
+        if (role === 'other') {
+          proofInput.required = true;
+        } else {
           proofInput.required = false;
         }
+      } else {
+        warningBox.style.display = 'none';
+        proofInput.required = false;
       }
     }
 
@@ -540,56 +552,24 @@
       const customRoleContainer = document.getElementById('custom-role-container');
       const customRoleInput = document.getElementById('custom-role');
 
-      // Toggle Custom Role container
       if (role === 'other') {
         customRoleContainer.style.display = 'flex';
         customRoleInput.required = true;
+        fieldContainer.style.display = 'flex';
+        input.required = true;
+        
+        label.innerText = 'Accreditation / Professional Proof';
+        input.placeholder = 'e.g. FAA Certification Code or Company Reference';
       } else {
         customRoleContainer.style.display = 'none';
         customRoleInput.required = false;
+        fieldContainer.style.display = 'none';
+        input.required = false;
       }
 
-      fieldContainer.style.display = 'flex';
-      
-      const labelMap = {
-        owner_part91: 'Aircraft N-Number Registration Proof',
-        owner_part135: 'Aircraft N-Number / Part 135 Certificate',
-        operator: 'Corporate Job Title / Dispatch Code',
-        pilot: 'FAA Airman Certificate Number (ATP / Commercial)',
-        mechanic: 'FAA Airman Mechanic Certificate Number (A&P / IA)',
-        mro: 'FAA Part 145 Certificate Number',
-        broker: 'Brokerage License / Company URL',
-        supplier: 'AS9100 / ASA-100 Accreditation Number',
-        fbo: 'FBO Facility Name & Location',
-        financial: 'Financial Services Firm & Job Title',
-        flight_attendant: 'FAA Flight Attendant Certificate / Airline',
-        other: 'Accreditation / Professional Proof'
-      };
-
-      const placeholderMap = {
-        owner_part91: 'e.g. N702WJ',
-        owner_part135: 'e.g. N702WJ or Cert #XYZ',
-        operator: 'e.g. Chief Flight Coordinator (APX)',
-        pilot: 'e.g. FAA ATP #3842918',
-        mechanic: 'e.g. FAA A&P #4829108',
-        mro: 'e.g. FAA Part 145 #Duncan24B',
-        broker: 'e.g. Global Jet Broker ID #4821',
-        supplier: 'e.g. AS9100 Rev D cert #9982A',
-        fbo: 'e.g. Signature Flight Support (KTEB)',
-        financial: 'e.g. Senior Aviation Underwriter (Global Aerospace)',
-        flight_attendant: 'e.g. FAA Certificate / Delta Air Lines',
-        other: 'e.g. FAA Certification Code or Company Reference'
-      };
-
-      label.innerText = labelMap[role] || 'Accreditation Proof';
-      input.placeholder = placeholderMap[role] || 'e.g. FAA Certification Code';
-
-      // Check if proof is required (for critical roles or personal domains)
-      const isPersonalDomain = emailInput && emailInput.includes('@') && personalDomains.includes(emailInput.split('@')[1].toLowerCase());
-      if (['pilot', 'mechanic', 'mro', 'owner_part91', 'owner_part135'].includes(role) || isPersonalDomain) {
-        input.required = true;
-      } else {
-        input.required = false;
+      // Update email domain warning check
+      if (emailInput && emailInput.includes('@')) {
+        checkEmailDomain(emailInput);
       }
     }
 
@@ -601,6 +581,7 @@
       const role = document.getElementById('classification').value;
       const customRole = document.getElementById('custom-role').value;
       const proof = document.getElementById('verification-proof').value || 'AUTO-DOMAIN-VERIFIED';
+      const message = document.getElementById('message').value;
 
       const emailDomain = email.split('@')[1].toLowerCase();
       const isPersonal = personalDomains.includes(emailDomain);

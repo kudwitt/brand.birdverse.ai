@@ -19,8 +19,8 @@ flywheelTitle: "Unified Benefits for the Aviation Ecosystem"
 flywheelDesc: "Birdverse connects aircraft owners, dispatchers, parts suppliers, and maintenance facilities into a single, secure digital workflow."
 
 pricingTag: "Simple, Secure, Streamlined"
-pricingHeadline: "Radical transparency.<br />No subscriptions. No hidden fees. No markups."
-pricingSub: "We don't believe in charging you for user seats, software upgrades, or data storage."
+pricingHeadline: "We don't believe in charging you for<br />user seats, software, or data."
+pricingSub: "Radical transparency. No subscriptions.<br />No hidden fees. No markups."
 pricingDisclaimer: "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
 
 roiPretitle: "Choose Your Runway"
@@ -84,7 +84,7 @@ import { frontmatter as labels } from './labels.mdx';
 <section class="final-cta" style="padding: 100px 2rem; text-align: center; border-top: 1px solid var(--border-color); background: rgba(8, 20, 49, 0.2);">
   <div style="max-width: 600px; margin: 0 auto;">
     <span class="section-pretitle">{labels.finalCtaPretitle}</span>
-    <h2 class="section-title" style="margin-bottom: 1.5rem;">{labels.finalCtaTitle}</h2>
+    <h2 class="section-title" style="margin-bottom: 1.5rem;" set:html={labels.finalCtaTitle}></h2>
     <p class="section-desc" style="margin-bottom: 3rem;">{labels.finalCtaDesc}</p>
     
     <div class="cta-container">
