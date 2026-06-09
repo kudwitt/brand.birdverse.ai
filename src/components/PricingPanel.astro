@@ -3,14 +3,12 @@ interface Props {
   tag?: string;
   headline?: string;
   sub?: string;
-  disclaimer?: string;
 }
 
 const {
   tag = "Simple, Secure, Streamlined",
   headline = "Radical transparency.<br />No subscriptions. No hidden fees. No markups.",
-  sub = "We don't believe in charging you for user seats, software upgrades, or data storage.",
-  disclaimer = "No subscription tiers. No hidden APIs. Fully transparent FBO/MRO invoice processing."
+  sub = "We don't believe in charging you for user seats, software upgrades, or data storage."
 } = Astro.props;
 ---
 
