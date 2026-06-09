@@ -425,13 +425,19 @@
         <div class="form-header">
           <div class="form-free-badge">✓ Free forever for owners and aviation industry professionals.</div>
           <h1 class="form-title">Join Birdverse</h1>
-          <p class="form-desc">To protect the integrity of Birdverse, you'll be asked to provide credentials to show ownership of aircraft or a member of the aviation industry as part of the onboarding process.</p>
+          <p class="form-desc">To protect the integrity of Birdverse, onboarding will require verifying aircraft ownership or credentials proving you're a bonafide aviation industry member.</p>
         </div>
 
         <form id="join-form" onsubmit="handleJoinSubmit(event)">
-          <div class="form-group">
-            <label class="form-label" for="full-name">Full Name</label>
-            <input class="form-input" type="text" id="full-name" required placeholder="e.g. Capt. Ross Martinez" />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="first-name">First Name</label>
+              <input class="form-input" type="text" id="first-name" required placeholder="e.g. Ross" />
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="last-name">Last Name</label>
+              <input class="form-input" type="text" id="last-name" required placeholder="e.g. Martinez" />
+            </div>
           </div>
 
           <div class="form-group">
@@ -466,19 +472,13 @@
 
           <!-- Dynamic Personal Domain Warning -->
           <div class="alert-box" id="domain-warning">
-            ⚠️ <strong>Personal Domain Detected:</strong> Email addresses from personal domains (Gmail, iCloud, etc.) bypass auto-verification and are routed to our secure manual review queue (<code>#onboarding-triage</code>). Please provide your FAA Airman Certificate Number or Aircraft N-Number in the message field below to expedite human sign-off.
-          </div>
-
-          <!-- Dynamic Role Verification Field -->
-          <div class="form-group" id="verification-field-container" style="display: none;">
-            <label class="form-label" id="verification-label" for="verification-proof">FAA Certificate / Proof</label>
-            <input class="form-input" type="text" id="verification-proof" placeholder="e.g. FAA ATP #3842918" />
+            ⚠️ <strong>Personal Domain Detected:</strong> Email addresses from personal domains (Gmail, iCloud, etc.) bypass auto-verification and are routed to our secure manual review queue (<code>#onboarding-triage</code>).
           </div>
 
           <!-- Message Field -->
           <div class="form-group">
             <label class="form-label" for="message">Message</label>
-            <textarea class="form-input" id="message" rows="4" placeholder="Tell us about your fleet, operations, or how we can help..." style="resize: vertical; font-family: var(--font-body);"></textarea>
+            <textarea class="form-input" id="message" rows="4" placeholder="Please let us know how we can help you." style="resize: vertical; font-family: var(--font-body);"></textarea>
           </div>
 
           <button class="btn-submit" type="submit">Submit</button>
@@ -527,27 +527,15 @@
       const parts = emailVal.toLowerCase().split('@');
       const domain = parts[parts.length - 1].trim();
       const warningBox = document.getElementById('domain-warning');
-      const proofInput = document.getElementById('verification-proof');
-      const role = document.getElementById('classification').value;
       
       if (personalDomains.includes(domain)) {
         warningBox.style.display = 'block';
-        if (role === 'other') {
-          proofInput.required = true;
-        } else {
-          proofInput.required = false;
-        }
       } else {
         warningBox.style.display = 'none';
-        proofInput.required = false;
       }
     }
 
     function handleRoleChange(role) {
-      const fieldContainer = document.getElementById('verification-field-container');
-      const label = document.getElementById('verification-label');
-      const input = document.getElementById('verification-proof');
-      const warningBox = document.getElementById('domain-warning');
       const emailInput = document.getElementById('email').value;
       const customRoleContainer = document.getElementById('custom-role-container');
       const customRoleInput = document.getElementById('custom-role');
@@ -555,16 +543,9 @@
       if (role === 'other') {
         customRoleContainer.style.display = 'flex';
         customRoleInput.required = true;
-        fieldContainer.style.display = 'flex';
-        input.required = true;
-        
-        label.innerText = 'Accreditation / Professional Proof';
-        input.placeholder = 'e.g. FAA Certification Code or Company Reference';
       } else {
         customRoleContainer.style.display = 'none';
         customRoleInput.required = false;
-        fieldContainer.style.display = 'none';
-        input.required = false;
       }
 
       // Update email domain warning check
@@ -576,11 +557,12 @@
     function handleJoinSubmit(e) {
       e.preventDefault();
       
-      const name = document.getElementById('full-name').value;
+      const firstName = document.getElementById('first-name').value;
+      const lastName = document.getElementById('last-name').value;
+      const name = `${firstName} ${lastName}`;
       const email = document.getElementById('email').value;
       const role = document.getElementById('classification').value;
       const customRole = document.getElementById('custom-role').value;
-      const proof = document.getElementById('verification-proof').value || 'AUTO-DOMAIN-VERIFIED';
       const message = document.getElementById('message').value;
 
       const emailDomain = email.split('@')[1].toLowerCase();
@@ -608,9 +590,9 @@
         `[RLS-AUTH] Creating secure record mapping to ${roleDisplay.toUpperCase()} entity`,
         `[AUDIT] Committing WORM entry: organization.join_request`,
         isPersonal 
-          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review channel <span class="console-green">#onboarding-triage</span><br><span class="console-label">EVIDENCE:</span> FAA Certificate Number verified as: "${proof}"`
+          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review channel <span class="console-green">#onboarding-triage</span>`
           : `[TRIAGE-ROUTE] corporate domain detected: "${emailDomain}"<br><span class="console-label">ACTION:</span> Matching against trusted-domain indices...<br><span class="console-green">SUCCESS:</span> Auto-routed to waitlist queue for Administrator approval`,
-        `[SECURITY] PDF/Proof document credentials encrypted in Supabase Storage (Supabase KMS)`,
+        `[SECURITY] Profile credentials encrypted in Supabase Storage (Supabase KMS)`,
         `[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`,
         `[NOTIFY] Sent verification dossier card to Ross (PM / Manual Triage Signer)`,
         `[STATUS] <span class="console-green">SUCCESS: dossier queued for manual sign-off (onboarding decision SLA &lt; 48 hours)</span>`
