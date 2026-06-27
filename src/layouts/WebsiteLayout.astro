@@ -1280,6 +1280,39 @@ const { frontmatter } = Astro.props;
       color: var(--brand-orange);
     }
 
+    .footer-navigation {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.25rem;
+    }
+
+    .footer-secondary-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .footer-secondary-links a {
+      color: var(--gray-velocity);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: var(--transition-fast);
+      opacity: 0.8;
+    }
+
+    .footer-secondary-links a:hover {
+      color: var(--brand-orange);
+      opacity: 1;
+    }
+
+    .footer-copyright {
+      font-size: 0.82rem;
+      color: var(--gray-velocity);
+      opacity: 0.8;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 968px) {
       .narrative-grid,
@@ -1407,9 +1440,21 @@ const { frontmatter } = Astro.props;
       .footer-container {
         flex-direction: column;
         text-align: center;
+        gap: 2.5rem;
       }
 
       .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .footer-navigation {
+        align-items: center;
+        width: 100%;
+      }
+
+      .footer-secondary-links {
         justify-content: center;
         flex-wrap: wrap;
         gap: 1.5rem;
@@ -1569,15 +1614,23 @@ const { frontmatter } = Astro.props;
         <div style="font-size: 0.8rem; color: var(--gray-velocity);">{frontmatter.tagline} // birdverse.ai</div>
       </div>
       
-      <ul class="footer-links">
-        <li><a href="#solutions">{labels.navFeatures}</a></li>
-        <li><a href="#roi">{labels.navAudiences}</a></li>
-        <li><a href="#pricing">{labels.navPricing}</a></li>
-        <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
-      </ul>
-      
-      <div style="font-size: 0.82rem; color: var(--gray-velocity);">
-        {labels.footerCopyright}
+      <div class="footer-navigation">
+        <ul class="footer-links">
+          <li><a href="#solutions">{labels.navFeatures}</a></li>
+          <li><a href="#roi">{labels.navAudiences}</a></li>
+          <li><a href="#pricing">{labels.navPricing}</a></li>
+          <li><a href="join.html" class="btn-nav-terminal" style="text-transform: none;">{labels.navLaunchBtn}</a></li>
+        </ul>
+        
+        <ul class="footer-secondary-links">
+          <li><a href="guide.html">Brand Guide</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+        
+        <div class="footer-copyright">
+          {labels.footerCopyright}
+        </div>
       </div>
     </div>
   </footer>
