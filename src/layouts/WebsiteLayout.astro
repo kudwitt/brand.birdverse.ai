@@ -1269,14 +1269,14 @@ const { frontmatter } = Astro.props;
       align-items: center;
     }
 
-    .footer-links a {
+    .footer-links a:not(.btn-nav-terminal) {
       color: var(--gray-velocity);
       text-decoration: none;
       font-size: 0.85rem;
       transition: var(--transition-fast);
     }
 
-    .footer-links a:hover {
+    .footer-links a:not(.btn-nav-terminal):hover {
       color: var(--brand-orange);
     }
 
@@ -1631,7 +1631,7 @@ const { frontmatter } = Astro.props;
           <li><a href="#solutions">{labels.navFeatures}</a></li>
           <li><a href="#roi">{labels.navAudiences}</a></li>
           <li><a href="#pricing">{labels.navPricing}</a></li>
-          <li><a href="join.html" class="btn-nav-terminal" style="text-transform: none;">{labels.navLaunchBtn}</a></li>
+          <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
         </ul>
         
         <ul class="footer-secondary-links">
