@@ -251,6 +251,111 @@
       color: var(--white-horizon);
     }
 
+    /* Multiselect Dropdown Styling */
+    .multiselect-dropdown {
+      position: relative;
+      width: 100%;
+      user-select: none;
+    }
+
+    .multiselect-select {
+      background: #040a1b;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--white-horizon);
+      padding: 0.8rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: var(--transition-fast);
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .multiselect-select:hover, .multiselect-select.active {
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 10px rgba(255, 160, 40, 0.15);
+    }
+
+    .multiselect-select span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 1rem;
+      opacity: 0.5;
+    }
+
+    .multiselect-select span.has-value {
+      opacity: 1;
+    }
+
+    .dropdown-arrow {
+      transition: transform var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .multiselect-select.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .multiselect-options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 6px;
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 0;
+      box-sizing: border-box;
+    }
+
+    .multiselect-options.active {
+      display: block;
+    }
+
+    .multiselect-option {
+      display: flex;
+      align-items: center;
+      padding: 0.65rem 1.25rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      gap: 12px;
+    }
+
+    .multiselect-option:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .multiselect-option input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: var(--brand-orange);
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--border-color);
+      background: #040a1b;
+      border-radius: 4px;
+      margin: 0;
+    }
+
+    .multiselect-option label {
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--white-horizon);
+      font-family: var(--font-body);
+      flex: 1;
+      margin: 0;
+    }
+
     /* Dynamic Alert box */
     .alert-box {
       background: rgba(255, 160, 40, 0.04);
@@ -452,22 +557,86 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="classification">Role / Classification</label>
-            <select class="form-select" id="classification" required onchange="handleRoleChange(this.value)">
-              <option value="" disabled selected>Select your aviation role</option>
-              <option value="mechanic">A&P Mechanic / IA Airman</option>
-              <option value="broker">Aircraft Broker</option>
-              <option value="owner_part135">Aircraft Owner - Part 135</option>
-              <option value="owner_part91">Aircraft Owner - Part 91</option>
-              <option value="pilot">Commercial Pilot / ATP</option>
-              <option value="fbo">FBO</option>
-              <option value="financial">Financial Services</option>
-              <option value="flight_attendant">Flight Attendant</option>
-              <option value="operator">Flight Dispatcher / Fleet Manager</option>
-              <option value="mro">Part 145 MRO Repair Station</option>
-              <option value="supplier">Parts Distributor / Supplier</option>
-              <option value="other">Other</option>
-            </select>
+            <label class="form-label" for="multiselect-trigger">Role / Classification</label>
+            <div class="multiselect-dropdown" id="multiselect-dropdown">
+              <div class="multiselect-select" id="multiselect-trigger" onclick="toggleDropdown(event)">
+                <span id="multiselect-label">Select your aviation role(s)</span>
+                <svg class="dropdown-arrow" viewBox="0 0 24 24" width="18" height="18">
+                  <path d="M7 10l5 5 5-5H7z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="multiselect-options" id="multiselect-options">
+                <div class="multiselect-option" onclick="toggleOption('role-mechanic')">
+                  <input type="checkbox" id="role-mechanic" value="mechanic" data-label="A&P Mechanic / IA Airman" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-mechanic" onclick="event.stopPropagation();">A&P Mechanic / IA Airman</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-owner_part135')">
+                  <input type="checkbox" id="role-owner_part135" value="owner_part135" data-label="Aircraft Owner - Part 135" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-owner_part135" onclick="event.stopPropagation();">Aircraft Owner - Part 135</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-owner_part91')">
+                  <input type="checkbox" id="role-owner_part91" value="owner_part91" data-label="Aircraft Owner - Part 91" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-owner_part91" onclick="event.stopPropagation();">Aircraft Owner - Part 91</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-attorney')">
+                  <input type="checkbox" id="role-attorney" value="attorney" data-label="Attorney / Escrow Agent" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-attorney" onclick="event.stopPropagation();">Attorney / Escrow Agent</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-avionics')">
+                  <input type="checkbox" id="role-avionics" value="avionics" data-label="Avionics Shop / Technician" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-avionics" onclick="event.stopPropagation();">Avionics Shop / Technician</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-broker')">
+                  <input type="checkbox" id="role-broker" value="broker" data-label="Broker / Dealer" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-broker" onclick="event.stopPropagation();">Broker / Dealer</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-corporate')">
+                  <input type="checkbox" id="role-corporate" value="corporate" data-label="Corporate Flight Department" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-corporate" onclick="event.stopPropagation();">Corporate Flight Department</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-dispatcher')">
+                  <input type="checkbox" id="role-dispatcher" value="dispatcher" data-label="Dispatcher / Fleet Manager" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-dispatcher" onclick="event.stopPropagation();">Dispatcher / Fleet Manager</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-fbo')">
+                  <input type="checkbox" id="role-fbo" value="fbo" data-label="FBO" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-fbo" onclick="event.stopPropagation();">FBO</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-financial')">
+                  <input type="checkbox" id="role-financial" value="financial" data-label="Financial Services" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-financial" onclick="event.stopPropagation();">Financial Services</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-flight_attendant')">
+                  <input type="checkbox" id="role-flight_attendant" value="flight_attendant" data-label="Flight Attendant" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-flight_attendant" onclick="event.stopPropagation();">Flight Attendant</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-flight_school')">
+                  <input type="checkbox" id="role-flight_school" value="flight_school" data-label="Flight School / Academy" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-flight_school" onclick="event.stopPropagation();">Flight School / Academy</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-mro')">
+                  <input type="checkbox" id="role-mro" value="mro" data-label="Part 145 MRO Repair Station" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-mro" onclick="event.stopPropagation();">Part 145 MRO Repair Station</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-supplier')">
+                  <input type="checkbox" id="role-supplier" value="supplier" data-label="Parts Distributor / Supplier" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-supplier" onclick="event.stopPropagation();">Parts Distributor / Supplier</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-pilot_commercial')">
+                  <input type="checkbox" id="role-pilot_commercial" value="pilot_commercial" data-label="Pilot - Commercial / ATP" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-pilot_commercial" onclick="event.stopPropagation();">Pilot - Commercial / ATP</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-pilot_private')">
+                  <input type="checkbox" id="role-pilot_private" value="pilot_private" data-label="Pilot - Private / General Aviation" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-pilot_private" onclick="event.stopPropagation();">Pilot - Private / General Aviation</label>
+                </div>
+                <div class="multiselect-option" onclick="toggleOption('role-other')">
+                  <input type="checkbox" id="role-other" value="other" data-label="Other" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-other" onclick="event.stopPropagation();">Other</label>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="classification" required name="classification" />
           </div>
 
           <!-- Custom Role Input (Conditionally visible) -->
@@ -541,12 +710,57 @@
       }
     }
 
-    function handleRoleChange(role) {
-      const emailInput = document.getElementById('email').value;
+    function toggleDropdown(e) {
+      if (e) e.stopPropagation();
+      const options = document.getElementById('multiselect-options');
+      const trigger = document.getElementById('multiselect-trigger');
+      options.classList.toggle('active');
+      trigger.classList.toggle('active');
+    }
+
+    function toggleOption(id) {
+      const cb = document.getElementById(id);
+      if (cb) {
+        cb.checked = !cb.checked;
+        updateSelectedRoles();
+      }
+    }
+
+    function updateSelectedRoles() {
+      const checkboxes = document.querySelectorAll('.multiselect-option input[type="checkbox"]');
+      const selectedLabels = [];
+      const selectedValues = [];
+      let isOtherSelected = false;
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          selectedLabels.push(cb.getAttribute('data-label'));
+          selectedValues.push(cb.value);
+          if (cb.value === 'other') {
+            isOtherSelected = true;
+          }
+        }
+      });
+
+      const label = document.getElementById('multiselect-label');
+      const trigger = document.getElementById('multiselect-trigger');
+      
+      if (selectedLabels.length === 0) {
+        label.innerText = 'Select your aviation role(s)';
+        label.classList.remove('has-value');
+      } else {
+        label.innerText = selectedLabels.join(', ');
+        label.classList.add('has-value');
+        if (trigger) trigger.style.borderColor = '';
+      }
+
+      const hiddenInput = document.getElementById('classification');
+      hiddenInput.value = selectedValues.join(',');
+
+      // Toggle custom role container
       const customRoleContainer = document.getElementById('custom-role-container');
       const customRoleInput = document.getElementById('custom-role');
-
-      if (role === 'other') {
+      if (isOtherSelected) {
         customRoleContainer.style.display = 'flex';
         customRoleInput.required = true;
       } else {
@@ -554,20 +768,41 @@
         customRoleInput.required = false;
       }
 
-      // Update email domain warning check
+      // Update email check if active
+      const emailInput = document.getElementById('email').value;
       if (emailInput && emailInput.includes('@')) {
         checkEmailDomain(emailInput);
       }
     }
 
+    // Dismiss dropdown on outside clicks
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('multiselect-dropdown');
+      const options = document.getElementById('multiselect-options');
+      const trigger = document.getElementById('multiselect-trigger');
+      if (dropdown && !dropdown.contains(event.target)) {
+        options.classList.remove('active');
+        trigger.classList.remove('active');
+      }
+    });
+
     function handleJoinSubmit(e) {
       e.preventDefault();
       
+      const role = document.getElementById('classification').value;
+      if (!role) {
+        const trigger = document.getElementById('multiselect-trigger');
+        if (trigger) {
+          trigger.style.borderColor = 'var(--alert)';
+          trigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
       const firstName = document.getElementById('first-name').value;
       const lastName = document.getElementById('last-name').value;
       const name = `${firstName} ${lastName}`;
       const email = document.getElementById('email').value;
-      const role = document.getElementById('classification').value;
       const customRole = document.getElementById('custom-role').value;
       const message = document.getElementById('message').value;
 
@@ -586,17 +821,21 @@
       consoleBox.innerHTML = '';
 
       let roleDisplay = role;
-      if (role === 'other') {
-        roleDisplay = customRole;
+      if (role.split(',').includes('other')) {
+        const rolesArr = role.split(',').filter(r => r !== 'other');
+        if (customRole) {
+          rolesArr.push(customRole);
+        }
+        roleDisplay = rolesArr.join(', ');
       }
 
       const logs = [
         `[INGEST] Initializing profile row for user: ${name}`,
         `[INGEST] Email: ${email} // Domain: ${emailDomain}`,
-        `[RLS-AUTH] Creating secure record mapping to ${roleDisplay.toUpperCase()} entity`,
+        `[RLS-AUTH] Creating secure record mapping to ${roleDisplay.toUpperCase()} entities`,
         `[AUDIT] Committing WORM entry: organization.join_request`,
         isPersonal 
-          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review channel <span class="console-green">#onboarding-triage</span>`
+          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review queue <span class="console-green">#onboarding-triage</span>`
           : `[TRIAGE-ROUTE] corporate domain detected: "${emailDomain}"<br><span class="console-label">ACTION:</span> Matching against trusted-domain indices...<br><span class="console-green">SUCCESS:</span> Auto-routed to waitlist queue for Administrator approval`,
         `[SECURITY] Profile credentials encrypted in Supabase Storage (Supabase KMS)`,
         `[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`,
