@@ -1313,6 +1313,18 @@ const { frontmatter } = Astro.props;
       opacity: 0.8;
     }
 
+    /* Legal Pages links styling */
+    .legal-document-section a {
+      color: inherit !important;
+      text-decoration: underline;
+      text-decoration-color: var(--brand-orange);
+      transition: var(--transition-fast);
+    }
+    
+    .legal-document-section a:hover {
+      color: var(--brand-orange) !important;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 968px) {
       .narrative-grid,
