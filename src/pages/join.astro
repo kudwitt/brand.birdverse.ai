@@ -303,18 +303,14 @@
 
     .multiselect-options {
       display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
+      position: relative;
       width: 100%;
-      background: var(--card-bg);
+      background: #040a1b;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      margin-top: 6px;
+      margin-top: 8px;
       max-height: 250px;
       overflow-y: auto;
-      z-index: 1000;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       padding: 0.5rem 0;
       box-sizing: border-box;
     }
@@ -603,8 +599,8 @@
                   <label for="role-fbo" onclick="event.stopPropagation();">FBO</label>
                 </div>
                 <div class="multiselect-option" onclick="toggleOption('role-financial')">
-                  <input type="checkbox" id="role-financial" value="financial" data-label="Financial Services" onclick="event.stopPropagation(); updateSelectedRoles();" />
-                  <label for="role-financial" onclick="event.stopPropagation();">Financial Services</label>
+                  <input type="checkbox" id="role-financial" value="financial" data-label="Financial Services / Insurance" onclick="event.stopPropagation(); updateSelectedRoles();" />
+                  <label for="role-financial" onclick="event.stopPropagation();">Financial Services / Insurance</label>
                 </div>
                 <div class="multiselect-option" onclick="toggleOption('role-flight_attendant')">
                   <input type="checkbox" id="role-flight_attendant" value="flight_attendant" data-label="Flight Attendant" onclick="event.stopPropagation(); updateSelectedRoles();" />
