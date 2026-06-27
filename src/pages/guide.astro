@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birdverse — Brand Identity Guideline & Playground</title>
-  
-  <!-- Modern Typography from Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
+---
+import WebsiteLayout from '../layouts/WebsiteLayout.astro';
+---
+<WebsiteLayout frontmatter={{ title: "Birdverse", tagline: "Brand Identity Guideline & Playground" }}>
   <style is:inline>
     /* ----------------------------------------------------
        DESIGN SYSTEM TOKENS (Vanilla CSS Variables)
@@ -1323,27 +1315,17 @@
       }
     }
   </style>
-</head>
-<body>
-
-  <!-- Premium Header -->
-  <header>
-    <div class="header-logo">
-      <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
-      </svg>
-      <span><span class="logo-text-orange">Birdverse</span></span>
-    </div>
-    <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle visual theme">
-      <span id="theme-icon">🌙</span>
-      <span id="theme-text">Dark Cockpit</span>
-    </button>
-  </header>
 
   <div class="container">
     
     <!-- Sidebar Navigation Rail -->
     <aside class="sidebar">
+      <div style="margin-bottom: 2rem; display: flex; justify-content: flex-start; padding-left: 20px;">
+        <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle visual theme">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Dark Cockpit</span>
+        </button>
+      </div>
       <ul class="nav-list">
         <li class="nav-item active" data-section="overview"><button onclick="scrollToSection('overview')">Overview</button></li>
         <li class="nav-item" data-section="naming"><button onclick="scrollToSection('naming')">Naming & Brand Casing</button></li>
@@ -2298,5 +2280,4 @@
     updateLogoPlayground();
     toggleTaglineMock('login');
   </script>
-</body>
-</html>
+</WebsiteLayout>
