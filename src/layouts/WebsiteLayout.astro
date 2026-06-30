@@ -1694,7 +1694,8 @@ const homeUrl = isOriginalPage ? 'original.html' : 'index.html';
         const headerLogo = document.querySelector('nav .nav-logo');
         
         if (headerLogo) {
-          headerLogo.addEventListener('click', (e) => {
+          // Listen to pointerdown for instant tap counting (bypasses double-tap and touch delays)
+          headerLogo.addEventListener('pointerdown', () => {
             const now = Date.now();
             if (now - lastClickTime > 2000) {
               logoClicks = 0;
@@ -1703,7 +1704,12 @@ const homeUrl = isOriginalPage ? 'original.html' : 'index.html';
             lastClickTime = now;
             if (logoClicks >= 5) {
               window.location.href = 'original.html';
-            } else {
+            }
+          });
+
+          // Prevent navigation on click until 5 taps are reached
+          headerLogo.addEventListener('click', (e) => {
+            if (logoClicks < 5) {
               e.preventDefault();
             }
           });
