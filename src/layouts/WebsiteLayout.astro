@@ -1684,36 +1684,33 @@ const homeUrl = isOriginalPage ? 'original.html' : 'index.html';
         });
       });
     }
-
-    // Logo easter egg click count
-    let logoClicks = 0;
-    let lastClickTime = 0;
-    const headerLogo = document.querySelector('nav .nav-logo');
-    
-    if (headerLogo) {
-      // Intercept logo clicks only on the Coming Soon homepage
-      const isComingSoonPage = window.location.pathname.endsWith('/') || 
-                               window.location.pathname.endsWith('/index.html') ||
-                               window.location.pathname.endsWith('/index') ||
-                               window.location.pathname === '';
-      
-      if (isComingSoonPage) {
-        headerLogo.addEventListener('click', (e) => {
-          const now = Date.now();
-          if (now - lastClickTime > 2000) {
-            logoClicks = 0;
-          }
-          logoClicks++;
-          lastClickTime = now;
-          if (logoClicks >= 5) {
-            window.location.href = 'original.html';
-          } else {
-            e.preventDefault();
-          }
-        });
-      }
-    }
   </script>
+
+  {isComingSoon && (
+    <script is:inline>
+      (function() {
+        let logoClicks = 0;
+        let lastClickTime = 0;
+        const headerLogo = document.querySelector('nav .nav-logo');
+        
+        if (headerLogo) {
+          headerLogo.addEventListener('click', (e) => {
+            const now = Date.now();
+            if (now - lastClickTime > 2000) {
+              logoClicks = 0;
+            }
+            logoClicks++;
+            lastClickTime = now;
+            if (logoClicks >= 5) {
+              window.location.href = 'original.html';
+            } else {
+              e.preventDefault();
+            }
+          });
+        }
+      })();
+    </script>
+  )}
 
 
 
