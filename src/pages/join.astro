@@ -393,6 +393,31 @@
       box-shadow: 0 6px 22px rgba(255, 160, 40, 0.45);
     }
 
+    .btn-secondary {
+      background: rgba(224, 242, 254, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--white-horizon) !important;
+      padding: 0.95rem 2.5rem;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(224, 242, 254, 0.08);
+      border-color: var(--gray-velocity);
+      color: var(--brand-orange) !important;
+      transform: translateY(-2px);
+    }
+
     /* Success Card States */
     .success-container {
       display: none;
@@ -678,7 +703,7 @@
         </div>
 
         <a href="#" id="mailto-cta" class="btn-submit" style="display: none; text-decoration: none; margin-top: 2rem; margin-bottom: 1rem; text-align: center;">Compose Email Manually</a>
-        <a href="index.html" class="btn-secondary" style="display: block; text-decoration: none; margin-top: 2rem; text-align: center;">Return to Homepage</a>
+        <a href="index.html" class="btn-secondary" style="margin-top: 2rem;">Return to Homepage</a>
       </div>
 
     </div>
