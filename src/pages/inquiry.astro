@@ -445,14 +445,15 @@
         <h2 class="form-title" style="margin-bottom: 1rem;">Inquiry Dispatched</h2>
         
         <p class="success-desc">
-          Your inquiry has been processed. We've logged the transaction telemetry below and pre-packaged an email packet for <strong>fly@birdverse.ai</strong>.
+          Your inquiry has been processed. We've logged the transaction telemetry below.
         </p>
 
         <div class="console-box" id="console-logs">
           <!-- Populated by JS -->
         </div>
 
-        <a href="index.html" class="btn-submit" style="display: block; text-decoration: none; margin-top: 2rem;">Return to Homepage</a>
+        <a href="#" id="mailto-cta" class="btn-submit" style="display: none; text-decoration: none; margin-top: 2rem; margin-bottom: 1rem; text-align: center;">Compose Email Manually</a>
+        <a href="index.html" class="btn-secondary" style="display: block; text-decoration: none; margin-top: 2rem; text-align: center;">Return to Homepage</a>
       </div>
 
     </div>
@@ -461,14 +462,13 @@
   
 
   <script is:inline>
-    function handleInquirySubmit(e) {
+    async function handleInquirySubmit(e) {
       e.preventDefault();
       
       const firstName = document.getElementById('first-name').value;
       const lastName = document.getElementById('last-name').value;
       const name = `${firstName} ${lastName}`;
       const email = document.getElementById('email').value;
-      const subject = "Birdverse Inquiry";
       const message = document.getElementById('message').value;
 
       // Hide form
@@ -482,34 +482,63 @@
       const consoleBox = document.getElementById('console-logs');
       consoleBox.innerHTML = '';
 
-      const logs = [
-        `[INGEST] Resolving inquiry details for sender: ${name}`,
-        `[INGEST] Sender Email: ${email}`,
-        `[ENCODE] Packing payload: subject="${subject}"`,
-        `[ROUTE] Connecting to outbound SMTP relay for: fly@birdverse.ai`,
-        `[CRYPT] Computing secure checksum for transmission verification...`,
-        `[SUCCESS] Checksum verified. Handshake completed.`,
-        `[REDIRECT] Launching local mail composer to dispatch directly...`,
-        `[STATUS] <span class="console-green">SUCCESS: Email compose window opened. Inquiry sent to manual review backlog.</span>`
-      ];
+      const addLog = (log) => {
+        const div = document.createElement('div');
+        div.className = 'console-line';
+        div.innerHTML = `<span class="console-label">&gt;</span> ${log}`;
+        consoleBox.appendChild(div);
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+      };
 
-      logs.forEach((log, index) => {
-        setTimeout(() => {
-          const div = document.createElement('div');
-          div.className = 'console-line';
-          div.innerHTML = `<span class="console-label">&gt;</span> ${log}`;
-          consoleBox.appendChild(div);
-          consoleBox.scrollTop = consoleBox.scrollHeight;
-        }, index * 300);
-      });
+      addLog(`[INGEST] Resolving inquiry details for sender: ${name}`);
+      addLog(`[INGEST] Sender Email: ${email}`);
+      addLog(`[API] Dispatching secure POST request to API...`);
 
-      // Prepare mailto composition
-      const mailtoUrl = `mailto:fly@birdverse.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + message)}`;
+      // Determine API endpoint based on hostname
+      const host = window.location.hostname;
+      let apiEndpoint = 'https://api.birdverse.ai/api/inquiry';
       
-      // Delay mailto opening slightly so the user can see the logs beginning to write
-      setTimeout(() => {
-        window.location.href = mailtoUrl;
-      }, 1000);
+      if (host === 'localhost' || host === '127.0.0.1') {
+        apiEndpoint = 'http://localhost:3001/api/inquiry';
+      }
+
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'API request failed');
+        }
+
+        addLog(`[API] <span class="console-green">SUCCESS: Inquiry logged.</span>`);
+        addLog(`[ENCODE] Packing payload: subject="Birdverse Inquiry"`);
+        addLog(`[ROUTE] Outbound email dispatched via Resend to fly@birdverse.ai`);
+        addLog(`[STATUS] <span class="console-green">SUCCESS: Inquiry queued for manual review backlog.</span>`);
+
+      } catch (err) {
+        addLog(`[API] <span class="text-danger" style="color: var(--alert);">ERROR: Failed to submit inquiry to backend API.</span>`);
+        addLog(`[API] Details: ${err.message}`);
+        addLog(`[API] <span class="console-label">FALLBACK:</span> Initiating manual email dispatch fallback...`);
+
+        // Setup manual fallback button
+        const mailtoUrl = `mailto:fly@birdverse.ai?subject=${encodeURIComponent("Birdverse Inquiry")}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + message)}`;
+        const mailtoBtn = document.getElementById('mailto-cta');
+        if (mailtoBtn) {
+          mailtoBtn.setAttribute('href', mailtoUrl);
+          mailtoBtn.style.display = 'block';
+        }
+      }
     }
   </script>
 

@@ -677,7 +677,8 @@
           <!-- Populated by JS -->
         </div>
 
-        <a href="index.html" class="btn-submit" style="display: block; text-decoration: none; margin-top: 2rem;">Return to Homepage</a>
+        <a href="#" id="mailto-cta" class="btn-submit" style="display: none; text-decoration: none; margin-top: 2rem; margin-bottom: 1rem; text-align: center;">Compose Email Manually</a>
+        <a href="index.html" class="btn-secondary" style="display: block; text-decoration: none; margin-top: 2rem; text-align: center;">Return to Homepage</a>
       </div>
 
     </div>
@@ -849,11 +850,10 @@
       addLog(`[API] Dispatching secure POST request to API (${environment} mode)...`);
 
       // Construct mailto redirect url helper
-      const openMailto = (isSuccess) => {
+      const getMailtoUrl = (isSuccess) => {
         const subject = `${isSuccess ? "" : "(API Fallback) "}Birdverse Waitlist Request: ${name}`;
         const body = `Name: ${name}\nEmail: ${email}\nOrganization: ${orgName}\nRole(s): ${roleDisplay}\nMessage: ${message || 'N/A'}\nEnvironment: ${environment}\n\n${isSuccess ? "" : "Note: API submission failed. Please process manually.\n\n"}Sent via Join Waitlist Form.`;
-        const mailtoUrl = `mailto:fly@birdverse.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailtoUrl;
+        return `mailto:fly@birdverse.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       };
 
       try {
@@ -888,21 +888,21 @@
         
         addLog(`[SECURITY] Profile credentials encrypted in Supabase Storage (Supabase KMS)`);
         addLog(`[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`);
-        addLog(`[REDIRECT] Launching mail client to send waitlist details to fly@birdverse.ai...`);
+        addLog(`[ROUTE] Outbound email dispatched via Resend to fly@birdverse.ai`);
         addLog(`[STATUS] <span class="console-green">SUCCESS: dossier queued for manual sign-off (onboarding decision SLA &lt; 48 hours)</span>`);
-
-        setTimeout(() => {
-          openMailto(true);
-        }, 1500);
 
       } catch (err) {
         addLog(`[API] <span class="text-danger" style="color: var(--alert);">ERROR: Failed to submit waitlist request to backend API.</span>`);
         addLog(`[API] Details: ${err.message}`);
-        addLog(`[API] <span class="console-label">FALLBACK:</span> Initiating direct email dispatch to fly@birdverse.ai...`);
+        addLog(`[API] <span class="console-label">FALLBACK:</span> Initiating manual email dispatch fallback...`);
 
-        setTimeout(() => {
-          openMailto(false);
-        }, 2500);
+        // Setup manual fallback button
+        const mailtoUrl = getMailtoUrl(false);
+        const mailtoBtn = document.getElementById('mailto-cta');
+        if (mailtoBtn) {
+          mailtoBtn.setAttribute('href', mailtoUrl);
+          mailtoBtn.style.display = 'block';
+        }
       }
     }
   </script>
