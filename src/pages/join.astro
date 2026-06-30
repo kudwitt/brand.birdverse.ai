@@ -553,6 +553,11 @@
           </div>
 
           <div class="form-group">
+            <label class="form-label" for="org-name">Company / Organization</label>
+            <input class="form-input" type="text" id="org-name" required placeholder="e.g. Apex Flight Operations" />
+          </div>
+
+          <div class="form-group">
             <label class="form-label" for="multiselect-trigger">Role / Classification</label>
             <div class="multiselect-dropdown" id="multiselect-dropdown">
               <div class="multiselect-select" id="multiselect-trigger" onclick="toggleDropdown(event)">
@@ -774,7 +779,7 @@
       }
     });
 
-    function handleJoinSubmit(e) {
+    async function handleJoinSubmit(e) {
       e.preventDefault();
       
       const role = document.getElementById('classification').value;
@@ -791,23 +796,13 @@
       const lastName = document.getElementById('last-name').value;
       const name = `${firstName} ${lastName}`;
       const email = document.getElementById('email').value;
+      const orgName = document.getElementById('org-name').value;
       const customRole = document.getElementById('custom-role').value;
       const message = document.getElementById('message').value;
 
       const emailDomain = email.split('@')[1].toLowerCase();
       const isPersonal = personalDomains.includes(emailDomain);
       
-      // Hide form
-      document.getElementById('join-form-container').style.display = 'none';
-      
-      // Show success container
-      const successBox = document.getElementById('success-container');
-      successBox.style.display = 'block';
-
-      // Build simulated console logs based on architecture/plan
-      const consoleBox = document.getElementById('console-logs');
-      consoleBox.innerHTML = '';
-
       let roleDisplay = role;
       if (role.split(',').includes('other')) {
         const rolesArr = role.split(',').filter(r => r !== 'other');
@@ -817,29 +812,98 @@
         roleDisplay = rolesArr.join(', ');
       }
 
-      const logs = [
-        `[INGEST] Initializing profile row for user: ${name}`,
-        `[INGEST] Email: ${email} // Domain: ${emailDomain}`,
-        `[RLS-AUTH] Creating secure record mapping to ${roleDisplay.toUpperCase()} entities`,
-        `[AUDIT] Committing WORM entry: organization.join_request`,
-        isPersonal 
-          ? `[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review queue <span class="console-green">#onboarding-triage</span>`
-          : `[TRIAGE-ROUTE] corporate domain detected: "${emailDomain}"<br><span class="console-label">ACTION:</span> Matching against trusted-domain indices...<br><span class="console-green">SUCCESS:</span> Auto-routed to waitlist queue for Administrator approval`,
-        `[SECURITY] Profile credentials encrypted in Supabase Storage (Supabase KMS)`,
-        `[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`,
-        `[NOTIFY] Sent verification dossier card to Ross (PM / Manual Triage Signer)`,
-        `[STATUS] <span class="console-green">SUCCESS: dossier queued for manual sign-off (onboarding decision SLA &lt; 48 hours)</span>`
-      ];
+      // Determine API endpoint and environment based on hostname
+      const host = window.location.hostname;
+      let environment = 'production';
+      let apiEndpoint = 'https://api.birdverse.ai/api/onboarding/join';
+      
+      if (host === 'localhost' || host === '127.0.0.1') {
+        environment = 'dev';
+        apiEndpoint = 'http://localhost:3001/api/onboarding/join';
+      } else if (host.includes('test') || host.includes('staging') || host.includes('dev')) {
+        environment = 'test';
+        apiEndpoint = 'https://api.birdverse.ai/api/onboarding/join';
+      }
 
-      logs.forEach((log, index) => {
+      // Hide form
+      document.getElementById('join-form-container').style.display = 'none';
+      
+      // Show success container
+      const successBox = document.getElementById('success-container');
+      successBox.style.display = 'block';
+
+      const consoleBox = document.getElementById('console-logs');
+      consoleBox.innerHTML = '';
+
+      const addLog = (log) => {
+        const div = document.createElement('div');
+        div.className = 'console-line';
+        div.innerHTML = `<span class="console-label">&gt;</span> ${log}`;
+        consoleBox.appendChild(div);
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+      };
+
+      addLog(`[INGEST] Initializing profile row for user: ${name}`);
+      addLog(`[INGEST] Email: ${email} // Domain: ${emailDomain}`);
+      addLog(`[INGEST] Organization: ${orgName}`);
+      addLog(`[API] Dispatching secure POST request to API (${environment} mode)...`);
+
+      // Construct mailto redirect url helper
+      const openMailto = (isSuccess) => {
+        const subject = `${isSuccess ? "" : "(API Fallback) "}Birdverse Waitlist Request: ${name}`;
+        const body = `Name: ${name}\nEmail: ${email}\nOrganization: ${orgName}\nRole(s): ${roleDisplay}\nMessage: ${message || 'N/A'}\nEnvironment: ${environment}\n\n${isSuccess ? "" : "Note: API submission failed. Please process manually.\n\n"}Sent via Join Waitlist Form.`;
+        const mailtoUrl = `mailto:fly@birdverse.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoUrl;
+      };
+
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            orgName,
+            environment
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'API request failed');
+        }
+
+        addLog(`[API] <span class="console-green">SUCCESS: Onboarding request accepted. Request ID: ${data.requestId || 'N/A'}</span>`);
+        addLog(`[RLS-AUTH] Creating secure record mapping to ${roleDisplay.toUpperCase()} entities`);
+        addLog(`[AUDIT] Committing WORM entry: organization.join_request`);
+        
+        if (isPersonal) {
+          addLog(`[TRIAGE-ROUTE] fallback detected: Personal domain signup (Gmail/iCloud)<br><span class="console-label">ACTION:</span> Dispatched dossier to internal manual review queue <span class="console-green">#onboarding-triage</span>`);
+        } else {
+          addLog(`[TRIAGE-ROUTE] corporate domain detected: "${emailDomain}"<br><span class="console-label">ACTION:</span> Matching against trusted-domain indices...<br><span class="console-green">SUCCESS:</span> Auto-routed to waitlist queue for Administrator approval`);
+        }
+        
+        addLog(`[SECURITY] Profile credentials encrypted in Supabase Storage (Supabase KMS)`);
+        addLog(`[AUDIT-LOG] Computed SHA-256 block hash for WORM append-only ledger`);
+        addLog(`[REDIRECT] Launching mail client to send waitlist details to fly@birdverse.ai...`);
+        addLog(`[STATUS] <span class="console-green">SUCCESS: dossier queued for manual sign-off (onboarding decision SLA &lt; 48 hours)</span>`);
+
         setTimeout(() => {
-          const div = document.createElement('div');
-          div.className = 'console-line';
-          div.innerHTML = `<span class="console-label">&gt;</span> ${log}`;
-          consoleBox.appendChild(div);
-          consoleBox.scrollTop = consoleBox.scrollHeight;
-        }, index * 400);
-      });
+          openMailto(true);
+        }, 1500);
+
+      } catch (err) {
+        addLog(`[API] <span class="text-danger" style="color: var(--alert);">ERROR: Failed to submit waitlist request to backend API.</span>`);
+        addLog(`[API] Details: ${err.message}`);
+        addLog(`[API] <span class="console-label">FALLBACK:</span> Initiating direct email dispatch to fly@birdverse.ai...`);
+
+        setTimeout(() => {
+          openMailto(false);
+        }, 2500);
+      }
     }
   </script>
 

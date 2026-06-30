@@ -966,7 +966,8 @@ import WebsiteLayout from '../layouts/WebsiteLayout.astro';
     /* Specific Overlay adjustments for placement & sizes */
     .polo-overlay {
       top: 38.5%;
-      left: 64%;
+      left: 62%;
+      transform: translate(-50%, -50%);
       width: 50px;
       height: auto;
     }
@@ -1001,12 +1002,12 @@ import WebsiteLayout from '../layouts/WebsiteLayout.astro';
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 32px;
+      width: 48px;
       height: auto;
     }
     .cap-overlay .bird-symbol-overlay {
-      width: 30px;
-      height: 30px;
+      width: 44px;
+      height: 44px;
     }
     .cap-overlay .bird-symbol-overlay path {
       fill: #e0f2fe;
@@ -1334,10 +1335,10 @@ import WebsiteLayout from '../layouts/WebsiteLayout.astro';
         <li class="nav-item" data-section="landing-rules"><button onclick="scrollToSection('landing-rules')">Landing Page</button></li>
         <li class="nav-item" data-section="colors"><button onclick="scrollToSection('colors')">Color Palette</button></li>
         <li class="nav-item" data-section="theme-shading"><button onclick="scrollToSection('theme-shading')">Theme Shading</button></li>
-        <li class="nav-item" data-section="logowear"><button onclick="scrollToSection('logowear')">Logowear Specs</button></li>
         <li class="nav-item" data-section="signage"><button onclick="scrollToSection('signage')">Outdoor Signage</button></li>
         <li class="nav-item" data-section="typography"><button onclick="scrollToSection('typography')">Typography</button></li>
         <li class="nav-item" data-section="dev-snippets"><button onclick="scrollToSection('dev-snippets')">Code Snippets</button></li>
+        <li class="nav-item" data-section="logowear"><button onclick="scrollToSection('logowear')">Logowear Specs</button></li>
       </ul>
     </aside>
     
@@ -1694,9 +1695,229 @@ import WebsiteLayout from '../layouts/WebsiteLayout.astro';
         </div>
       </section>
 
+      <!-- Section: Outdoor Building Signage -->
+      <section id="signage">
+        <h1 class="section-title">7. Outdoor Building Signage</h1>
+        <p class="section-desc">Dimensional halo-lit channel lettering and installation contrast guidelines.</p>
+        <div class="card">
+          <div class="signage-simulator">
+            
+            <!-- Dark Wall Facade Simulator -->
+            <div class="sign-facade dark-wall">
+              <span class="sign-facade-label">Dark Facade Installation</span>
+              
+              <div class="halo-logo-rendered">
+                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                </svg>
+                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
+              </div>
+              
+              <div class="sign-facade-desc">
+                <strong>Brushed Aluminum Faces</strong> with backlit halo LEDs simulating the <strong>Arctic Ice</strong> color temperature (approx. 6000K). Solid bird face (no outline).
+              </div>
+            </div>
+
+            <!-- Light Wall Facade Simulator -->
+            <div class="sign-facade light-wall">
+              <span class="sign-facade-label">Light Facade Installation</span>
+              
+              <div class="halo-logo-rendered">
+                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
+                </svg>
+                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
+              </div>
+              
+              <div class="sign-facade-desc">
+                <strong>Matte Black Steel Faces</strong> with Arctic Ice backlit halo. The bird acrylic face is framed in a <strong>0.5" deep black metal border</strong> to preserve outline contrast.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Signage & Pantone -->
+      <section id="pantone">
+        <h1 class="section-title">8. Print & Thread Matching</h1>
+        <p class="section-desc">Pantone matching specs (PMS Coated / Uncoated) and Embroidery Thread pairing.</p>
+        <div class="color-grid">
+          
+          <!-- Orange Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: var(--brand-orange)">Terminal Orange</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #ffa028;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 1375 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 137 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1137</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blue Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: #4361ee">Aether Blue</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #081431;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 296 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 296 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1944</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ice Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: #8ecae6">Arctic Ice</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #e0f2fe; border: 1px solid var(--border-color);"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 290 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 290 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1753</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slate Print Card -->
+          <div class="color-card">
+            <div class="color-info" style="gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="color-name" style="color: var(--text-muted)">Deep Slate</span>
+                <span style="width: 20px; height: 20px; border-radius: 50%; background: #0f172a;"></span>
+              </div>
+              <div class="color-print-info">
+                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 433 C</span></div>
+                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 433 U</span></div>
+                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1841</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Typography -->
+      <section id="typography">
+        <h1 class="section-title">9. Typography System</h1>
+        <p class="section-desc">Fonts mapping for visual headers, navigation rails, body copies, and technical dispatch lists.</p>
+        <div class="typo-showcase">
+          
+          <!-- Montserrat Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">Brand & Header Font (Montserrat)</div>
+            <div class="specimen-letters" style="font-family: 'Montserrat', sans-serif; font-weight: 700;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
+              Used strictly for application logos, side navigation rail headers, primary layout title cards, and main headers. Styled in bold (700 / 800).
+            </div>
+          </div>
+
+          <!-- Outfit Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">Navigation & UI Control Font (Outfit)</div>
+            <div class="specimen-letters" style="font-family: 'Outfit', sans-serif; font-weight: 600;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
+              Used for system navigation links, main action buttons, taglines, active subheadings, and tab controls. Styled in medium/semibold (500 / 600 / 700).
+            </div>
+          </div>
+          
+          <!-- Inter Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">General Body Copy (Inter)</div>
+            <div class="specimen-letters" style="font-family: 'Inter', sans-serif; font-weight: 400;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
+              Used for general system parameters, chat message dialogues, forms, settings menus, lists, and paragraphs. Styled in regular/medium (400 / 500 / 600).
+            </div>
+          </div>
+
+          <!-- JetBrains Mono Specimen -->
+          <div class="typo-specimen">
+            <div class="font-sample-title">Technical & Monospace Font (JetBrains Mono)</div>
+            <div class="specimen-letters" style="font-family: 'JetBrains Mono', monospace; font-weight: 500;">Aa Bb Cc</div>
+            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
+              Used for system URLs, terminal readouts, live telemetry feeds, airworthiness alerts, and log consoles. Styled in monospace (400 / 500 / 700).
+            </div>
+          </div>
+
+          <!-- Monospace Technical -->
+          <div class="technical-terminal-mock">
+            [SYS EVENT] 09:12:04 UTC | INGEST DISPATCH RUNNING FOR N702WJ (G650ER)
+            <br>&gt; FAA AIRMEN REGISTRY LOOKUP: ROSS KUDWITT - PILOT VERIFIED (ATP #9910452)
+            <br>&gt; COMPLIANCE VERIFICATION GATES: ACTIVE METAR KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012
+            <br>&gt; TRIP RECORD LOGGED: HOBBS IN: 4192.4, LANDINGS: 3 | STATUS: OK [GREEN]
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Section: Dev Snippets -->
+      <section id="dev-snippets">
+        <h1 class="section-title">10. Developer Integration Snippets</h1>
+        <p class="section-desc">Copy configuration tokens into your local CSS/Tailwind projects.</p>
+        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <div style="position: relative;">
+            <div class="control-group-title">index.css (Vanilla CSS Custom Properties)</div>
+            <button class="btn-copy" onclick="copySnippet('css-code')">Copy</button>
+            <pre class="code-block"><code id="css-code" set:html={`:root {
+  --font-primary: 'Montserrat', 'Inter', 'Outfit', sans-serif;
+  --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --dark-bg: #081431;            /* Aether Blue */
+  --card-bg: #101e3e;            /* Deep Cockpit Surface */
+  --card-bg-hover: #17284f;      /* Sleek Hover Blue */
+  
+  --brand-orange: #ffa028;       /* Terminal Orange */
+  --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
+  --brand-deep-slate: #0f172a;   /* Deep Slate */
+}
+
+[data-theme="light"] {
+  --dark-bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --card-bg-hover: #f8fafc;
+}`} /></pre>
+          </div>
+
+          <div style="position: relative;">
+            <div class="control-group-title">tailwind.config.js (Colors & Fonts configuration)</div>
+            <button class="btn-copy" onclick="copySnippet('tailwind-code')">Copy</button>
+            <pre class="code-block"><code id="tailwind-code" set:html={`module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          orange: '#FFA028',
+          'arctic-ice': '#E0F2FE',
+          'deep-slate': '#0F172A',
+        },
+        cockpit: {
+          aether: '#081431',
+          surface: '#101E3E',
+          hover: '#17284F',
+        }
+      }
+    }
+  }
+}`} /></pre>
+          </div>
+
+        </div>
+      </section>
+
       <!-- Section: Logowear Specifications -->
       <section id="logowear">
-        <h1 class="section-title">7. Logowear Specifications</h1>
+        <h1 class="section-title">11. Logowear Specifications</h1>
         <p class="section-desc">Embroidery and layout specifications for physical brand apparel.</p>
         <div class="apparel-grid">
           
@@ -1799,217 +2020,6 @@ import WebsiteLayout from '../layouts/WebsiteLayout.astro';
                 <strong>Tone:</strong> Follows dark navy canvas rules
               </div>
             </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section: Outdoor Building Signage -->
-      <section id="signage">
-        <h1 class="section-title">8. Outdoor Building Signage</h1>
-        <p class="section-desc">Dimensional halo-lit channel lettering and installation contrast guidelines.</p>
-        <div class="card">
-          <div class="signage-simulator">
-            
-            <!-- Dark Wall Facade Simulator -->
-            <div class="sign-facade dark-wall">
-              <span class="sign-facade-label">Dark Facade Installation</span>
-              
-              <div class="halo-logo-rendered">
-                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
-                </svg>
-                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
-              </div>
-              
-              <div class="sign-facade-desc">
-                <strong>Brushed Aluminum Faces</strong> with backlit halo LEDs simulating the <strong>Arctic Ice</strong> color temperature (approx. 6000K). Solid bird face (no outline).
-              </div>
-            </div>
-
-            <!-- Light Wall Facade Simulator -->
-            <div class="sign-facade light-wall">
-              <span class="sign-facade-label">Light Facade Installation</span>
-              
-              <div class="halo-logo-rendered">
-                <svg class="halo-bird-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
-                </svg>
-                <span class="halo-text"><span class="halo-text-orange">Birdverse</span></span>
-              </div>
-              
-              <div class="sign-facade-desc">
-                <strong>Matte Black Steel Faces</strong> with Arctic Ice backlit halo. The bird acrylic face is framed in a <strong>0.5" deep black metal border</strong> to preserve outline contrast.
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- Section: Signage & Pantone -->
-      <section id="pantone">
-        <h1 class="section-title">9. Print & Thread Matching</h1>
-        <p class="section-desc">Pantone matching specs (PMS Coated / Uncoated) and Embroidery Thread pairing.</p>
-        <div class="color-grid">
-          
-          <!-- Orange Print Card -->
-          <div class="color-card">
-            <div class="color-info" style="gap: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="color-name" style="color: var(--brand-orange)">Terminal Orange</span>
-                <span style="width: 20px; height: 20px; border-radius: 50%; background: #ffa028;"></span>
-              </div>
-              <div class="color-print-info">
-                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 1375 C</span></div>
-                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 137 U</span></div>
-                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1137</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Blue Print Card -->
-          <div class="color-card">
-            <div class="color-info" style="gap: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="color-name" style="color: #4361ee">Aether Blue</span>
-                <span style="width: 20px; height: 20px; border-radius: 50%; background: #081431;"></span>
-              </div>
-              <div class="color-print-info">
-                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 296 C</span></div>
-                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 296 U</span></div>
-                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1944</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ice Print Card -->
-          <div class="color-card">
-            <div class="color-info" style="gap: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="color-name" style="color: #8ecae6">Arctic Ice</span>
-                <span style="width: 20px; height: 20px; border-radius: 50%; background: #e0f2fe; border: 1px solid var(--border-color);"></span>
-              </div>
-              <div class="color-print-info">
-                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 290 C</span></div>
-                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 290 U</span></div>
-                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1753</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slate Print Card -->
-          <div class="color-card">
-            <div class="color-info" style="gap: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="color-name" style="color: var(--text-muted)">Deep Slate</span>
-                <span style="width: 20px; height: 20px; border-radius: 50%; background: #0f172a;"></span>
-              </div>
-              <div class="color-print-info">
-                <div class="color-print-row"><span>PMS Coated:</span><span>PMS 433 C</span></div>
-                <div class="color-print-row"><span>PMS Uncoated:</span><span>PMS 433 U</span></div>
-                <div class="color-print-row"><span>Madeira Thread:</span><span>Madeira Classic 1841</span></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section: Typography -->
-      <section id="typography">
-        <h1 class="section-title">10. Typography System</h1>
-        <p class="section-desc">Fonts mapping for visual headers, body copies, and technical dispatch lists.</p>
-        <div class="typo-showcase">
-          
-          <!-- Montserrat Specimen -->
-          <div class="typo-specimen">
-            <div class="font-sample-title">Brand & Header Font (Montserrat)</div>
-            <div class="specimen-letters" style="font-family: 'Montserrat', sans-serif;">Aa Bb Cc</div>
-            <div class="specimen-text" style="font-family: 'Montserrat', sans-serif;">
-              Used strictly for application logos, side navigation rail headers, primary layout title cards, and main headers.
-            </div>
-          </div>
-          
-          <!-- Inter Specimen -->
-          <div class="typo-specimen">
-            <div class="font-sample-title">General Body Copy (Inter / Outfit)</div>
-            <div class="specimen-letters" style="font-family: 'Inter', sans-serif;">Aa Bb Cc</div>
-            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
-              Used for general system parameters, chat message dialogues, forms, settings menus, and paragraphs.
-            </div>
-          </div>
-
-          <!-- JetBrains Mono Specimen -->
-          <div class="typo-specimen" style="grid-column: span 2;">
-            <div class="font-sample-title">Technical & Monospace Font (JetBrains Mono)</div>
-            <div class="specimen-letters" style="font-family: 'JetBrains Mono', monospace; font-weight: 500;">Aa Bb Cc</div>
-            <div class="specimen-text" style="font-family: 'Inter', sans-serif;">
-              Used for system URLs (e.g., <code>Welcome to Birdverse</code> / <code>birdverse.ai</code>), terminal readouts, live telemetry feeds, airworthiness alerts, and log consoles.
-            </div>
-          </div>
-
-          <!-- Monospace Technical -->
-          <div class="technical-terminal-mock">
-            [SYS EVENT] 09:12:04 UTC | INGEST DISPATCH RUNNING FOR N702WJ (G650ER)
-            <br>&gt; FAA AIRMEN REGISTRY LOOKUP: ROSS KUDWITT - PILOT VERIFIED (ATP #9910452)
-            <br>&gt; COMPLIANCE VERIFICATION GATES: ACTIVE METAR KPBI 071600Z 12012KT 10SM SCT025 28/22 A3012
-            <br>&gt; TRIP RECORD LOGGED: HOBBS IN: 4192.4, LANDINGS: 3 | STATUS: OK [GREEN]
-          </div>
-          
-        </div>
-      </section>
-
-      <!-- Section: Dev Snippets -->
-      <section id="dev-snippets">
-        <h1 class="section-title">11. Developer Integration Snippets</h1>
-        <p class="section-desc">Copy configuration tokens into your local CSS/Tailwind projects.</p>
-        <div class="card" style="display: flex; flex-direction: column; gap: 2rem;">
-          
-          <div style="position: relative;">
-            <div class="control-group-title">index.css (Vanilla CSS Custom Properties)</div>
-            <button class="btn-copy" onclick="copySnippet('css-code')">Copy</button>
-            <pre class="code-block"><code id="css-code" set:html={`:root {
-  --font-primary: 'Montserrat', 'Inter', 'Outfit', sans-serif;
-  --font-technical: 'JetBrains Mono', 'SF Mono', monospace;
-
-  --dark-bg: #081431;            /* Aether Blue */
-  --card-bg: #101e3e;            /* Deep Cockpit Surface */
-  --card-bg-hover: #17284f;      /* Sleek Hover Blue */
-  
-  --brand-orange: #ffa028;       /* Terminal Orange */
-  --brand-arctic-ice: #e0f2fe;   /* Arctic Ice */
-  --brand-deep-slate: #0f172a;   /* Deep Slate */
-}
-
-[data-theme="light"] {
-  --dark-bg: #f1f5f9;
-  --card-bg: #ffffff;
-  --card-bg-hover: #f8fafc;
-}`} /></pre>
-          </div>
-
-          <div style="position: relative;">
-            <div class="control-group-title">tailwind.config.js (Colors & Fonts configuration)</div>
-            <button class="btn-copy" onclick="copySnippet('tailwind-code')">Copy</button>
-            <pre class="code-block"><code id="tailwind-code" set:html={`module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          orange: '#FFA028',
-          'arctic-ice': '#E0F2FE',
-          'deep-slate': '#0F172A',
-        },
-        cockpit: {
-          aether: '#081431',
-          surface: '#101E3E',
-          hover: '#17284F',
-        }
-      }
-    }
-  }
-}`} /></pre>
           </div>
 
         </div>

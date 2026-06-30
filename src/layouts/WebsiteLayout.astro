@@ -1,6 +1,10 @@
 ---
 import { frontmatter as labels } from '../pages/labels.mdx';
-const { frontmatter } = Astro.props;
+const { frontmatter = {} } = Astro.props;
+
+const isOriginalPage = Astro.url.pathname.includes('original');
+const isComingSoon = !isOriginalPage && (Astro.url.pathname === '/' || Astro.url.pathname.endsWith('/index.html') || Astro.url.pathname.endsWith('/index') || Astro.url.pathname === '');
+const homeUrl = isOriginalPage ? 'original.html' : 'index.html';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -1585,29 +1589,37 @@ const { frontmatter } = Astro.props;
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">
+    <a href={homeUrl} class="nav-logo">
       <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
       </svg>
-      <span class="nav-logo-text">{frontmatter.title}</span>
+      <span class="nav-logo-text">{frontmatter.title || "Birdverse"}</span>
     </a>
     
     <div class="nav-actions">
-      <a href="join.html" class="btn-nav-terminal header-join-btn">{labels.navLaunchBtn}</a>
-      
-      <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-      </button>
+      {isComingSoon ? (
+        <a href="join.html" class="btn-nav-terminal" style="display: inline-block;">{labels.navLaunchBtn}</a>
+      ) : (
+        <>
+          <a href="join.html" class="btn-nav-terminal header-join-btn">{labels.navLaunchBtn}</a>
+          
+          <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
+        </>
+      )}
     </div>
     
-    <ul class="nav-links" id="nav-menu">
-      <li><a href="index.html#solutions" class="nav-link">{labels.navFeatures}</a></li>
-      <li><a href="index.html#roi" class="nav-link">{labels.navAudiences}</a></li>
-      <li><a href="index.html#pricing" class="nav-link">{labels.navPricing}</a></li>
-      <li class="nav-desktop-only"><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
-    </ul>
+    {!isComingSoon && (
+      <ul class="nav-links" id="nav-menu">
+        <li><a href={`${homeUrl}#solutions`} class="nav-link">{labels.navFeatures}</a></li>
+        <li><a href={`${homeUrl}#roi`} class="nav-link">{labels.navAudiences}</a></li>
+        <li><a href={`${homeUrl}#pricing`} class="nav-link">{labels.navPricing}</a></li>
+        <li class="nav-desktop-only"><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
+      </ul>
+    )}
   </nav>
 
   <slot />
@@ -1616,22 +1628,28 @@ const { frontmatter } = Astro.props;
   <footer>
     <div class="footer-container">
       <div class="footer-identity">
-        <a href="index.html" class="nav-logo" style="margin-bottom: 4px;">
+        <a href={homeUrl} class="nav-logo" style="margin-bottom: 4px;">
           <svg class="nav-logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M215.091 262.074C225.098 242.154 233.069 222.999 238 205C128 150 36 108 18 92C100 72 240 82 318 125C362 95 396 63 410 50C400 78 348 125 310 178C387.357 273.608 453.711 349.930 463.471 371.947C421.845 360.891 320.138 335.704 215.091 262.074Z"/>
           </svg>
-          <span class="nav-logo-text">{frontmatter.title}</span>
+          <span class="nav-logo-text">{frontmatter.title || "Birdverse"}</span>
         </a>
-        <div style="font-size: 0.8rem; color: var(--gray-velocity);">{frontmatter.tagline} // birdverse.ai</div>
+        <div style="font-size: 0.8rem; color: var(--gray-velocity);">{frontmatter.tagline || "The Terminal for Global Aviation."} // birdverse.ai</div>
       </div>
       
       <div class="footer-navigation">
-        <ul class="footer-links">
-          <li><a href="index.html#solutions">{labels.navFeatures}</a></li>
-          <li><a href="index.html#roi">{labels.navAudiences}</a></li>
-          <li><a href="index.html#pricing">{labels.navPricing}</a></li>
-          <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
-        </ul>
+        {isComingSoon ? (
+          <div style="margin-bottom: 0.5rem;">
+            <a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a>
+          </div>
+        ) : (
+          <ul class="footer-links">
+            <li><a href={`${homeUrl}#solutions`}>{labels.navFeatures}</a></li>
+            <li><a href={`${homeUrl}#roi`}>{labels.navAudiences}</a></li>
+            <li><a href={`${homeUrl}#pricing`}>{labels.navPricing}</a></li>
+            <li><a href="join.html" class="btn-nav-terminal">{labels.navLaunchBtn}</a></li>
+          </ul>
+        )}
         
         <ul class="footer-secondary-links">
           <li><a href="guide.html">Brand Guide</a></li>
@@ -1665,6 +1683,35 @@ const { frontmatter } = Astro.props;
           hamburgerBtn.setAttribute('aria-expanded', 'false');
         });
       });
+    }
+
+    // Logo easter egg click count
+    let logoClicks = 0;
+    let lastClickTime = 0;
+    const headerLogo = document.querySelector('nav .nav-logo');
+    
+    if (headerLogo) {
+      // Intercept logo clicks only on the Coming Soon homepage
+      const isComingSoonPage = window.location.pathname.endsWith('/') || 
+                               window.location.pathname.endsWith('/index.html') ||
+                               window.location.pathname.endsWith('/index') ||
+                               window.location.pathname === '';
+      
+      if (isComingSoonPage) {
+        headerLogo.addEventListener('click', (e) => {
+          const now = Date.now();
+          if (now - lastClickTime > 2000) {
+            logoClicks = 0;
+          }
+          logoClicks++;
+          lastClickTime = now;
+          if (logoClicks >= 5) {
+            window.location.href = 'original.html';
+          } else {
+            e.preventDefault();
+          }
+        });
+      }
     }
   </script>
 

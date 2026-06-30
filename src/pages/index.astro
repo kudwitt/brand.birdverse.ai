@@ -1,0 +1,24 @@
+---
+import WebsiteLayout from '../layouts/WebsiteLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const frontmatter = {
+  title: "Birdverse",
+  tagline: "The Terminal for Global Aviation."
+};
+---
+
+<WebsiteLayout frontmatter={frontmatter}>
+  <Hero 
+    title="Birdverse"
+    tagline="The Terminal for Global Aviation."
+    url="Welcome to Birdverse"
+    desc="The Zero-Cost System to Simplify Maintenance, Messaging,<br />and Data for Aircraft Owners and Aviation Professionals."
+    primaryCtaText="Join Waitlist"
+    primaryCtaLink="join.html"
+    secondaryCtaText="Talk to Us"
+    secondaryCtaLink="inquiry.html"
+    ctaSubtext="No subscriptions. No onboarding fees.<br />Only a 1% escrow fee, paid by the Seller, to keep Birdverse free."
+    badge=""
+  />
+</WebsiteLayout>
